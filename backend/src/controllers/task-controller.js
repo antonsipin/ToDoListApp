@@ -35,19 +35,6 @@ const deleteTask = async (req, res) => {
   }
 }
 
-const changeStatus = async (req, res) => {
-  const { id, name, status, edit } = req.body
-  try {
-    const task = await Task.findOne({ name: req.body.name })
-    task.status = !task.status
-    await task.save()
-    const tasks = await Task.find()
-    res.send(tasks)
-  } catch (error) {
-    res.send(500).end()
-  }
-};
-
 const resolveTask = async (req, res) => {
   try {
     const { id, status } = req.body
@@ -62,7 +49,7 @@ const resolveTask = async (req, res) => {
   }
 }
 
-const renderTasks = async (req, res) => {
+const getTasks = async (req, res) => {
   try {
     const tasks = await Task.find()
 
@@ -78,7 +65,6 @@ const renderTasks = async (req, res) => {
 module.exports = {
   addTask,
   deleteTask,
-  changeStatus,
   resolveTask,
-  renderTasks
+  getTasks
 };

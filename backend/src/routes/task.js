@@ -4,15 +4,11 @@ const taskController = require('../controllers/task-controller');
 
 router
   .route('/')
-  .get(taskController.renderTasks)
+  .get(taskController.getTasks)
 
 router
   .route('/delete/:id')
   .delete(taskController.deleteTask)
-
-router
-  .route('/changeStatus')
-  .post(taskController.changeStatus)
 
 router
   .route('/add')
