@@ -29,7 +29,9 @@ export default function TasksList(): JSX.Element {
   }
 
   function handleDelete(id: string): void {
-    api.deleteTask(id).then(() => setTasks((tasks) => tasks.filter((el) => el.id !== id)))
+    api.deleteTask(id).then((taskId) => setTasks((tasks) => {
+      return tasks.filter((task) => String(task.id) !== String(taskId))
+    }))
   }
 
   return (

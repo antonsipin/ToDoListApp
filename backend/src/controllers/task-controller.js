@@ -29,7 +29,7 @@ const deleteTask = async (req, res) => {
   try {
     const { id } = req.params
     await Task.deleteOne({ id })
-    res.status(200)
+    res.send(id)
   } catch (error) {
     res.send(500).end()
   }
