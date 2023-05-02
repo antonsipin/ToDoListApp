@@ -7,8 +7,8 @@ router
   .get(taskController.renderTasks)
 
 router
-  .route('/delete')
-  .post(taskController.deleteTask)
+  .route('/delete/:id')
+  .delete(taskController.deleteTask)
 
 router
   .route('/changeStatus')

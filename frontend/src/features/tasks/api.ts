@@ -32,3 +32,10 @@ export async function addTask(taskName: string): Promise<Task> {
   })
   return response.json()
 }
+
+export async function deleteTask(id: string): Promise<Task> {
+  const response = await fetch(`/task/delete/${id}`, {
+    method: 'DELETE'
+  })
+  return response.json()
+}

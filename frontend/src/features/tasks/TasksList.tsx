@@ -25,10 +25,11 @@ export default function TasksList(): JSX.Element {
   function handleSubmit(event: React.FormEvent): void {
     event.preventDefault() 
     
-    api.addTask(input).then((task) => setTasks((tasks) => {
-      setInput('')
-      return [...tasks, task]
-    }))
+    api.addTask(input).then((task) => setTasks((tasks) => [...tasks, task]))
+  }
+
+  function handleDelete(id: string): void {
+    api.deleteTask(id).then(() => setTasks((tasks) => tasks.filter((el) => el.id !== id)))
   }
 
   return (
@@ -39,11 +40,13 @@ export default function TasksList(): JSX.Element {
               task.status ?
                 <div className='Resolved' key={task.id}>
                   <span className='ResolvedTaskName'>{task.name}</span>
-                  <button type='button' onClick={() => handleResolve(task.id, task.status)} className='TaskButton'>UnResolve</button>
+                  <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>UnResolve</button>
+                  <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
                 </div> :
                 <div className='UnResolved' key={task.id}>
                   <span className='TaskName'>{task.name}</span>
-                  <button type='button' onClick={() => handleResolve(task.id, task.status)} className='TaskButton'>Resolve</button>
+                  <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>Resolve</button>
+                  <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
                 </div>
             
           )

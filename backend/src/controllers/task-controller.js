@@ -27,9 +27,9 @@ const addTask = async (req, res) => {
 
 const deleteTask = async (req, res) => {
   try {
-    const deletedTask = await Task.deleteOne({ id: req.body.id })
-    const task = await Task.find()
-    res.json(task)
+    const { id } = req.params
+    await Task.deleteOne({ id })
+    res.status(200)
   } catch (error) {
     res.send(500).end()
   }
