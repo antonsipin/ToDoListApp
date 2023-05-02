@@ -1,0 +1,15 @@
+.App {
+  margin-left: 20px;
+  width: 900px;
+}
+
+.ToDo {
+  text-align: center;
+  color: blue;
+  font-weight: bold;
+  font-size: 2rem;
+  padding-right: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
