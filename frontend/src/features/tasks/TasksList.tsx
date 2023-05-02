@@ -25,8 +25,10 @@ export default function TasksList(): JSX.Element {
   function handleSubmit(event: React.FormEvent): void {
     event.preventDefault() 
     
-    api.addTask(input).then((task) => setTasks((tasks) => [...tasks, task]))
-    setInput('')
+    api.addTask(input).then((task) => setTasks((tasks) => {
+      setInput('')
+      return [...tasks, task]
+    }))
   }
 
   return (
@@ -36,7 +38,7 @@ export default function TasksList(): JSX.Element {
             (task: Task) => 
               task.status ?
                 <div className='Resolved' key={task.id}>
-                  <span className='TaskName'>{task.name}</span>
+                  <span className='ResolvedTaskName'>{task.name}</span>
                   <button type='button' onClick={() => handleResolve(task.id, task.status)} className='TaskButton'>UnResolve</button>
                 </div> :
                 <div className='UnResolved' key={task.id}>
@@ -49,7 +51,7 @@ export default function TasksList(): JSX.Element {
       <div className='Form'>
         <form onSubmit={handleSubmit}>
           <input onChange={(event) => setInput(event.target.value)} className='Input' placeholder='Type new task name' type="text" />{' '}
-          <button type='button' className='FormButton'>Add task</button>
+          <button className='FormButton'>Add task</button>
       </form>
       </div>
     </>

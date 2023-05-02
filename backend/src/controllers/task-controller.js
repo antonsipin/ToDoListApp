@@ -4,8 +4,7 @@ const Task = require('../models/task.model')
 const addTask = async (req, res) => {
   try {
     const { taskName } = req.body
-    console.log('taskName:', taskName)
-      const id = Math.floor(Math.random()*1000).toString()
+      const id = Math.floor(Math.random()*100000).toString()
       const newTask = new Task({
         id,
         name: taskName,
@@ -17,13 +16,12 @@ const addTask = async (req, res) => {
 
     await newTask.save()
     const task = await Task.findOne({ id })
-    console.log('task:', task)
-    // setTimeout(() => {
-    //   res.send(task)
-    // }, 100)
+    setTimeout(() => {
+      res.send(task)
+    }, 100)
 
     } catch (e) {
-      res.send(500).end()
+    res.send(500).end()
   }
 };
 
