@@ -1,0 +1,24 @@
+{
+  "name": "ToDoListApp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "cd backend && npm install && npm start"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonsipin/ToDoListApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonsipin/ToDoListApp/issues"
+  },
+  "homepage": "https://github.com/antonsipin/ToDoListApp#readme"
+}
