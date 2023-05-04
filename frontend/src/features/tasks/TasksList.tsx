@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Task from './types/Task'
+import Info from '../../features/Info'
 import * as api from './api'
 import './TasksList.css'
 
@@ -46,23 +47,25 @@ export default function TasksList(): JSX.Element {
           task.name = updateInput
           api.updateTask(id, updateInput)
           task.isUpdate = !task.isUpdate
-          setInfo(false)
+          handleInfo(false)
       } else if (!task.isUpdate && task.id === id) {
-        setInfo(true)
+        handleInfo(true)
       } else if (task.isUpdate && !updateInput.length && task.id === id) {
-          task.isUpdate = !task.isUpdate
+        task.isUpdate = !task.isUpdate
+        handleInfo(false)
       }
       return task
     }))
   }
 
+  function handleInfo(currentInfo: boolean): void {
+    setInfo(currentInfo)
+  }
+
   return (
     <>
-      {
-        info && <div className='Info'>Some task is already being updated. Please save it and try again.
-          <button onClick={() => setInfo(false)}className='CloseInfo'>X</button>
-        </div>
-      }
+      <Info info={info} handleInfo={handleInfo} />
+
       <div className='Form'>
         <form onSubmit={handleSubmit}>
           <input onChange={(event) => setInput(event.target.value)} className='Input' placeholder='Type task' type="text" />{' '}
