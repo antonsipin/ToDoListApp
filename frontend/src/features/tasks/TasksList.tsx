@@ -72,28 +72,20 @@ export default function TasksList(): JSX.Element {
       {
           tasks.length ?  tasks.map(
             (task: Task) => 
-              task.status ?
-                <div className='Resolved' key={task.id}>
-                  <span className='ResolvedTaskName'>{task.name}</span>
+                <div className={task.status ? 'Resolved' : 'UnResolved'} key={task.id}>
+                  {
+                    task.status ? <span className='ResolvedTaskName'>{task.name}</span> :
+                    <span className='TaskName'>{task.name}</span>
+                  }
                   {
                     task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
                   }
-                  <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>UnResolve</button>
-
+                  {
+                    task.status ? <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>UnResolve</button> :
+                    <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>Resolve</button>  
+                  }
                   <button className='UpdateButton' onClick={() => handleUpdate(task.id)} type='button'>Update</button>
                   
-
-                  <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
-                </div> :
-                <div className='UnResolved' key={task.id}>
-                  <span className='TaskName'>{task.name}</span>
-                  {
-                    task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
-                  }
-                  <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>Resolve</button>
-
-                  <button className='UpdateButton' onClick={() => handleUpdate(task.id)} type='button'>Update</button>
-
                   <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
                 </div>
             
