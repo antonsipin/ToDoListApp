@@ -6,6 +6,8 @@ import './TasksList.css'
 export default function TasksList(): JSX.Element {
   const [tasks, setTasks] = useState<Task[]>([])
   const [input, setInput] = useState<string>('')
+  const [updateInput, setUpdateInput] = useState<string>('')
+  const [info, setInfo] = useState<boolean>(false)
 
   useEffect(() => {
     api.getTasks().then((tasks) => setTasks(tasks))
@@ -29,36 +31,77 @@ export default function TasksList(): JSX.Element {
   }
 
   function handleDelete(id: string): void {
-    api.deleteTask(id).then((taskId) => setTasks((tasks) => {
-      return tasks.filter((task) => String(task.id) !== String(taskId))
+    setTasks((tasks) => tasks.filter((task) => String(task.id) !== String(id)))
+
+    api.deleteTask(id)
+  }
+
+  function handleUpdate(id: string): void {
+    setTasks((tasks) => tasks.map((task) => {
+      if (!tasks.some((el) => el.isUpdate === true)) {
+        if (task.id === id) {
+          task.isUpdate = !task.isUpdate
+      }
+      } else if (task.isUpdate && updateInput && task.id === id) {
+          task.name = updateInput
+          api.updateTask(id, updateInput)
+          task.isUpdate = !task.isUpdate
+          setInfo(false)
+      } else if (!task.isUpdate && task.id === id) {
+        setInfo(true)
+      } else if (task.isUpdate && !updateInput.length && task.id === id) {
+          task.isUpdate = !task.isUpdate
+      }
+      return task
     }))
   }
 
   return (
     <>
       {
-          tasks.length && tasks.map(
+        info && <div className='Info'>Some task is already being updated. Please save it and try again.
+          <button onClick={() => setInfo(false)}className='CloseInfo'>X</button>
+        </div>
+      }
+      <div className='Form'>
+        <form onSubmit={handleSubmit}>
+          <input onChange={(event) => setInput(event.target.value)} className='Input' placeholder='Type task' type="text" />{' '}
+          <button className='FormButton'>Add task</button>
+      </form>
+      </div>
+      {
+          tasks.length ?  tasks.map(
             (task: Task) => 
               task.status ?
                 <div className='Resolved' key={task.id}>
                   <span className='ResolvedTaskName'>{task.name}</span>
+                  {
+                    task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
+                  }
                   <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>UnResolve</button>
+
+                  <button className='UpdateButton' onClick={() => handleUpdate(task.id)} type='button'>Update</button>
+                  
+
                   <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
                 </div> :
                 <div className='UnResolved' key={task.id}>
                   <span className='TaskName'>{task.name}</span>
+                  {
+                    task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
+                  }
                   <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>Resolve</button>
+
+                  <button className='UpdateButton' onClick={() => handleUpdate(task.id)} type='button'>Update</button>
+
                   <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
                 </div>
             
-          )
+        ) :
+          <div className='NoTasks'>
+            Let's add a task!
+          </div> 
       }
-      <div className='Form'>
-        <form onSubmit={handleSubmit}>
-          <input onChange={(event) => setInput(event.target.value)} className='Input' placeholder='Type new task name' type="text" />{' '}
-          <button className='FormButton'>Add task</button>
-      </form>
-      </div>
     </>
   )
 }

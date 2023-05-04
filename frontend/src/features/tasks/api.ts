@@ -39,3 +39,14 @@ export async function deleteTask(id: string): Promise<string> {
   })
   return response.json()
 }
+
+export async function updateTask(id: string, taskName: string): Promise<string> {
+  const response = await fetch('/task/update', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ id, taskName })
+  })
+  return response.json()
+}

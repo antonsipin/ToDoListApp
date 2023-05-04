@@ -18,4 +18,8 @@ router
   .route('/resolve')
   .put(taskController.resolveTask)
 
+router
+  .route('/update')
+  .put(taskController.updateTask)
+
 module.exports = router;

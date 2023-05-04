@@ -2,8 +2,9 @@ require('dotenv').config()
 const Task = require('../models/task.model')
 
 const addTask = async (req, res) => {
+  const { taskName } = req.body
+
   try {
-    const { taskName } = req.body
       const id = Math.floor(Math.random()*100000).toString()
       const newTask = new Task({
         id,
@@ -23,36 +24,38 @@ const addTask = async (req, res) => {
     } catch (e) {
     res.send(500).end()
   }
-};
+}
 
 const deleteTask = async (req, res) => {
+  const { id } = req.params
+
   try {
-    const { id } = req.params
     await Task.deleteOne({ id })
-    res.send(id)
+    res.sendStatus(200)
+
   } catch (error) {
     res.send(500).end()
   }
 }
 
 const resolveTask = async (req, res) => {
-  try {
-    const { id, status } = req.body
+  const { id, status } = req.body
 
+  try {
     const task = await Task.findOne({ id })
     task.status = !status
     await task.save()
-
     res.send(task)
+
   } catch (err) {
     res.send(500).end()
   }
 }
 
 const getTasks = async (req, res) => {
-  try {
-    const tasks = await Task.find()
+  const tasks = await Task.find()
 
+  try {
     setTimeout(() => {
       res.send(tasks)
     }, 0)
@@ -60,11 +63,26 @@ const getTasks = async (req, res) => {
   } catch (error) {
     res.send(500).end()
   }
-};
+}
+
+const updateTask = async (req, res) => {
+  const { id, taskName } = req.body
+
+  try {
+    const task = await Task.findOne({ id })
+    task.name = taskName
+    task.save()
+    res.sendStatus(200)
+
+  } catch (error) {
+    res.send(500).end()
+  }
+}
 
 module.exports = {
   addTask,
   deleteTask,
   resolveTask,
-  getTasks
-};
+  getTasks,
+  updateTask
+}

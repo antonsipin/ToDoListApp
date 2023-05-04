@@ -2,7 +2,8 @@ export default interface Task {
   id: string,
   name: string,
   status: boolean,
-  edit: boolean,
+  isUpdate: boolean,
   isLoaded: boolean,
   message: string
 }
+

@@ -4,7 +4,7 @@ const taskSchema = new mongoose.Schema({
   id: String,
   name: String,
   status: Boolean,
-  edit: Boolean,
+  isUpdate: Boolean,
   isLoaded: Boolean,
   message: String
 })

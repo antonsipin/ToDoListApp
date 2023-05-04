@@ -21,6 +21,17 @@
   margin: 0 5px 0 0;
 }
 
+.UpdateButton {
+  color: green;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100px;
+  height: 2rem;
+  margin: 0 5px 0 0;
+}
+
 .DeleteButton {
   color: red;
   border-radius: 5px;
@@ -55,15 +66,35 @@
 
 .Form {
   margin-top: 20px;
+  margin-bottom: 20px;
   align-items: center;
   justify-content: center;
   display: flex;
 }
 
+.Info {
+  color: red;
+  font-size: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.CloseInfo {
+  color: blue;
+  margin-left: 10px;
+  height: 20px;
+  cursor: pointer;
+}
+
 .Input {
-  border: none;
+  border-style:groove;
+  border-color: darkgray;
   height: 2rem;
   text-align: center;
+  border-radius: 5px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-right: 20px;
 }
 
 .TaskName {
@@ -72,6 +103,17 @@
   justify-content: center;
   display: flex;
   margin-right: 20px;
+}
+
+.NoTasks {
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  color: red;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  font-weight: bold;
 }
 
 .ResolvedTaskName {
