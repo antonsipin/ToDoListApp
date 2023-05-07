@@ -9,16 +9,17 @@ export default function TasksList(): JSX.Element {
   const [input, setInput] = useState<string>('')
   const [updateInput, setUpdateInput] = useState<string>('')
   const [info, setInfo] = useState<boolean>(false)
+  const [error, setError] = useState<string>('')
 
   useEffect(() => {
-    api.getTasks().then((tasks) => setTasks(tasks))
+    api.getTasks().then((response) => setTasks(response.data))
   }, [])
 
   function handleResolve(id: string, status: boolean): void {
-    api.resolveTask(id, status).then((task) => {
+    api.resolveTask(id, status).then((response) => {
       setTasks((tasks) => tasks.map((el: Task): Task => {
-        if (el.id === task.id) {
-          el.status = task.status
+        if (el.id === response.data.id) {
+          el.status = response.data.status
         }
         return el
       }))
@@ -28,7 +29,14 @@ export default function TasksList(): JSX.Element {
   function handleSubmit(event: React.FormEvent): void {
     event.preventDefault() 
     
-    api.addTask(input).then((task) => setTasks((tasks) => [...tasks, task]))
+    api.addTask(input).then((response) => {
+      if (response.error) {
+        setError(response.error)
+      } else {
+        setTasks((tasks) => [...tasks, response.data])
+        setError('')
+      }
+    })
   }
 
   function handleDelete(id: string): void {
@@ -70,7 +78,13 @@ export default function TasksList(): JSX.Element {
         <form onSubmit={handleSubmit}>
           <input onChange={(event) => setInput(event.target.value)} className='Input' placeholder='Type task' type="text" />{' '}
           <button className='FormButton'>Add task</button>
+          {
+            error && <div className='Error'>{error}
+              <button onClick={() => setError('')}className='CloseInfo'>X</button>
+            </div>
+          }
       </form>
+      
       </div>
       {
           tasks.length ?  tasks.map(

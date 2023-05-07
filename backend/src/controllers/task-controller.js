@@ -1,28 +1,40 @@
 require('dotenv').config()
 const Task = require('../models/task.model')
 
+const response = (result, error, data) => {
+  return {
+    result: result || '',
+    error: error || '',
+    data: data || {}
+  }
+}
+
 const addTask = async (req, res) => {
   const { taskName } = req.body
 
   try {
+    const existTasks = await Task.find()
+    
+    if (!existTasks.some((task) => task.name === taskName)) {
       const id = Math.floor(Math.random()*100000).toString()
       const newTask = new Task({
         id,
         name: taskName,
         status: false,
-        edit: false,
+        isUpdate: false,
         isLoaded: false,
         message: ''
       })
-
     await newTask.save()
-    const task = await Task.findOne({ id })
     setTimeout(() => {
-      res.send(task)
+      res.send(response('Successfully', '', newTask))
     }, 100)
-
+      
+    } else {
+      res.send(response('Error', 'The task already exists'))
+    }
     } catch (e) {
-    res.send(500).end()
+    res.send(response('Error', String(e)))
   }
 }
 
@@ -31,10 +43,10 @@ const deleteTask = async (req, res) => {
 
   try {
     await Task.deleteOne({ id })
-    res.sendStatus(200)
+    res.send(response('Successfully'))
 
   } catch (error) {
-    res.send(500).end()
+    res.send(response('Error', String(e)))
   }
 }
 
@@ -45,10 +57,10 @@ const resolveTask = async (req, res) => {
     const task = await Task.findOne({ id })
     task.status = !status
     await task.save()
-    res.send(task)
+    res.send(response('Successfully'))
 
   } catch (err) {
-    res.send(500).end()
+    res.send(response('Error', String(e)))
   }
 }
 
@@ -57,11 +69,11 @@ const getTasks = async (req, res) => {
 
   try {
     setTimeout(() => {
-      res.send(tasks)
+      res.send(response('Successfully', '', tasks))
     }, 0)
 
   } catch (error) {
-    res.send(500).end()
+    res.send(response('Error', String(e)))
   }
 }
 
@@ -72,10 +84,10 @@ const updateTask = async (req, res) => {
     const task = await Task.findOne({ id })
     task.name = taskName
     task.save()
-    res.sendStatus(200)
+    res.send(response('Successfully'))
 
   } catch (error) {
-    res.send(500).end()
+    res.send(response('Error', String(e)))
   }
 }
 

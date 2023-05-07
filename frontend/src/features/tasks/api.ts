@@ -1,17 +1,18 @@
-import Task from './types/Task'
+import Response from './types/Response'
+import ResponseTasks from './types/ResponseTasks'
 
-export async function getTasks(): Promise<Task[]> {
+export async function getTasks(): Promise<ResponseTasks> {
   const response = await fetch('/task', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
   })
-  const tasks = response.json()
+  const tasks = await response.json()
   return tasks
 }
 
-export async function resolveTask(id: string, status: boolean): Promise<Task> {
+export async function resolveTask(id: string, status: boolean): Promise<Response> {
   const response = await fetch('/task/resolve', {
       method: 'PUT',
       headers: {
@@ -19,10 +20,10 @@ export async function resolveTask(id: string, status: boolean): Promise<Task> {
       },
     body: JSON.stringify({ id, status })
   })
-  return response.json()
+  return await response.json()
 }
 
-export async function addTask(taskName: string): Promise<Task> {
+export async function addTask(taskName: string): Promise<Response> {
   const response = await fetch('/task/add', {
     method: 'POST',
     headers: {
@@ -30,17 +31,17 @@ export async function addTask(taskName: string): Promise<Task> {
     },
     body: JSON.stringify({ taskName })
   })
-  return response.json()
+  return await response.json()
 }
 
-export async function deleteTask(id: string): Promise<string> {
+export async function deleteTask(id: string): Promise<Response> {
   const response = await fetch(`/task/delete/${id}`, {
     method: 'DELETE'
   })
-  return response.json()
+  return await response.json()
 }
 
-export async function updateTask(id: string, taskName: string): Promise<string> {
+export async function updateTask(id: string, taskName: string): Promise<Response> {
   const response = await fetch('/task/update', {
     method: 'PUT',
     headers: {
@@ -48,5 +49,5 @@ export async function updateTask(id: string, taskName: string): Promise<string> 
     },
     body: JSON.stringify({ id, taskName })
   })
-  return response.json()
+  return await response.json()
 }

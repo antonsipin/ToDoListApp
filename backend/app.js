@@ -23,10 +23,6 @@ app.use('/', indexRouter)
 app.use('/task', taskRouter)
 app.use('*', mainRouter)
 
-app.use(function (req, res, next) {
-  res.render('404')
-});
-
 app.listen(PORT, () => {
   console.log('Server has been started on port: ', PORT)
 })
