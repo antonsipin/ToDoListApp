@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import Task from './types/Task'
 import Info from '../../features/Info'
+import Form from '../../features/Form'
+import NoTasks from '../../features/NoTasks'
 import * as api from './api'
 import './TasksList.css'
 
@@ -90,22 +92,18 @@ export default function TasksList(): JSX.Element {
     setInfo(currentInfo)
   }
 
+  function handleInput (input: string): void {
+    setInput(input)
+  }
+
+  function handleError (error: string): void {
+    setError(error)
+  }
+
   return (
     <>
-      <Info info={info} handleInfo={handleInfo} />
-
-      <div className='Form'>
-        <form onSubmit={handleSubmit}>
-          <input onChange={(event) => setInput(event.target.value)} className='InputForm' placeholder='Type task' type="text" />{' '}
-          <button className='FormButton'>Add task</button>
-          {
-            error && <div className='Error'>{error}
-              <button onClick={() => setError('')}className='CloseInfo'>X</button>
-            </div>
-          }
-      </form>
-      
-      </div>
+      <Info info={info} handleInfo={handleInfo}  />
+      <Form handleSubmit={handleSubmit} handleInput={handleInput} handleError={handleError} error={error}/>
       {
           tasks.length ?  tasks.map(
             (task: Task) => 
@@ -127,9 +125,7 @@ export default function TasksList(): JSX.Element {
                 </div>
             
         ) :
-          <div className='NoTasks'>
-            Let's add a task!
-          </div> 
+          <NoTasks />
       }
     </>
   )
