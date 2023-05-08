@@ -36,16 +36,19 @@ export default function TasksList(): JSX.Element {
 
   function handleSubmit(event: React.FormEvent): void {
     event.preventDefault() 
-    
-    api.addTask(input).then((response) => {
-      if (response.error) {
-        setError(response.error)
-      } else {
-        setTasks((tasks) => [...tasks, response.data])
-        setError('')
-      }
-      handleInfo(false)
-    })
+    if (input.length) {
+      api.addTask(input).then((response) => {
+        if (response.error) {
+          setError(response.error)
+        } else {
+          setTasks((tasks) => [...tasks, response.data])
+          setError('')
+        }
+      })
+    } else {
+      setError('Can not add empty task')
+    }
+    handleInfo(false)
   }
 
   function handleDelete(id: string): void {
@@ -60,6 +63,17 @@ export default function TasksList(): JSX.Element {
     })
   }
 
+  function handleHide(id: string): void {
+    setTasks((tasks) => tasks.map((task) => {
+      if (task.id === id) {
+        task.isUpdate = !task.isUpdate
+      }
+      return task
+    }))
+    setError('')
+    handleInfo(false)
+  }
+
   function handleUpdate(id: string): void {
     setTasks((tasks) => tasks.map((task) => {
       if (!tasks.some((el) => el.isUpdate === true)) {
@@ -67,7 +81,7 @@ export default function TasksList(): JSX.Element {
           task.isUpdate = !task.isUpdate
           setError('')
       }
-      } else if (task.isUpdate && updateInput && task.id === id) {
+      } else if (task.isUpdate && updateInput.length && task.id === id) {
           api.updateTask(id, updateInput).then((response) => {
             if (response.error) {
               setError(response.error)
@@ -119,7 +133,12 @@ export default function TasksList(): JSX.Element {
                     task.status ? <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>UnResolve</button> :
                     <button type='button' onClick={() => handleResolve(task.id, task.status)} className='ResolveButton'>Resolve</button>  
                   }
-                  <button className='UpdateButton' onClick={() => handleUpdate(task.id)} type='button'>Update</button>
+                  {
+                    task.isUpdate && !updateInput.length ? 
+                    <button onClick={() => handleHide(task.id)} className='HideButton' type='button'>Hide input</button>:
+                    <button className='UpdateButton' onClick={() => handleUpdate(task.id)} type='button'>Update</button>
+                  }
+                  
                   
                   <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
                 </div>

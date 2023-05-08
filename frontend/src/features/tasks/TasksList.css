@@ -32,6 +32,17 @@
   margin: 0 5px 0 0;
 }
 
+.HideButton {
+  color: grey;
+  border-radius: 5px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100px;
+  height: 2rem;
+  margin: 0 5px 0 0;
+}
+
 .DeleteButton {
   color: red;
   border-radius: 5px;
