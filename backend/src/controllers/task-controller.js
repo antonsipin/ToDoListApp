@@ -81,11 +81,16 @@ const updateTask = async (req, res) => {
   const { id, taskName } = req.body
 
   try {
-    const task = await Task.findOne({ id })
-    task.name = taskName
-    task.save()
-    res.send(response('Successfully'))
+    const tasks = await Task.find()
 
+    if (tasks.some((task) => task.name === taskName)) {
+      res.send(response('Error', 'The task already exists'))
+    } else {
+      const updateTask = await Task.findOne({ id })
+      updateTask.name = taskName
+      await updateTask.save()
+      res.send(response('Successfully'))
+    }
   } catch (error) {
     res.send(response('Error', String(e)))
   }

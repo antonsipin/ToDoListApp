@@ -17,12 +17,18 @@ export default function TasksList(): JSX.Element {
 
   function handleResolve(id: string, status: boolean): void {
     api.resolveTask(id, status).then((response) => {
-      setTasks((tasks) => tasks.map((el: Task): Task => {
-        if (el.id === response.data.id) {
-          el.status = response.data.status
-        }
-        return el
-      }))
+      if (!response.error) {
+        setTasks((tasks) => tasks.map((el: Task): Task => {
+          if (el.id === id) {
+            el.status = !status
+          }
+          return el
+        }))
+        setError('')
+      } else {
+        setError(response.error)
+      }
+      handleInfo(false)
     })
   }
 
@@ -36,13 +42,20 @@ export default function TasksList(): JSX.Element {
         setTasks((tasks) => [...tasks, response.data])
         setError('')
       }
+      handleInfo(false)
     })
   }
 
   function handleDelete(id: string): void {
-    setTasks((tasks) => tasks.filter((task) => String(task.id) !== String(id)))
-
-    api.deleteTask(id)
+    api.deleteTask(id).then((response) => {
+      if (response.error) {
+        setError(response.error) 
+      } else {
+        setTasks((tasks) => tasks.filter((task) => String(task.id) !== String(id)))
+        setError('')
+      }
+      handleInfo(false)
+    })
   }
 
   function handleUpdate(id: string): void {
@@ -50,12 +63,19 @@ export default function TasksList(): JSX.Element {
       if (!tasks.some((el) => el.isUpdate === true)) {
         if (task.id === id) {
           task.isUpdate = !task.isUpdate
+          setError('')
       }
       } else if (task.isUpdate && updateInput && task.id === id) {
-          task.name = updateInput
-          api.updateTask(id, updateInput)
-          task.isUpdate = !task.isUpdate
-          handleInfo(false)
+          api.updateTask(id, updateInput).then((response) => {
+            if (response.error) {
+              setError(response.error)
+            } else {
+              task.isUpdate = !task.isUpdate
+              task.name = updateInput
+              setError('')
+            }
+            handleInfo(false)
+          })
       } else if (!task.isUpdate && task.id === id) {
         handleInfo(true)
       } else if (task.isUpdate && !updateInput.length && task.id === id) {
@@ -76,7 +96,7 @@ export default function TasksList(): JSX.Element {
 
       <div className='Form'>
         <form onSubmit={handleSubmit}>
-          <input onChange={(event) => setInput(event.target.value)} className='Input' placeholder='Type task' type="text" />{' '}
+          <input onChange={(event) => setInput(event.target.value)} className='InputForm' placeholder='Type task' type="text" />{' '}
           <button className='FormButton'>Add task</button>
           {
             error && <div className='Error'>{error}
