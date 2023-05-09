@@ -116,8 +116,8 @@ export default function TasksList(): JSX.Element {
 
   return (
     <>
-      <Info info={info} handleInfo={handleInfo}  />
-      <Form handleSubmit={handleSubmit} handleInput={handleInput} handleError={handleError} error={error}/>
+      <Info info={info} onHandleInfo={handleInfo}  />
+      <Form onHandleSubmit={handleSubmit} onHandleInput={handleInput} onHandleError={handleError} error={error}/>
       {
           tasks.length ?  tasks.map(
             (task: Task) => 
