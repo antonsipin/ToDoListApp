@@ -1,9 +1,10 @@
 interface InfoProps {
   info: boolean
-  onHandleInfo: (info: boolean) => void 
+  onHandleInfo: (info: boolean) => void
 }
 
-export default function Info({ info , onHandleInfo }: InfoProps): JSX.Element {
+export default function Info({ info, onHandleInfo }: InfoProps): JSX.Element {
+  
   return (
     <>
       {

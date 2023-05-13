@@ -6,6 +6,7 @@ interface FormProps {
 }
 
 export default function Form({onHandleSubmit, onHandleInput, onHandleError, error}: FormProps): JSX.Element {
+
     return (
         <>
             <div className='Form'>
