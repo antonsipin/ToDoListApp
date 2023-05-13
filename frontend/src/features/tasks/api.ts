@@ -12,13 +12,13 @@ export async function getTasks(): Promise<ResponseTasks> {
   return tasks
 }
 
-export async function resolveTask(id: string, status: boolean): Promise<Response> {
+export async function resolveTask(id: string): Promise<Response> {
   const response = await fetch('/task/resolve', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-    body: JSON.stringify({ id, status })
+    body: JSON.stringify({ id })
   })
   return await response.json()
 }

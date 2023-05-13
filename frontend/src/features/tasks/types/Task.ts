@@ -7,3 +7,5 @@ export default interface Task {
   message: string
 }
 
+export type TaskId = Task['id']
+

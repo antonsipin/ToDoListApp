@@ -51,11 +51,11 @@ const deleteTask = async (req, res) => {
 }
 
 const resolveTask = async (req, res) => {
-  const { id, status } = req.body
+  const { id } = req.body
 
   try {
     const task = await Task.findOne({ id })
-    task.status = !status
+    task.status = !task.status
     await task.save()
     res.send(response('Successfully'))
 
