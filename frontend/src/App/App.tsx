@@ -7,16 +7,13 @@ export default function App(): JSX.Element {
   const [showCount, setShowCount] = useState(true)
 
   function handleStop() {
-    setShowCount(!showCount)
+    setShowCount((showCount) => !showCount)
   }
 
   return (
     <div className='App'>
       <div className='ToDo'>ToDo: {showCount && <Counter />}
-        {
-          showCount ? <button onClick={handleStop} type='button' className='CountButton'>Stop</button> :
-          <button onClick={handleStop} type='button' className='CountButton'>Start</button>
-        }
+        <button onClick={handleStop} type='button' className='CountButton'>{showCount ? 'Stop' : 'Start'}</button>
       </div>  
       <TasksList/>
     </div>
