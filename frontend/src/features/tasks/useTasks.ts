@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from 'react'
+import { useState, useReducer } from 'react'
 import Task from './types/Task'
 import * as api from './api'
 import reducer from './reducer'
@@ -50,9 +50,10 @@ export default function useTasks() {
             api.addTask(input).then((response) => {
               if (response.error) {
                 setError(response.error)
-              } else {
+              } else if (response.data) {
                 dispatch({type: 'tasks/createTask', payload: response.data})
                 setError('')
+                setInfo(false)
               }
             })
           } else {
@@ -75,6 +76,7 @@ export default function useTasks() {
                 if (task.id === id) {
                   dispatch({type: 'updateInputs/hideInput', payload: id})
                   setError('')
+                  handleInfo(false)
               }
             } else if (task.isUpdate && updateInput && task.id === id) {
                     api.updateTask(id, updateInput).then((response) => {
