@@ -2,7 +2,6 @@
 
 <h3> This is animated interactive application for adding, editing and storing a to-do list.
 </h3>
-
   <h3>
     Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, MongoDB, React, Redux, React SSR, REST API.
    </h3>
@@ -10,7 +9,7 @@
   <h3>
    How to start the app locally:
    </h3>
-   
+
   <p>
   <ul>
     <li>
