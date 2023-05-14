@@ -1,0 +1,22 @@
+.MainPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    flex-direction: column;
+}
+
+.SignUpLink {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+}
+
+.SignInLink  {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+}
+

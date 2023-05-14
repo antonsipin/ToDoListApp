@@ -2,12 +2,16 @@
   display: flex;
   align-items: center;
   justify-content: right;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .UnResolved {
   display: flex;
   align-items: center;
   justify-content: left;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .ResolveButton {
@@ -58,17 +62,6 @@
   color: red;
   margin: 20px 0 20px 0;
   font-size: 1rem;
-}
-
-.CountButton {
-  color: red;
-  border-radius: 5px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100px;
-  height: 2rem;
-  margin: 0 20px 0 20px;
 }
 
 .FormButton {

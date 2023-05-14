@@ -1,7 +1,12 @@
 import TasksListState from './types/TasksListState'
 import Action from './types/Action'
+import Task from './types/Task'
 
 export default function reducer(state: TasksListState, action: Action): TasksListState {
+    function sortByName() {
+        return (a: Task, b: Task) => a['name'] > b['name'] ? 1 : -1
+    }
+
     switch(action.type) {
         case 'tasks/deleteTask': {
             return {
@@ -23,13 +28,13 @@ export default function reducer(state: TasksListState, action: Action): TasksLis
         case 'tasks/getTasks': {
             return {
                 ...state,
-                tasks: action.payload
+                tasks: action.payload.sort(sortByName())
             }
         }
         case 'tasks/createTask': {
             return {
                 ...state,
-                tasks: [...state.tasks, action.payload]
+                tasks: [...state.tasks, action.payload].sort(sortByName())
             }
         }
         case 'updateInputs/hideInput': {
@@ -52,7 +57,7 @@ export default function reducer(state: TasksListState, action: Action): TasksLis
                         task.name = action.payload.updateInput
                     } 
                     return task
-                })
+                }).sort(sortByName())
             }
         }
         default: {

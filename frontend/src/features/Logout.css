@@ -1,0 +1,27 @@
+.Logout {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+.LogoutLink {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+    color: blue;
+}
+
+.LogoutButton {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: blue;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 10px;
+    width: 120px;
+    background-color: rgb(209, 228, 238);
+}

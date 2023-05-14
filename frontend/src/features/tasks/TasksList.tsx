@@ -3,8 +3,11 @@ import Task from './types/Task'
 import Info from '../../features/Info'
 import Form from '../../features/Form'
 import NoTasks from '../../features/NoTasks'
+import Counter from '../Counter'
 import './TasksList.css'
+import '../Logout.css'
 import useTasks from './useTasks'
+import { Link } from 'react-router-dom'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks, handleUpdate, handleCreateTask, handleLoadTasks, handleDelete, handleHide, handleResolve, handleInfo, handleError } = useTasks()
@@ -26,6 +29,8 @@ export default function TasksList(): JSX.Element {
 
   return (
     <>
+      <Link to='/logout' className='LogoutLink'>Logout</Link>
+      <Counter />
       <Info onHandleInfo={handleInfo} info={info}  />
       <Form onHandleSubmit={handleSubmit} onHandleInput={handleInput} onHandleError={handleError} error={error}/>
       {
