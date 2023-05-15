@@ -6,8 +6,8 @@ import useTasks from './useTasks'
 export default function TaskCard(): JSX.Element {
     const navigate = useNavigate()
     const { tasks, handleLoadTasks } = useTasks()
-    const id = useParams().id
-    console.log(tasks)
+    const params = useParams()
+    const id = String(params.id)
 
     useEffect(() => {
         handleLoadTasks()
