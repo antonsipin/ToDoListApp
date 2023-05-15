@@ -15,7 +15,7 @@ export default function TaskComponent({task, onHandleUpdate, onHandleDelete, onH
 
     return (
         <div className='Task'>
-            <div className={task.status ? 'Resolved' : 'UnResolved'} key={task.id}>
+            <div className={task.status ? 'Resolved' : 'UnResolved'} >
                     <Link to={`/tasks/${task.id}`}>
                       <span className={task.status ?'ResolvedTaskName' : 'TaskName'}>{task.name}</span>
                     </Link>

@@ -17,7 +17,7 @@ export default function TaskCard(): JSX.Element {
     const task = tasks.find((task) => task.id === id)
 
     return (
-        <div className='TaskCard' key={id}>
+        <div className='TaskCard'>
             <span className="TaskNameCard">{task?.name}</span>
 
             <span className="TaskDescription">{task?.message}</span>

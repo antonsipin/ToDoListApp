@@ -35,7 +35,7 @@ export default function TasksList(): JSX.Element {
       <Form onHandleSubmit={handleSubmit} onHandleInput={handleInput} onHandleError={handleError} error={error}/>
       {
           tasks.length ?  tasks.map(
-            (task: Task) => <TaskComponent task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} />
+            (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} />
         ) :
           <NoTasks />
       }
