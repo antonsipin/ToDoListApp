@@ -8,11 +8,11 @@ import './TasksList.css'
 import '../Logout.css'
 import useTasks from './useTasks'
 import { Link } from 'react-router-dom'
+import TaskComponent from '../tasks/TaskComponent'
 
 export default function TasksList(): JSX.Element {
-  const { info, error, tasks, handleUpdate, handleCreateTask, handleLoadTasks, handleDelete, handleHide, handleResolve, handleInfo, handleError } = useTasks()
+  const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
   const [input, setInput] = useState<string>('')
-  const [updateInput, setUpdateInput] = useState<string>('')
 
   useEffect(() => {
     handleLoadTasks()
@@ -35,22 +35,7 @@ export default function TasksList(): JSX.Element {
       <Form onHandleSubmit={handleSubmit} onHandleInput={handleInput} onHandleError={handleError} error={error}/>
       {
           tasks.length ?  tasks.map(
-            (task: Task) => 
-                <div className={task.status ? 'Resolved' : 'UnResolved'} key={task.id}>
-                    <span className={task.status ?'ResolvedTaskName' : 'TaskName'}>{task.name}</span>
-                  {
-                    task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
-                  }
-                  {
-                    <button type='button' onClick={() => handleResolve(task.id)} className='ResolveButton'>{task.status ? 'UnResolve⤴️' : 'Resolve ✔️'}</button>
-                  }
-                  {
-                    task.isUpdate && !updateInput.length ? 
-                    <button onClick={() => handleHide(task.id)} className='HideButton' type='button'>Hide input ✖️</button>:
-                    <button className='UpdateButton' onClick={() => handleUpdate(task.id, updateInput)} type='button'>Update ✏️</button>
-                  }
-                  <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete 🗑</button>
-                </div>
+            (task: Task) => <TaskComponent task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} />
         ) :
           <NoTasks />
       }
