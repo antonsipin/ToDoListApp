@@ -42,14 +42,14 @@ export default function TasksList(): JSX.Element {
                     task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
                   }
                   {
-                    <button type='button' onClick={() => handleResolve(task.id)} className='ResolveButton'>{task.status ? 'UnResolve' : 'Resolve'}</button>
+                    <button type='button' onClick={() => handleResolve(task.id)} className='ResolveButton'>{task.status ? 'UnResolve⤴️' : 'Resolve ✔️'}</button>
                   }
                   {
                     task.isUpdate && !updateInput.length ? 
-                    <button onClick={() => handleHide(task.id)} className='HideButton' type='button'>Hide input</button>:
-                    <button className='UpdateButton' onClick={() => handleUpdate(task.id, updateInput)} type='button'>Update</button>
+                    <button onClick={() => handleHide(task.id)} className='HideButton' type='button'>Hide input ✖️</button>:
+                    <button className='UpdateButton' onClick={() => handleUpdate(task.id, updateInput)} type='button'>Update ✏️</button>
                   }
-                  <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete</button>
+                  <button onClick={() => handleDelete(task.id)} className='DeleteButton' type='button'>Delete 🗑</button>
                 </div>
         ) :
           <NoTasks />

@@ -22,7 +22,7 @@ export default function Counter(): JSX.Element {
   return (
     <>
       <div className='ToDo'>ToDo: {showCount && count}
-        <button onClick={handleStop} type='button' className='CountButton'>{showCount ? 'Stop' : 'Start'}</button>
+        <button onClick={handleStop} type='button' className='CountButton'>{showCount ? 'Stop ⌚️' : 'Start ⌚️'}</button>
       </div>  
     </>
   )

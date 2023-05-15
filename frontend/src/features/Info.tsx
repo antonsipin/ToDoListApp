@@ -9,7 +9,7 @@ export default function Info({ info, onHandleInfo }: InfoProps): JSX.Element {
     <>
       {
         info && <div className='Info'>Some task is already being updated. Please save it and try again.
-          <button onClick={() => onHandleInfo(false)} className='CloseInfo'>X</button>
+          <button onClick={() => onHandleInfo(false)} className='CloseInfo'>❌</button>
         </div>
       }
     </>
