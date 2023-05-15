@@ -19,7 +19,7 @@
     background-color: rgb(209, 228, 238);
 }
 
-.TaskName {
+.TaskNameCard {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +27,6 @@
     font-weight: bold;
     color: red;
     margin-top: 20px;
-    margin-left: 20px;
 }
 
 .TaskDescription {

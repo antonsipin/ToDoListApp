@@ -18,10 +18,10 @@ export default function TaskCard(): JSX.Element {
 
     return (
         <div className='TaskCard' key={id}>
-            <span className="TaskName">{task?.name}</span>
+            <span className="TaskNameCard">{task?.name}</span>
 
             <span className="TaskDescription">{task?.message}</span>
-            
+
             <button className='TaskCardButton' onClick={handleBack} type='button'>Back</button>
         </div>
     )
