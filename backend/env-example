@@ -1,0 +1,6 @@
+PORT=local port
+DB_NAME=MongoDB name
+DB_USER=MongoDB user name
+DB_PASSWORD=MongoDB password
+DB_PORT=MongoDB port
+DB_HOST=MongoDB host
