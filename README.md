@@ -6,7 +6,6 @@
   <h3>
     Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, MongoDB, React, Redux, React SSR, REST API.
    </h3>
-
   <h3>
    How to start the app locally:
    </h3>
