@@ -18,5 +18,14 @@
     font-weight: bold;
     color: blue;
     cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.MainPageLink {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 

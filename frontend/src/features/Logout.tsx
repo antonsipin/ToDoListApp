@@ -10,6 +10,7 @@ export default function Logout(): JSX.Element {
 
     return (
         <div className='Logout'>
+            <span className='LogoutMessage'>Do you really want to logout ?</span>
             <button onClick={handleLogout} type='button' className='LogoutButton'>Logout</button>
         </div>
     )
