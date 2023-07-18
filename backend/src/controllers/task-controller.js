@@ -3,9 +3,9 @@ const Task = require('../models/task.model')
 
 const response = (result, error, data) => {
   return {
-    result: result || '',
-    error: error || '',
-    data: data || {}
+    result: result ? result : '',
+    error: error ? error : '',
+    data: data ? data : {}
   }
 }
 
