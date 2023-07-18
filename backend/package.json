@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
+  "type":"commonjs",
   "scripts": {
     "dev": "nodemon --ignore .'sessions/' app.js",
     "start": "node app.js",
