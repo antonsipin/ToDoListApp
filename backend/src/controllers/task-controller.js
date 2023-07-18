@@ -25,10 +25,9 @@ const addTask = async (req, res) => {
         isLoaded: false,
         message: ''
       })
+
     await newTask.save()
-    setTimeout(() => {
-      res.send(response('Successfully', '', newTask))
-    }, 100)
+    res.send(response('Successfully', '', newTask))
       
     } else {
       res.send(response('Error', 'The task already exists'))
@@ -68,9 +67,7 @@ const getTasks = async (req, res) => {
   const tasks = await Task.find()
 
   try {
-    setTimeout(() => {
-      res.send(response('Successfully', '', tasks))
-    }, 0)
+    res.send(response('Successfully', '', tasks))
 
   } catch (error) {
     res.send(response('Error', String(e)))
@@ -88,9 +85,11 @@ const updateTask = async (req, res) => {
     } else {
       const updateTask = await Task.findOne({ id })
       updateTask.name = taskName
+      
       await updateTask.save()
       res.send(response('Successfully'))
     }
+
   } catch (error) {
     res.send(response('Error', String(e)))
   }
