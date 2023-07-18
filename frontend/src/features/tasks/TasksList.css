@@ -74,12 +74,6 @@
   background-color: rgb(130, 130, 130);
 }
 
-.Error {
-  color: red;
-  margin: 20px 0 20px 0;
-  font-size: 1rem;
-}
-
 .FormButton {
   color: green;
   border-radius: 5px;
@@ -94,37 +88,12 @@
   background-color: rgb(130, 130, 130);
 }
 
-.Form {
-  margin: 30px 0 40px 30px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-}
-
 .Info {
   color: red;
   font-size: 1.5rem;
   align-items: center;
   justify-content: center;
   display: flex;
-}
-
-.CloseInfo {
-  color: blue;
-  margin-left: 10px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.Input {
-  border-style:groove;
-  border-color: darkgray;
-  height: 2rem;
-  text-align: center;
-  border-radius: 5px;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  margin-right: 20px;
 }
 
 .InputForm {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import Task from './types/Task'
 import Info from '../../features/Info'
 import Form from '../../features/Form'
@@ -11,19 +11,14 @@ import TaskComponent from '../tasks/TaskComponent'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
-  const [input, setInput] = useState<string>('')
 
   useEffect(() => {
     handleLoadTasks()
   }, [])
 
-  function handleSubmit(event: React.FormEvent): void {
+  function handleSubmit(event: React.FormEvent, input: string): void {
     event.preventDefault() 
     handleCreateTask(input)
-  }
-
-  function handleInput(input: string): void {
-    setInput(input)
   }
 
   return (
@@ -31,7 +26,7 @@ export default function TasksList(): JSX.Element {
       <Link to='/logout' className='LogoutLink'>Logout</Link>
       <Counter />
       <Info onHandleInfo={handleInfo} info={info}  />
-      <Form onHandleSubmit={handleSubmit} onHandleInput={handleInput} onHandleError={handleError} error={error}/>
+      <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
       {
           tasks.length ?  tasks.map(
             (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} />

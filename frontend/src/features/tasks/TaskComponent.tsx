@@ -1,6 +1,7 @@
 import Task from './types/Task'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import './TaskComponent.css'
 
 interface TaskProps {
   onHandleUpdate: (id: string, updateInput: string) => void
