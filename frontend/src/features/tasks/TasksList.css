@@ -25,6 +25,10 @@
   margin: 0 5px 0 0;
 }
 
+.ResolveButton:hover {
+  background-color: rgb(130, 130, 130);
+}
+
 .UpdateButton {
   color: green;
   border-radius: 5px;
@@ -34,6 +38,10 @@
   width: 100px;
   height: 2rem;
   margin: 0 5px 0 0;
+}
+
+.UpdateButton:hover {
+  background-color: rgb(130, 130, 130)
 }
 
 .HideButton {
@@ -47,6 +55,10 @@
   margin: 0 5px 0 0;
 }
 
+.HideButton:hover {
+  background-color:rgb(130, 130, 130)
+}
+
 .DeleteButton {
   color: red;
   border-radius: 5px;
@@ -56,6 +68,10 @@
   width: 100px;
   height: 2rem;
   margin: 0 5px 0 0;
+}
+
+.DeleteButton:hover {
+  background-color: rgb(130, 130, 130);
 }
 
 .Error {
@@ -72,6 +88,10 @@
   cursor: pointer;
   width: 100px;
   height: 2rem;
+}
+
+.FormButton:hover {
+  background-color: rgb(130, 130, 130);
 }
 
 .Form {
