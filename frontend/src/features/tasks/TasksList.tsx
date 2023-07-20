@@ -8,11 +8,13 @@ import './TasksList.css'
 import useTasks from './useTasks'
 import { Link } from 'react-router-dom'
 import TaskComponent from '../tasks/TaskComponent'
+const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
 
   useEffect(() => {
+    const ws = new WebSocket(URL)
     handleLoadTasks()
   }, [])
 
