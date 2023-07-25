@@ -5,5 +5,9 @@ module.exports = function createSocketServer(server) {
 
     socketServer.on('connection', (socketClient) => {
         console.log('SocketClient connected!')
+
+        socketClient.on('message', (data) => {
+            console.log('Data is: ', JSON.parse(data))
+        })
     })
 }

@@ -15,6 +15,13 @@ export default function TasksList(): JSX.Element {
 
   useEffect(() => {
     const ws = new WebSocket(URL)
+
+    ws.onopen = () => {
+    };
+
+    ws.onmessage = (event) => {
+    }
+
     handleLoadTasks()
   }, [])
 
