@@ -1,13 +1,15 @@
 import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import Task from './types/Task'
 import Info from '../../features/Info'
 import Form from '../../features/Form'
 import NoTasks from '../../features/NoTasks'
 import Counter from '../Counter'
 import './TasksList.css'
+import '../Logout.css'
 import useTasks from './useTasks'
-import { Link } from 'react-router-dom'
 import TaskComponent from '../tasks/TaskComponent'
+import Theme from '../Theme'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
@@ -15,13 +17,10 @@ export default function TasksList(): JSX.Element {
 
   useEffect(() => {
     const ws = new WebSocket(URL)
-
     ws.onopen = () => {
-    };
-
+    }
     ws.onmessage = (event) => {
     }
-
     handleLoadTasks()
   }, [])
 
@@ -31,8 +30,11 @@ export default function TasksList(): JSX.Element {
   }
 
   return (
-    <>
-      <Link to='/logout' className='LogoutLink'>Logout</Link>
+    <div className='TasksList'>
+      <div className='Header'>
+        <Link to='/logout' className='LogoutLink'>Logout</Link>
+        <Theme />
+      </div>
       <Counter />
       <Info onHandleInfo={handleInfo} info={info}  />
       <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
@@ -42,6 +44,6 @@ export default function TasksList(): JSX.Element {
         ) :
           <NoTasks />
       }
-    </>
+    </div>
   )
 }
