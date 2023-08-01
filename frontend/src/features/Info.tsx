@@ -1,3 +1,5 @@
+import './Info.css'
+
 interface InfoProps {
   info: boolean
   onHandleInfo: (info: boolean) => void

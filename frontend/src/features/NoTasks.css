@@ -1,0 +1,10 @@
+.NoTasks {
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    color: red;
+    font-size: 1.5rem;
+    margin-top: 20px;
+    font-weight: bold;
+  }

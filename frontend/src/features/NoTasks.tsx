@@ -1,3 +1,5 @@
+import './NoTasks.css'
+
 export default function NoTask(): JSX.Element {
     return (
         <>
