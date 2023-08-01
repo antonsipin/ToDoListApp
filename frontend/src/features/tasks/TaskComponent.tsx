@@ -8,14 +8,15 @@ interface TaskProps {
   onHandleDelete: (id: string) => void
   onHandleHide: (id: string) => void
   onHandleResolve: (id: string) => void
+  className: string
   task: Task
 }
 
-export default function TaskComponent({task, onHandleUpdate, onHandleDelete, onHandleHide, onHandleResolve}: TaskProps): JSX.Element {
+export default function TaskComponent({className, task, onHandleUpdate, onHandleDelete, onHandleHide, onHandleResolve}: TaskProps): JSX.Element {
   const [updateInput, setUpdateInput] = useState<string>('')
 
     return (
-        <div className='Task'>
+        <div className={className}>
             <div className={task.status ? 'Resolved' : 'UnResolved'} >
                     <Link to={`/tasks/${task.id}`}>
                       <span className={task.status ?'ResolvedTaskName' : 'TaskName'}>{task.name}</span>
