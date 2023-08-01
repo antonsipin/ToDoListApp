@@ -6,19 +6,6 @@
     flex-direction: column;
 }
 
-.TaskCardButton {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: blue;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 5px;
-    width: 100px;
-    margin-top: 20px;
-    background-color: rgb(209, 228, 238);
-}
-
 .TaskNameCard {
     display: flex;
     justify-content: center;
