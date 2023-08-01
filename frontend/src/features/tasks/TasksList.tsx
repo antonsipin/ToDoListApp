@@ -5,7 +5,7 @@ import Info from '../../features/Info'
 import Form from '../../features/Form'
 import NoTasks from '../../features/NoTasks'
 import Counter from '../Counter'
-import style from './TasksList.module.css'
+import style from './TasksList.module.scss'
 import '../Logout.css'
 import useTasks from './useTasks'
 import TaskComponent from '../tasks/TaskComponent'
@@ -30,8 +30,8 @@ export default function TasksList(): JSX.Element {
   }
 
   return (
-    <div className={style.TasksList}>
-      <div className={style.Header}>
+    <div className={style.tasksList}>
+      <div className={style.header}>
         <Link to='/logout' className='LogoutLink'>Logout</Link>
         <Theme />
       </div>
