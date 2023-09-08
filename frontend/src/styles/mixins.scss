@@ -1,0 +1,28 @@
+@import './variables.scss';
+
+@mixin viewport--md {
+    @media (max-width: #{$viewport--lg - 1px}) {
+        @content;
+    }
+}
+
+// до 767px
+@mixin viewport--sm {
+    @media (max-width: #{$viewport--md - 1px}) {
+        @content;
+    }
+}
+
+// до 519px
+@mixin viewport--smd {
+    @media (max-width: #{$viewport--smd - 1px}) {
+        @content;
+    }
+}
+
+// до 359px
+@mixin viewport--xs {
+    @media (max-width: #{$viewport--sm - 1px}) {
+        @content;
+    }
+}

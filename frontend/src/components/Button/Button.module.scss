@@ -1,0 +1,51 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.btn {
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px;
+  width: 150px;
+  height: 2rem;
+  margin: 0 5px 0 0;
+  background-color: rgb(209, 228, 238);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+    &--resolve {
+      color: blue;
+
+      &:hover {
+        background-color: rgb(130, 130, 130);
+      }
+    }
+
+    &--update {
+      color: green;
+
+      &:hover {
+        background-color: rgb(130, 130, 130)
+      }
+    }
+
+    &--hide {
+      color: rgb(96, 96, 96);
+
+      &:hover {
+        background-color:rgb(163, 163, 163)
+      }
+    }
+
+    &--delete {
+      color: red;
+
+      &:hover {
+        background-color: rgb(130, 130, 130);
+      }
+    }
+  }
