@@ -1,5 +1,9 @@
-.tasksList {
+.taskWrapper {
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
 }
 
 .header {
@@ -15,4 +19,10 @@
 
 .Black {
   background-color: black;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

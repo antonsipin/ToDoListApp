@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import './TaskCard.css'
 import useTasks from './useTasks'
-import Button from '../../components/Button/Button'
+import { Button } from '../../components/Button'
 
 export default function TaskCard(): JSX.Element {
     const navigate = useNavigate()
@@ -23,7 +23,7 @@ export default function TaskCard(): JSX.Element {
 
             <span className="TaskDescription">{task?.message}</span>
 
-            <Button onClick={handleBack} children={'Back'}/>
+            <Button onClick={handleBack} children={'Back'} btnType={'back'}/>
         </div>
     )
 }

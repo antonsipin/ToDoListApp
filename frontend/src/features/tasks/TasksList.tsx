@@ -5,14 +5,18 @@ import Info from '../../features/Info'
 import Form from '../../features/Form'
 import NoTasks from '../../features/NoTasks'
 import Counter from '../Counter'
-import style from './TasksList.module.scss'
+import styles from './TasksList.module.scss'
 import '../Logout.css'
 import useTasks from './useTasks'
 import TaskComponent from '../tasks/TaskComponent'
+import { TasksTable } from '../../components/TasksTable'
+import { useTasksTableController } from '../../components/TasksTable/TasksTable.controller'
+import { Spinner } from '../../components/Loader'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+  const { table } = useTasksTableController()
   const [theme, setTheme] = useState('White')
 
   useEffect(() => {
@@ -30,8 +34,8 @@ export default function TasksList(): JSX.Element {
   }
 
   return (
-    <div className={style[theme]}>
-      <div className={style.header}>
+    <div className={styles[theme]}>
+      <div className={styles.header}>
         <Link to='/logout' className='LogoutLink'>Logout</Link>
 
         <select className={theme} value={theme} onChange={(e) => setTheme(e.currentTarget.value)}>
@@ -42,12 +46,16 @@ export default function TasksList(): JSX.Element {
       <Counter />
       <Info onHandleInfo={handleInfo} info={info}  />
       <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
-      {
-          tasks.length ?  tasks.map(
-            (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} className={theme}/>
-        ) :
-          <NoTasks />
-      }
+      <div className={styles.taskWrapper}>
+        {
+            tasks.length ?  tasks.map(
+              (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} className={theme}/>
+          ) :
+              <div className={styles.loader}>
+                <Spinner />
+              </div> || <NoTasks />
+        }
+      </div>
     </div>
   )
 }

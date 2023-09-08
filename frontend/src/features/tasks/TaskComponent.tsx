@@ -1,7 +1,8 @@
 import Task from './types/Task'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import './TaskComponent.css'
+import styles from './TaskComponent.module.scss'
+import { Button } from '../../components/Button'
 
 interface TaskProps {
   onHandleUpdate: (id: string, updateInput: string) => void
@@ -17,23 +18,42 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
 
     return (
         <div className={className}>
-            <div className={task.status ? 'Resolved' : 'UnResolved'} >
-                    <Link to={`/tasks/${task.id}`}>
-                      <span className={task.status ?'ResolvedTaskName' : 'TaskName'}>{task.name}</span>
-                    </Link>
+            <div className={task.status ? styles.Resolved : styles.UnResolved} >
+                  <Link to={`/tasks/${task.id}`}>
+                    <span className={task.status ? styles.ResolvedTaskName : styles.TaskName}>{task.name}</span>
+                  </Link>
                     
                   {
-                    task.isUpdate && <input placeholder='Type new task' className='Input' onChange={(event) => setUpdateInput(event.target.value)} type="text" />
+                    task.isUpdate && <input placeholder='Type new task' className={styles.Input} onChange={(event) => setUpdateInput(event.target.value)} type="text" />
                   }
                   {
-                    <button type='button' onClick={() => onHandleResolve(task.id)} className='ResolveButton'>{task.status ? 'UnResolve⤴️' : 'Resolve ✔️'}</button>
+                    
+                  <Button 
+                    onClick={() => onHandleResolve(task.id)} 
+                    children={task.status ? 'UnResolve ⤴️' : 'Resolve ✔️'} 
+                    btnType={'resolve'}
+                  />
                   }
                   {
                     task.isUpdate && !updateInput ? 
-                    <button onClick={() => onHandleHide(task.id)} className='HideButton' type='button'>Hide input ✖️</button>:
-                    <button className='UpdateButton' onClick={() => onHandleUpdate(task.id, updateInput)} type='button'>Update ✏️</button>
+
+                    <Button 
+                    onClick={() => onHandleHide(task.id)}
+                    children={'Hide input ✖️'}
+                    btnType='hide'
+                    />:
+                    
+                  <Button 
+                    onClick={() => onHandleUpdate(task.id, updateInput)} 
+                    children={'Update ✏️'} 
+                    btnType='update'
+                  />
                   }
-                  <button onClick={() => onHandleDelete(task.id)} className='DeleteButton' type='button'>Delete 🗑</button>
+                  <Button 
+                    onClick={() => onHandleDelete(task.id)} 
+                    children={'Delete ✖️'}
+                    btnType='delete'
+                  />
                 </div>
         </div>
     )

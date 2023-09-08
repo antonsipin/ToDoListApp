@@ -1,15 +1,24 @@
 import React from 'react'
-import style from './Button.module.css'
+import styles from './Button.module.scss'
+import cn from 'classnames'
 
 interface ButtonProps {
     onClick: () => void
     children: React.ReactNode
+    btnType: string
 }
 
-export default function Button({onClick, children}: ButtonProps): JSX.Element {
+export const Button = ({onClick, children, btnType}: ButtonProps): JSX.Element => {
     return (
         <>
-            <button className={style.button} onClick={onClick}>{children}</button>
+            <button 
+                type='button' 
+                className={cn(
+                    styles.btn, 
+                    styles[`btn--${btnType}`]
+                    )} 
+                onClick={onClick}>{children}
+            </button>
         </>
     )
 }

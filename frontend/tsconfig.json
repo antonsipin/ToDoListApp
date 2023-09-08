@@ -23,9 +23,11 @@
     "jsx": "react-jsx",
     "plugins": [{
         "name": "typescript-plugin-css-modules"
-      }]
+      }],
+      "paths": {
+        "@/*": ["./src/*"]
+    }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.test*", "node_modules"]
 }
