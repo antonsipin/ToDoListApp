@@ -23,7 +23,7 @@ const TasksTable = function<T> (props: TasksTableProps<T>): JSX.Element {
     onRowDoubleClick
   } = props
 
-    // const hasPagination = totalItems > 15
+    const hasPagination = totalItems ? totalItems > 15 : false
 
     return (
         <div>
@@ -37,8 +37,8 @@ const TasksTable = function<T> (props: TasksTableProps<T>): JSX.Element {
             {table.getRowModel().rows.map((row) => (
             <div key={row.id}>
               <div
-                // onClick={() => onRowClick ? onRowClick(row) : null}
-                // onDoubleClick={() => onRowDoubleClick ? onRowDoubleClick(row) : null}
+                onClick={() => onRowClick ? onRowClick(row) : null}
+                onDoubleClick={() => onRowDoubleClick ? onRowDoubleClick(row) : null}
                 // onKeyUp={(e) => handleKeyUp(e, row)}
                 role="row"
                 tabIndex={0}

@@ -31,8 +31,6 @@ export default function TasksList(props: TableProps): JSX.Element {
     // setNameFilter,
     // nameFilter,
     // mode,
-    // toggleIekUsers,
-    // toggleExternalUsers,
     // onInputNameFilter,
     // onUserSelect,
     // usersSuggestions,
