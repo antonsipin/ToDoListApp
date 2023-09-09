@@ -5,20 +5,27 @@ import SignUp from '../features/SignUp'
 import MainPage from '../features/MainPage'
 import Logout from '../features/Logout'
 import TaskCard from '../features/tasks/TaskCard'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
 
 export default function App(): JSX.Element {
+  const queryClient = new QueryClient()
 
   return (
+    <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path='/' element={<MainPage />} >
           <Route path='/signIn' element={<SignIn />}/>
           <Route path='/signUp' element={<SignUp />}/>
         </Route>
 
-        <Route path='/tasks' element={<TasksList />}/>
-        <Route path='/tasks/:id' element={<TaskCard />} />
+          <Route path='/tasks' element={<TasksList />}/>
+          <Route path='/tasks/:id' element={<TaskCard />} />
 
         <Route path='/logout' element={<Logout />}/>
       </Routes>
+    </QueryClientProvider>
   );
 }

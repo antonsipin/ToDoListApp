@@ -5,26 +5,25 @@ import styles from './TasksTable.module.scss'
 import { TasksTableProps } from './types'
 import { useTasksTableController } from './TasksTable.controller'
 
-const TasksTable = function <T> (props: TasksTableProps<T>): JSX.Element {
-    const {
-        table,
-        // totalItems,
-        // totalPages,
-        // page,
-        // pageSize,
-        // loading,
-        // renderLoader,
-        // headerWrapperClass,
-        // rowWrapperClass,
-        // onPageChange,
-        // onPageSizeChange,
-        // renderSubRow,
-        // onRowClick,
-        // onRowDoubleClick
-    } = useTasksTableController()
+const TasksTable = function<T> (props: TasksTableProps<T>): JSX.Element {
+  const {
+    table,
+    totalItems,
+    totalPages,
+    // page,
+    // pageSize,
+    // onPageChange,
+    // onPageSizeChange,
+    // renderSubRow,
+    // headerWrapperClass,
+    // rowWrapperClass,
+    loading: isLoading,
+    // renderLoader,
+    onRowClick,
+    onRowDoubleClick
+  } = props
 
     // const hasPagination = totalItems > 15
-    console.log(table)
 
     return (
         <div>

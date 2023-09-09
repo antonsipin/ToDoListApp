@@ -12,12 +12,33 @@ import TaskComponent from '../tasks/TaskComponent'
 import { TasksTable } from '../../components/TasksTable'
 import { useTasksTableController } from '../../components/TasksTable/TasksTable.controller'
 import { Spinner } from '../../components/Loader'
+import { TableProps } from '../../components/TasksTable/types'
 const URL = 'ws://localhost:3100'
 
-export default function TasksList(): JSX.Element {
+export default function TasksList(props: TableProps): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
-  const { table } = useTasksTableController()
   const [theme, setTheme] = useState('White')
+
+  const {
+    // page,
+    // pageSize,
+    totalPages,
+    isLoading,
+    table,
+    totalCount,
+    // onPageChange,
+    // onPageSizeChange,
+    // setNameFilter,
+    // nameFilter,
+    // mode,
+    // toggleIekUsers,
+    // toggleExternalUsers,
+    // onInputNameFilter,
+    // onUserSelect,
+    // usersSuggestions,
+    // exportUsers,
+    // isExporting,
+  } = useTasksTableController(props)
 
   useEffect(() => {
     const ws = new WebSocket(URL)
@@ -46,6 +67,20 @@ export default function TasksList(): JSX.Element {
       <Counter />
       <Info onHandleInfo={handleInfo} info={info}  />
       <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
+
+        <TasksTable 
+          table={table}
+          // page={page}
+          // pageSize={pageSize}
+          totalItems={totalCount}
+          totalPages={totalPages}
+          loading={isLoading}
+          // headerWrapperClass={styles.headerWrapperClass}
+          // rowWrapperClass={styles.rowWrapperClass}
+          // onPageChange={onPageChange}
+          // onPageSizeChange={onPageSizeChange}
+        />
+
       <div className={styles.taskWrapper}>
         {
             tasks.length ?  tasks.map(

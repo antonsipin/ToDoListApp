@@ -1,7 +1,7 @@
 import Response from './types/Response'
 import ResponseTasks from './types/ResponseTasks'
 
-export async function getTasks(): Promise<ResponseTasks> {
+export async function getTasks(): Promise<any> {
   try {
     const response = await fetch('/task', {
       method: 'GET',
