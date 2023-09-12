@@ -25,6 +25,14 @@
       }
     }
 
+    &--mode {
+      color: rgb(61, 34, 78);
+
+      &:hover {
+        background-color: rgb(130, 130, 130);
+      }
+    }
+
     &--update {
       color: green;
 
