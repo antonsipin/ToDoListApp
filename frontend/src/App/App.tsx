@@ -1,15 +1,16 @@
-import TasksList from '../features/tasks/TasksList'
+import TasksList from '../pages/TasksList/TasksList'
 import { Routes, Route } from 'react-router-dom'
-import SignIn from '../features/SignIn'
-import SignUp from '../features/SignUp'
-import MainPage from '../features/MainPage'
-import Logout from '../features/Logout'
-import TaskCard from '../features/tasks/TaskCard'
+import SignIn from '../components/SignIn/SignIn'
+import SignUp from '../components/SignUp/SignUp'
+import MainPage from '../pages/MainPage/MainPage'
+import Logout from '../components/Logout/Logout'
+import TaskCard from '../pages/TaskCard/TaskCard'
 import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
+import styles from './App.module.scss'
 
 interface FallbackComponentType {
   error: { message: string }
@@ -18,7 +19,7 @@ interface FallbackComponentType {
 
 function FallbackComponent({ error, resetErrorBoundary } : FallbackComponentType) {
   return (
-    <div role="alert">
+    <div className={styles.error} role="alert">
       <p>Something went wrong:</p>
       <pre>{error.message}</pre>
       <button onClick={resetErrorBoundary}>Try again</button>

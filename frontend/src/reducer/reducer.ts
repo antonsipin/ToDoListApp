@@ -1,6 +1,6 @@
-import TasksListState from './types/TasksListState'
-import Action from './types/Action'
-import Task from './types/Task'
+import TasksListState from '../types/TasksListState'
+import Action from '../types/Action'
+import Task from '../types/Task'
 
 export default function reducer(state: TasksListState, action: Action): TasksListState {
     function sortByName() {

@@ -1,5 +1,5 @@
-import './SignUp.css'
 import { useNavigate } from 'react-router-dom'
+import styles from './SignUp.module.scss'
 
 export default function SignUp(): JSX.Element {
     const navigate = useNavigate()
@@ -9,8 +9,8 @@ export default function SignUp(): JSX.Element {
     }
 
     return (
-        <div className='SignUp'>
-            <button onClick={handleSignIn} className='SignUpButton'>SignUp</button>
+        <div className={styles.SignUp}>
+            <button onClick={handleSignIn} className={styles.SignUpButton}>SignUp</button>
         </div>
     )
 }

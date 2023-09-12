@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import useTasks from './useTasks'
+import useTasks from '../../hooks/useTasks'
 import { Button } from '../../components/Button'
 import styles from './TaskCard.module.scss' 
 

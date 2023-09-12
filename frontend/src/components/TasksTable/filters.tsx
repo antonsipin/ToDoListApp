@@ -1,5 +1,5 @@
 import { ColumnFilterT, GlobalFilterT } from '../../types'
-import Task from '../../features/tasks/types/Task'
+import Task from '../../types/Task'
 import { matchSorter } from 'match-sorter'
 import { useMemo, useState } from 'react'
 import { FilterType, FilterTypes, useAsyncDebounce } from 'react-table'

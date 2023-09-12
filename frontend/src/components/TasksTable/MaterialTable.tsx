@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MaterialReactTable, { MRT_ColumnDef } from "material-react-table"
-import Task from '../../features/tasks/types/Task'
+import Task from '../../types/Task'
 
 export const columns: MRT_ColumnDef<Task>[] = [
     {

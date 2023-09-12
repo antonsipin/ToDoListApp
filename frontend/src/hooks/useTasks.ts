@@ -1,8 +1,8 @@
 import { useState, useReducer } from 'react'
-import Task from './types/Task'
-import * as api from './api'
-import reducer from './reducer'
-import TasksListState from './types/TasksListState'
+import Task from '../types/Task'
+import * as api from '../api/api'
+import reducer from '../reducer/reducer'
+import TasksListState from '../types/TasksListState'
 
 const initialState: TasksListState = {
     tasks: []

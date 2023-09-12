@@ -1,5 +1,5 @@
-import Response from './types/Response'
-import ResponseTasks from './types/ResponseTasks'
+import Response from '../types/Response'
+import ResponseTasks from '../types/ResponseTasks'
 
 export async function getTasks(): Promise<any> {
   try {

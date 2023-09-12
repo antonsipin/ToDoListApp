@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import './Form.css'
+import styles from './Form.module.scss'
 
 interface FormProps {
     onHandleSubmit: (event:React.FormEvent, task: string, taskDescription: string) => void
@@ -13,14 +13,14 @@ export default function Form({onHandleSubmit, onHandleError, error}: FormProps):
 
     return (
         <>
-            <div className='Form'>
+            <div className={styles.Form}>
             <form onSubmit={(event) => onHandleSubmit(event, task, taskDescription)}>
-            <input onChange={(event) => setTask(event.target.value)} className='InputForm' placeholder='Type task' type="text" />{' '}
-            <input onChange={(event) => setTaskDescription(event.target.value)} className='InputForm' placeholder='Task description' type="text" />{' '}
-            <button className='FormButton'>Add task 📌</button>
+            <input onChange={(event) => setTask(event.target.value)} className={styles.InputForm} placeholder='Type task' type="text" />{' '}
+            <input onChange={(event) => setTaskDescription(event.target.value)} className={styles.InputForm} placeholder='Task description' type="text" />{' '}
+            <button className={styles.FormButton}>Add task 📌</button>
           {
-            error && <div className='FormError'>{error}
-            <button onClick={() => onHandleError('')} className='CloseInfo'>❌</button>
+            error && <div className={styles.FormError}>{error}
+            <button onClick={() => onHandleError('')} className={styles.CloseInfo}>❌</button>
             </div>
           }
             </form>

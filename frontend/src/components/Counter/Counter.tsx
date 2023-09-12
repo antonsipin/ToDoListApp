@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import './Counter.css'
+import styles from './Counter.module.scss'
 
 export default function Counter(): JSX.Element {
   const [count, setCount] = useState(0)
@@ -21,8 +21,8 @@ export default function Counter(): JSX.Element {
 
   return (
     <>
-      <div className='ToDo'>ToDo: {showCount && count}
-        <button onClick={handleStop} type='button' className='CountButton'>{showCount ? 'Stop ⌚️' : 'Start ⌚️'}</button>
+      <div className={styles.ToDo}>ToDo: {showCount && count}
+        <button onClick={handleStop} type='button' className={styles.CountButton}>{showCount ? 'Stop ⌚️' : 'Start ⌚️'}</button>
       </div>  
     </>
   )

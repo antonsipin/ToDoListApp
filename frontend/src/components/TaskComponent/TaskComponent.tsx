@@ -1,8 +1,8 @@
-import Task from './types/Task'
+import Task from '../../types/Task'
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './TaskComponent.module.scss'
-import { Button } from '../../components/Button'
+import { Button } from '../Button'
 
 interface TaskProps {
   onHandleUpdate: (id: string, updateTaskName: string, updateTaskDescription: string) => void

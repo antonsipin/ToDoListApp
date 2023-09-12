@@ -1,7 +1,7 @@
 import { BiSortAlt2, BiSortDown, BiSortUp } from 'react-icons/bi'
 import { GlobalFilter } from './filters'
 import React, { useMemo } from 'react'
-import Task from '../../features/tasks/types/Task'
+import Task from '../../types/Task'
 import styles from './TasksTable.module.scss'
 import { Column, useTable, useGlobalFilter, useFilters, SortByFn, useSortBy } from 'react-table'
 import { DefaultColumnFilter, filterTypes } from './filters'

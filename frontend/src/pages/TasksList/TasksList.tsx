@@ -1,13 +1,13 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import Task from './types/Task'
-import Info from '../../features/Info'
-import Form from '../../features/Form'
-import NoTasks from '../../features/NoTasks'
+import Task from '../../types/Task'
+import Info from '../../components/Info/Info'
+import Form from '../../components/Form/Form'
+import NoTasks from '../../components/NoTasks/NoTasks'
 import styles from './TasksList.module.scss'
-import '../Logout.css'
-import useTasks from './useTasks'
-import TaskComponent from '../tasks/TaskComponent'
+import '../../components/Logout' 
+import useTasks from '../../hooks/useTasks'        
+import TaskComponent from '../../components/TaskComponent/TaskComponent'
 import { MaterialTable } from '../../components/TasksTable'
 import { Spinner } from '../../components/Loader'
 import cn from 'classnames'
@@ -41,9 +41,6 @@ export default function TasksList(): JSX.Element {
 
   const handlePageClick = (event: any) => {
     const newOffset = (event.selected * DEFAULT_PAGE_SIZE) % tasks.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   }
 
@@ -111,10 +108,6 @@ export default function TasksList(): JSX.Element {
       </div>
       )
       }
-      
-      
-
-      
     </div>
   )
 }
