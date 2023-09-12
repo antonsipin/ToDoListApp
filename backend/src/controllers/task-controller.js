@@ -10,7 +10,7 @@ const response = (result, error, data) => {
 }
 
 const addTask = async (req, res) => {
-  const { taskName } = req.body
+  const { taskName, taskDescription } = req.body
 
   try {
     const existTasks = await Task.find()
@@ -23,7 +23,7 @@ const addTask = async (req, res) => {
         status: false,
         isUpdate: false,
         isLoaded: false,
-        message: ''
+        message: taskDescription || ''
       })
 
     await newTask.save()
@@ -75,7 +75,7 @@ const getTasks = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
-  const { id, taskName } = req.body
+  const { id, taskName, taskDescription } = req.body
 
   try {
     const tasks = await Task.find()
@@ -85,6 +85,7 @@ const updateTask = async (req, res) => {
     } else {
       const updateTask = await Task.findOne({ id })
       updateTask.name = taskName
+      updateTask.message = taskDescription
       
       await updateTask.save()
       res.send(response('Successfully'))

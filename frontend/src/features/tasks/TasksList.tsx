@@ -1,25 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Task from './types/Task'
 import Info from '../../features/Info'
 import Form from '../../features/Form'
 import NoTasks from '../../features/NoTasks'
-import Counter from '../Counter'
 import styles from './TasksList.module.scss'
 import '../Logout.css'
 import useTasks from './useTasks'
 import TaskComponent from '../tasks/TaskComponent'
-import { TasksTable } from '../../components/TasksTable'
 import { MaterialTable } from '../../components/TasksTable'
 import { Spinner } from '../../components/Loader'
 import cn from 'classnames'
 import Button from '../../components/Button'
+import ReactPaginate from 'react-paginate'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+  const DEFAULT_PAGE_SIZE = 7
   const [theme, setTheme] = useState('White')
   const [tableMode, setTableMode] = useState(false)
+  const [itemOffset, setItemOffset] = useState(0)
+  const endOffset = itemOffset + DEFAULT_PAGE_SIZE
+  const currentItems = useMemo(() => tasks.slice(itemOffset, endOffset), [tasks, itemOffset, endOffset])
+  const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
 
   useEffect(() => {
     const ws = new WebSocket(URL)
@@ -30,9 +34,17 @@ export default function TasksList(): JSX.Element {
     handleLoadTasks()
   }, [])
 
-  function handleSubmit(event: React.FormEvent, input: string): void {
+  function handleSubmit(event: React.FormEvent, task: string, taskDescription: string): void {
     event.preventDefault() 
-    handleCreateTask(input)
+    handleCreateTask(task, taskDescription)
+  }
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * DEFAULT_PAGE_SIZE) % tasks.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
   }
 
   return (
@@ -65,14 +77,37 @@ export default function TasksList(): JSX.Element {
           </div> || <NoTasks />
       ) : (
         <div className={styles.taskWrapper}>
-        {
-            tasks.length ?  tasks.map(
+        {   
+            currentItems.length ?  
+            
+              currentItems.map(
+              
               (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} className={theme}/>
-          ) :
+              ):
               <div className={styles.loader}>
                 <Spinner />
               </div> || <NoTasks />
         }
+              <ReactPaginate
+                nextLabel="next >"
+                onPageChange={handlePageClick}
+                pageRangeDisplayed={3}
+                marginPagesDisplayed={2}
+                pageCount={pageCount}
+                previousLabel="< previous"
+                pageClassName="page-item"
+                pageLinkClassName="page-link"
+                previousClassName="page-item"
+                previousLinkClassName="page-link"
+                nextClassName="page-item"
+                nextLinkClassName="page-link"
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+                containerClassName="pagination"
+                activeClassName="active"
+                renderOnZeroPageCount={null}
+              />
       </div>
       )
       }

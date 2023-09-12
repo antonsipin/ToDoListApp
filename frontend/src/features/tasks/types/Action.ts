@@ -6,7 +6,7 @@ type Action =
 | { type: 'tasks/resolveTask', payload: TaskId }
 | { type: 'tasks/updateTask', payload: {
     taskId: TaskId,
-    updateInput: string
+    updateInput: {taskName: string, taskDescription: string}
 } }
 | { type: 'tasks/deleteTask', payload: TaskId }
 | { type: 'updateInputs/hideInput', payload: TaskId } 

@@ -45,9 +45,9 @@ export default function useTasks() {
         setError('')
       }
 
-      function handleCreateTask(input: string) {
-        if (input.length) {
-            api.addTask(input).then((response) => {
+      function handleCreateTask(task: string, taskDescription: string) {
+        if (task.length) {
+            api.addTask(task, taskDescription).then((response) => {
               if (response.error) {
                 setError(response.error)
               } else if (response.data) {
@@ -70,7 +70,7 @@ export default function useTasks() {
         setError(currentError)
       }
 
-      function handleUpdate(id: string, updateInput: string): void {
+      function handleUpdate(id: string, taskName: string, taskDescription: string): void {
         tasks.map((task) => {
           if (!tasks.some((el: Task) => el.isUpdate === true)) {
                 if (task.id === id) {
@@ -78,12 +78,14 @@ export default function useTasks() {
                   setError('')
                   handleInfo(false)
               }
-            } else if (task.isUpdate && updateInput && task.id === id) {
-                    api.updateTask(id, updateInput).then((response) => {
+            } else if (task.isUpdate && taskName && task.id === id) {
+                    api.updateTask(id, taskName, taskDescription).then((response) => {
                       if (response.error) {
                         setError(response.error)
                       } else {
-                        dispatch({type: 'tasks/updateTask', payload: {updateInput, taskId: id}})
+                        dispatch({type: 'tasks/updateTask', payload: {
+                          updateInput: { taskName, taskDescription }, taskId: id
+                        }})
                         setError('')
                       }
                       handleInfo(false)
@@ -91,7 +93,7 @@ export default function useTasks() {
           } else if (!task.isUpdate && task.id === id) {
               handleInfo(true)
               setError('')
-          } else if (task.isUpdate && !updateInput && task.id === id) {
+          } else if (task.isUpdate && !taskName && task.id === id) {
             dispatch({type: 'updateInputs/hideInput', payload: id})
             handleInfo(false)
           }

@@ -38,14 +38,14 @@ export async function resolveTask(id: string): Promise<Response> {
   }
 }
 
-export async function addTask(taskName: string): Promise<Response> {
+export async function addTask(taskName: string, taskDescription: string): Promise<Response> {
   try {
     const response = await fetch('/task/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ taskName })
+      body: JSON.stringify({ taskName, taskDescription })
     })
     return await response.json()
   } catch (e) {
@@ -70,14 +70,14 @@ export async function deleteTask(id: string): Promise<Response> {
   }
 }
 
-export async function updateTask(id: string, taskName: string): Promise<Response> {
+export async function updateTask(id: string, taskName: string, taskDescription: string): Promise<Response> {
   try {
     const response = await fetch('/task/update', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ id, taskName })
+      body: JSON.stringify({ id, taskName, taskDescription })
     })
     return await response.json()
   } catch (e) {

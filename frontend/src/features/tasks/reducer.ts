@@ -52,9 +52,10 @@ export default function reducer(state: TasksListState, action: Action): TasksLis
             return {
                 ...state,
                 tasks: state.tasks.map((task) => {
-                    if (task.id === action.payload.taskId && action.payload.updateInput && task.isUpdate) {
+                    if (task.id === action.payload.taskId && action.payload.updateInput.taskName && task.isUpdate) {
                         task.isUpdate = !task.isUpdate
-                        task.name = action.payload.updateInput
+                        task.name = action.payload.updateInput.taskName
+                        task.message = action.payload.updateInput.taskDescription
                     } 
                     return task
                 }).sort(sortByName())

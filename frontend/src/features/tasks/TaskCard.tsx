@@ -9,7 +9,8 @@ export default function TaskCard(): JSX.Element {
     const navigate = useNavigate()
     const params = useParams()
     const id = String(params.id)
-    const [updateInput, setUpdateInput] = useState<string>('')
+    const [taskName, setTaskName] = useState<string>('')
+    const [taskDescription, setTaskDescription] = useState<string>('')
 
     useEffect(() => {
         handleLoadTasks()
@@ -31,7 +32,7 @@ export default function TaskCard(): JSX.Element {
 
             {task && <div>
                   {
-                    task.isUpdate && <input placeholder='Type new task' className={styles.Input} onChange={(event) => setUpdateInput(event.target.value)} type="text" />
+                    task.isUpdate && <input placeholder='Type new task' className={styles.Input} onChange={(event) => setTaskName(event.target.value)} type="text" />
                   }
                   {
                     
@@ -42,7 +43,7 @@ export default function TaskCard(): JSX.Element {
                   />
                   }
                   {
-                    task.isUpdate && !updateInput ? 
+                    task.isUpdate && !taskName ? 
 
                     <Button 
                     onClick={() => handleHide(task.id)}
@@ -51,7 +52,7 @@ export default function TaskCard(): JSX.Element {
                     />:
                     
                   <Button 
-                    onClick={() => handleUpdate(task.id, updateInput)} 
+                    onClick={() => handleUpdate(task.id, taskName, taskDescription)} 
                     children={'Update ✏️'} 
                     btnType='update'
                   />
