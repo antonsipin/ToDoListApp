@@ -2,8 +2,16 @@
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
+}
+
+.tableWrapper {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 20px 0;
 }
 
 .header {

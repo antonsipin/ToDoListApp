@@ -10,33 +10,14 @@ import '../Logout.css'
 import useTasks from './useTasks'
 import TaskComponent from '../tasks/TaskComponent'
 import { TasksTable } from '../../components/TasksTable'
-import { useTasksTableController } from '../../components/TasksTable/TasksTable.controller'
+import { MaterialTable } from '../../components/TasksTable'
 import { Spinner } from '../../components/Loader'
-import { TableProps } from '../../components/TasksTable/types'
+import cn from 'classnames'
 const URL = 'ws://localhost:3100'
 
-export default function TasksList(props: TableProps): JSX.Element {
+export default function TasksList(): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
   const [theme, setTheme] = useState('White')
-
-  const {
-    // page,
-    // pageSize,
-    totalPages,
-    isLoading,
-    table,
-    totalCount,
-    // onPageChange,
-    // onPageSizeChange,
-    // setNameFilter,
-    // nameFilter,
-    // mode,
-    // onInputNameFilter,
-    // onUserSelect,
-    // usersSuggestions,
-    // exportUsers,
-    // isExporting,
-  } = useTasksTableController(props)
 
   useEffect(() => {
     const ws = new WebSocket(URL)
@@ -62,24 +43,22 @@ export default function TasksList(props: TableProps): JSX.Element {
             <option value='Black'>Black</option>
         </select>
       </div>
-      <Counter />
       <Info onHandleInfo={handleInfo} info={info}  />
       <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
 
-        <TasksTable 
-          table={table}
-          // page={page}
-          // pageSize={pageSize}
-          totalItems={totalCount}
-          totalPages={totalPages}
-          loading={isLoading}
-          // headerWrapperClass={styles.headerWrapperClass}
-          // rowWrapperClass={styles.rowWrapperClass}
-          // onPageChange={onPageChange}
-          // onPageSizeChange={onPageSizeChange}
-        />
+      {tasks.length ? 
+      <div
+      className={cn(styles.tableWrapper)}
+      >
+        <MaterialTable tasks={tasks} />
+      </div> :
+      <div className={styles.loader}>
+      <Spinner />
+      </div> || <NoTasks />
+    }
+      
 
-      <div className={styles.taskWrapper}>
+      {/* <div className={styles.taskWrapper}>
         {
             tasks.length ?  tasks.map(
               (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} className={theme}/>
@@ -88,7 +67,7 @@ export default function TasksList(props: TableProps): JSX.Element {
                 <Spinner />
               </div> || <NoTasks />
         }
-      </div>
+      </div> */}
     </div>
   )
 }

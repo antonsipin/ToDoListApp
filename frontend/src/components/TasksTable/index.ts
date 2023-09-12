@@ -1,5 +1,7 @@
 import { TasksTable } from './TasksTable'
+import { MaterialTable } from './MaterialTable'
 
 export { TasksTable }
-export default TasksTable
+export { MaterialTable }
+export default MaterialTable
 
