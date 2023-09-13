@@ -3,11 +3,9 @@ import styles from './Form.module.scss'
 
 interface FormProps {
     onHandleSubmit: (event:React.FormEvent, task: string, taskDescription: string) => void
-    onHandleError: (error: string) => void
-    error: string
 }
 
-export default function Form({onHandleSubmit, onHandleError, error}: FormProps): JSX.Element {
+export default function Form({onHandleSubmit}: FormProps): JSX.Element {
   const [task, setTask] = useState<string>('')
   const [taskDescription, setTaskDescription] = useState<string>('')
 
@@ -27,13 +25,6 @@ export default function Form({onHandleSubmit, onHandleError, error}: FormProps):
             <button className={styles.FormButton}>
               Add task
             </button>
-            {
-              error && <div className={styles.FormError}>{error}
-              <button onClick={() => onHandleError('')} className={styles.CloseInfo}>
-                ❌
-              </button>
-              </div>
-            }
           </form>
       </div>
     )

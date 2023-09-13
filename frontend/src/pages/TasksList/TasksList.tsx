@@ -60,8 +60,8 @@ export default function TasksList(): JSX.Element {
         btnType={'mode'}
       />
       </div>
-      {info && <AlertComponent info={info} onHandleInfo={handleInfo} />}
-      <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
+      {info || error ? <AlertComponent error={error} info={info} onHandleInfo={handleInfo} onHandleError={handleError}/>: ''}
+      <Form onHandleSubmit={handleSubmit} />
       
       {tableMode ? (
         tasks.length  ?
