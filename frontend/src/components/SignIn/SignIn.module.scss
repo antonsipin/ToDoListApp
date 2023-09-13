@@ -1,18 +1,43 @@
-.SignIn {
+.Form {
     display: flex;
-    justify-content: center;
     align-items: center;
-    height: 500px;
+    justify-content: center;
+    margin: 200px 0 0 0;
 }
 
-.SignInButton {
-    font-size: 1.5rem;
+.Wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+}
+
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.SignUpLink {
+    font-size: 1.2rem;
     font-weight: bold;
     color: blue;
-    border: none;
-    border-radius: 5px;
+    cursor: pointer; 
+    margin: 0 10px 10px 10px;   
+}
+
+.SignInLink  {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: blue;
     cursor: pointer;
-    padding: 10px;
-    width: 120px;
-    background-color: rgb(209, 228, 238);
+    margin: 0 10px 10px 10px;
+}
+
+.MainPageLink {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+    margin: 0 10px 10px 10px;
 }

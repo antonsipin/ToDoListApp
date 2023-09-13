@@ -12,19 +12,29 @@ export default function Form({onHandleSubmit, onHandleError, error}: FormProps):
   const [taskDescription, setTaskDescription] = useState<string>('')
 
     return (
-        <>
-            <div className={styles.Form}>
-            <form onSubmit={(event) => onHandleSubmit(event, task, taskDescription)}>
-            <input onChange={(event) => setTask(event.target.value)} className={styles.InputForm} placeholder='Type task' type="text" />{' '}
-            <input onChange={(event) => setTaskDescription(event.target.value)} className={styles.InputForm} placeholder='Task description' type="text" />{' '}
-            <button className={styles.FormButton}>Add task 📌</button>
-          {
-            error && <div className={styles.FormError}>{error}
-            <button onClick={() => onHandleError('')} className={styles.CloseInfo}>❌</button>
-            </div>
-          }
-            </form>
-            </div>
-        </>
+        <div className={styles.Form}>
+          <form onSubmit={(event) => onHandleSubmit(event, task, taskDescription)}>
+            <input 
+              onChange={(event) => setTask(event.target.value)} 
+              className={styles.InputForm} 
+              placeholder='Task name' 
+              type="text" />{' '}
+            <input 
+              onChange={(event) => setTaskDescription(event.target.value)} 
+              className={styles.InputForm} 
+              placeholder='Task description' 
+              type="text" />{' '}
+            <button className={styles.FormButton}>
+              Add task
+            </button>
+            {
+              error && <div className={styles.FormError}>{error}
+              <button onClick={() => onHandleError('')} className={styles.CloseInfo}>
+                ❌
+              </button>
+              </div>
+            }
+          </form>
+      </div>
     )
 }

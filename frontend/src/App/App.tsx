@@ -1,5 +1,5 @@
 import TasksList from '../pages/TasksList/TasksList'
-import { Routes, Route } from 'react-router-dom'
+import {  BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import SignIn from '../components/SignIn/SignIn'
 import SignUp from '../components/SignUp/SignUp'
 import MainPage from '../pages/MainPage/MainPage'
@@ -40,14 +40,11 @@ export default function App(): JSX.Element {
     >
       <QueryClientProvider client={queryClient}>
         <Routes>
-          <Route path='/' element={<MainPage />} >
-            <Route path='/signIn' element={<SignIn />}/>
-            <Route path='/signUp' element={<SignUp />}/>
-          </Route>
-
-            <Route path='/tasks' element={<TasksList />}/>
-            <Route path='/tasks/:id' element={<TaskCard />} />
-
+          <Route path='/' element={<MainPage />} />
+          <Route path='/signIn' element={<SignIn />}/>
+          <Route path='/signUp' element={<SignUp />}/>
+          <Route path='/tasks' element={<TasksList />}/>
+          <Route path='/tasks/:id' element={<TaskCard />} />
           <Route path='/logout' element={<Logout />}/>
         </Routes>
       </QueryClientProvider>

@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import styles from './Logout.module.scss'
+import { Button } from '../../components/Button'
 
 export default function Logout(): JSX.Element {
     const navigate = useNavigate()
@@ -9,9 +10,17 @@ export default function Logout(): JSX.Element {
     }
 
     return (
-        <div className={styles.Logout}>
-            <span className={styles.LogoutMessage}>Do you really want to logout ?</span>
-            <button onClick={handleLogout} type='button' className={styles.LogoutButton}>Logout</button>
+        <div>
+            <div className={styles.Wrapper}>
+                <span className={styles.Text}>
+                    Do you really want to logout ?
+                </span>
+                <Button 
+                    onClick={handleLogout} 
+                    btnType='submit' 
+                    children={'Logout'}
+                />
+            </div>
         </div>
     )
 }

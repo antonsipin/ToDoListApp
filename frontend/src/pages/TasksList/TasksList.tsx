@@ -13,6 +13,7 @@ import { Spinner } from '../../components/Loader'
 import cn from 'classnames'
 import Button from '../../components/Button'
 import ReactPaginate from 'react-paginate'
+import { AlertComponent } from '../../components/Alert'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
@@ -47,7 +48,7 @@ export default function TasksList(): JSX.Element {
   return (
     <div className={styles[theme]}>
       <div className={styles.header}>
-        <Link to='/logout' className='LogoutLink'>Logout</Link>
+        <Link to='/logout' className={styles.LogoutLink}>Logout</Link>
 
         <select className={theme} value={theme} onChange={(e) => setTheme(e.currentTarget.value)}>
             <option value='White'>White</option>
@@ -59,7 +60,7 @@ export default function TasksList(): JSX.Element {
         btnType={'mode'}
       />
       </div>
-      <Info onHandleInfo={handleInfo} info={info}  />
+      {info && <AlertComponent info={info} onHandleInfo={handleInfo} />}
       <Form onHandleSubmit={handleSubmit} onHandleError={handleError} error={error}/>
       
       {tableMode ? (

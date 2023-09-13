@@ -16,6 +16,13 @@
   align-items: center;
 }
 
+.LogoutLink {
+  font-weight: 700;
+  color: blue;
+  margin: 0 10px 0 0;
+  font-size: 18px;
+}
+
 .tableWrapper {
   background-color: white;
   display: flex;
@@ -28,7 +35,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 30px;
+  margin: 10px 0 10px 0;
 }
 
 .White {

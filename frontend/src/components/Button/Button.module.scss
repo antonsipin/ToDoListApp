@@ -33,6 +33,22 @@
       }
     }
 
+    &--start {
+      color: red;
+
+      &:hover {
+        background-color: rgb(130, 130, 130);
+      }
+    }
+
+    &--submit {
+      color: blue;
+
+      &:hover {
+        background-color: rgb(130, 130, 130);
+      }
+    }
+
     &--update {
       color: green;
 
