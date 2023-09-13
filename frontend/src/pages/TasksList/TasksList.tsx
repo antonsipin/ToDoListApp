@@ -66,7 +66,10 @@ export default function TasksList(): JSX.Element {
       {tableMode ? (
         tasks.length  ?
           <div
-          className={cn(styles.tableWrapper)}
+          className={cn(
+            styles.tableWrapper, 
+            styles[`tableWrapper--${theme}`]
+            )}
           >
             <MaterialTable tasks={tasks} />
           </div> :

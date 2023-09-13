@@ -9,7 +9,6 @@
 }
 
 .taskWrapper {
-  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -24,11 +23,18 @@
 }
 
 .tableWrapper {
-  background-color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 20px 0 20px 0;
+
+  &--White {
+    background-color: white;
+  }
+
+  &--Black {
+    background-color: black;
+  }
 }
 
 .header {
