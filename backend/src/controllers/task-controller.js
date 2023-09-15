@@ -1,13 +1,6 @@
 require('dotenv').config()
 const Task = require('../models/task.model')
-
-const response = (result, error, data) => {
-  return {
-    result: result ? result : '',
-    error: error ? error : '',
-    data: data ? data : {}
-  }
-}
+const response = require('../types/response')
 
 const addTask = async (req, res) => {
   const { taskName, taskDescription } = req.body

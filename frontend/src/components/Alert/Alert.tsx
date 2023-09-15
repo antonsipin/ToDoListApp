@@ -3,8 +3,8 @@ import styles from './AlertComponent.module.scss'
 import { Button } from '../../components/Button'
 
 interface AlertProps {
-  info: boolean
-  error: string
+  info?: boolean
+  error?: string
   onHandleInfo: (info: boolean) => void
   onHandleError: (error: string) => void
 }
@@ -24,7 +24,7 @@ function AlertComponent ({ error, info, onHandleInfo, onHandleError }: AlertProp
             </Alert>
       ))}
     </div>
-  );
+  )
 }
 
-export default AlertComponent;
+export default AlertComponent

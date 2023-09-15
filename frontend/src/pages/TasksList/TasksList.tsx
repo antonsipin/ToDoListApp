@@ -1,7 +1,6 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Task from '../../types/Task'
-import Info from '../../components/Info/Info'
 import Form from '../../components/Form/Form'
 import NoTasks from '../../components/NoTasks/NoTasks'
 import styles from './TasksList.module.scss'

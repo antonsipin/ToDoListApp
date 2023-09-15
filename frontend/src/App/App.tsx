@@ -11,6 +11,8 @@ import {
 } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
 import styles from './App.module.scss'
+import { Provider } from 'react-redux'
+import { store } from '../store'
 
 interface FallbackComponentType {
   error: { message: string }
@@ -39,6 +41,7 @@ export default function App(): JSX.Element {
       resetKeys={['someKey']}
     >
       <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='/signIn' element={<SignIn />}/>
@@ -47,6 +50,7 @@ export default function App(): JSX.Element {
           <Route path='/tasks/:id' element={<TaskCard />} />
           <Route path='/logout' element={<Logout />}/>
         </Routes>
+        </Provider>
       </QueryClientProvider>
     </ErrorBoundary>
   )

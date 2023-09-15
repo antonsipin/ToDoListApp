@@ -1,5 +1,5 @@
-import Response from '../types/Response'
-import ResponseTasks from '../types/ResponseTasks'
+import { ResponseTask, ResponseUser } from '../types/Response'
+import { User } from '../types/User'
 
 export async function getTasks(): Promise<any> {
   try {
@@ -20,7 +20,7 @@ export async function getTasks(): Promise<any> {
   }
 }
 
-export async function resolveTask(id: string): Promise<Response> {
+export async function resolveTask(id: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/task/resolve', {
       method: 'PUT',
@@ -38,7 +38,7 @@ export async function resolveTask(id: string): Promise<Response> {
   }
 }
 
-export async function addTask(taskName: string, taskDescription: string): Promise<Response> {
+export async function addTask(taskName: string, taskDescription: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/task/add', {
       method: 'POST',
@@ -56,7 +56,25 @@ export async function addTask(taskName: string, taskDescription: string): Promis
   }
 }
 
-export async function deleteTask(id: string): Promise<Response> {
+export async function createUser(user: User): Promise<ResponseUser> {
+  try {
+    const response = await fetch('/user/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    return await response.json()
+  } catch (e) {
+    return {
+      result: 'Error',
+      error: String(e)
+    }
+  }
+}
+
+export async function deleteTask(id: string): Promise<ResponseTask> {
   try {
     const response = await fetch(`/task/delete/${id}`, {
       method: 'DELETE'
@@ -70,7 +88,7 @@ export async function deleteTask(id: string): Promise<Response> {
   }
 }
 
-export async function updateTask(id: string, taskName: string, taskDescription: string): Promise<Response> {
+export async function updateTask(id: string, taskName: string, taskDescription: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/task/update', {
       method: 'PUT',

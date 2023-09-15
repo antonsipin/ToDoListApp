@@ -2,7 +2,7 @@ import TasksListState from '../types/TasksListState'
 import Action from '../types/Action'
 import Task from '../types/Task'
 
-export default function reducer(state: TasksListState, action: Action): TasksListState {
+export function taskReducer(state: TasksListState, action: Action): TasksListState {
     function sortByName() {
         return (a: Task, b: Task) => a.name.localeCompare(b.name)
     }

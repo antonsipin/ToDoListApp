@@ -1,6 +1,6 @@
-const express = require('express');
-const router = express.Router();
-const taskController = require('../controllers/task-controller');
+const express = require('express')
+const router = express.Router()
+const taskController = require('../controllers/task-controller')
 
 router
   .route('/')
@@ -22,4 +22,4 @@ router
   .route('/update')
   .put(taskController.updateTask)
 
-module.exports = router;
+module.exports = router

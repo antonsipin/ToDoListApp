@@ -1,7 +1,7 @@
 import { useState, useReducer } from 'react'
 import Task from '../types/Task'
 import * as api from '../api/api'
-import reducer from '../reducer/reducer'
+import { taskReducer } from '../reducer/taskReducer'
 import TasksListState from '../types/TasksListState'
 
 const initialState: TasksListState = {
@@ -10,7 +10,7 @@ const initialState: TasksListState = {
 
 export default function useTasks() {
     const [error, setError] = useState<string>('')
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(taskReducer, initialState)
     const { tasks } = state 
     const [info, setInfo] = useState<boolean>(false)
 
