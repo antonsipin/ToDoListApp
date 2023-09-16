@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 200px 0 0 0;
+    margin: 20px 0 0 0;
 }
 
 .Wrapper {
@@ -10,6 +10,14 @@
     align-items: center;
     justify-content: start;
     flex-direction: column;
+}
+
+.WrapperAlertForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 120px 0 20px 0;
 }
 
 .Header {

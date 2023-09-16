@@ -38,4 +38,39 @@ const signUp = async (req, res) => {
     }
 }
 
-module.exports = { signUp }
+const signIn = async (req, res) => {
+    const { email, password } = req.body
+    try {
+        if (email && password) {
+            const user = await User.findOne({ email }).lean()
+            if (user) {
+                const validPassword = await bcrypt.compare(password, user.password)
+                if (validPassword) {
+                    req.session.user = serializeUser(user)
+                    res.send(response('Successfully', '', req.session.user))
+                } else {
+                    res.send(response('Error', 'Wrong Email or Password'))
+                }
+            } else {
+                res.send(response('Error', 'User does not exist'))
+            }
+        } else {
+            res.send(response('Error', 'Missing Email or Password'))
+        }
+    } catch (e) {
+        res.send(response('Error', String(e)))
+    }
+}
+
+const logout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.send(response('Error', String(err)))
+        } else {
+            res.clearCookie(req.app.get('session cookie name'))
+            res.send(response('Successfully'))
+        }
+    })
+}
+
+module.exports = { signUp, signIn, logout }

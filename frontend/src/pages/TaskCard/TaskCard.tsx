@@ -25,7 +25,13 @@ export default function TaskCard(): JSX.Element {
     }
 
     return (
-        <div className={styles.TaskCard}>
+        <div className={styles.Wrapper}>
+          <div className={styles.Header}>
+                <Link to='/' className={styles.MainPageLink}>Main Page</Link>
+                <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
+                <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
+          </div>
+          <div className={styles.TaskCard}>
             <div className={task?.status ? styles.ResolvedTaskName : styles.TaskName}>{task?.name}</div>
 
             <div className={styles.TaskDescription}>{task?.message}</div>
@@ -69,6 +75,8 @@ export default function TaskCard(): JSX.Element {
                   />
                 </div>
             }
+          </div>  
         </div>
+        
     )
 }

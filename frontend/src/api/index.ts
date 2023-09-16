@@ -1,9 +1,11 @@
-import { updateTask, addTask, createUser, resolveTask, deleteTask, getTasks } from './api'
+import { updateTask, addTask, signUp, signIn, logout, resolveTask, deleteTask, getTasks } from './api'
 
 export { 
     updateTask,
     addTask,
-    createUser,
+    signUp,
+    signIn,
+    logout,
     resolveTask,
     deleteTask,
     getTasks

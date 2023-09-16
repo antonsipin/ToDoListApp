@@ -1,5 +1,7 @@
 import { ResponseTask, ResponseUser } from '../types/Response'
 import { User } from '../types/User'
+import { SignInUser } from '../types/SignInUser'
+import { error } from 'console'
 
 export async function getTasks(): Promise<any> {
   try {
@@ -56,14 +58,49 @@ export async function addTask(taskName: string, taskDescription: string): Promis
   }
 }
 
-export async function createUser(user: User): Promise<ResponseUser> {
+export async function signUp(user: User): Promise<ResponseUser> {
   try {
-    const response = await fetch('/user/create', {
+    const response = await fetch('/user/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(user)
+    })
+    return await response.json()
+  } catch (e) {
+    return {
+      result: 'Error',
+      error: String(e)
+    }
+  }
+}
+
+export async function signIn(user: SignInUser): Promise<ResponseUser> {
+  try {
+    const response = await fetch('/user/signIn', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    return await response.json()
+  } catch (e) {
+    return {
+      result: 'Error',
+      error: String(e)
+    }
+  }
+}
+
+export async function logout(): Promise<ResponseUser> {
+  try {
+    const response = await fetch('/user/logout', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
     })
     return await response.json()
   } catch (e) {

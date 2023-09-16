@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-// import { useSelector  } from 'react-redux'
 import styles from './SignUp.module.scss'
 import Form from 'react-bootstrap/Form'
 import { Button } from '../../components/Button'
@@ -15,17 +14,15 @@ export default function SignUp(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
     const [ signUpError, setSignUpError ] = useState('')
-    // const store = useSelector((store) => store)
-    // const { signUp, signUpError } = useAuth()
 
     const signUp = useCallback((signUpUser: User) => {
         if (signUpUser) {
             try {
-                api.createUser(signUpUser).then((response) => {
-                    if (response.error) {
+                api.signUp(signUpUser).then((response) => {
+                    if (response.result === 'Error') {
                         setSignUpError(response.error)
                     } else {
-                        if (response.data) {
+                        if (response.result === 'Successfully') {
                             navigate('/signIn')
                             setSignUpError('')
                         }
@@ -87,10 +84,9 @@ export default function SignUp(): JSX.Element {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </Form.Group>
-                        <Button btnType={'submit'} children={'Register'} onClick={() => setIsSubmit(true)} />
+                        <Button btnType={'submit'} children={'Create account'} onClick={() => setIsSubmit(true)} />
                     </Form>
             </div>
-            
         </div>
     )
 }

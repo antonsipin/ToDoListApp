@@ -36,7 +36,7 @@ app.use(
 app.use(methodOverride('_method'))
 app.use(userMiddle.userName)
 app.use('/', indexRouter)
-app.use('/task', taskRouter)
+app.use('/task', userMiddle.isAuth, taskRouter)
 app.use('/user', userRouter)
 app.use('*', mainRouter)
 

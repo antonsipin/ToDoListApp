@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import Task from '../../types/Task'
 import Form from '../../components/Form/Form'
 import NoTasks from '../../components/NoTasks/NoTasks'
@@ -17,6 +17,7 @@ const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+  const location = useLocation()
   const DEFAULT_PAGE_SIZE = 7
   const [theme, setTheme] = useState('White')
   const [tableMode, setTableMode] = useState(false)
@@ -58,6 +59,9 @@ export default function TasksList(): JSX.Element {
         children={'Switch mode'} 
         btnType={'mode'}
       />
+      <span className={styles.userName}>
+        {`Good job, ${location.state?.name}!`}
+      </span>
       </div>
       {info || error ? <AlertComponent error={error} info={info} onHandleInfo={handleInfo} onHandleError={handleError}/>: ''}
       <Form onHandleSubmit={handleSubmit} />

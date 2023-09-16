@@ -12,6 +12,5 @@ type Action =
 | { type: 'tasks/deleteTask', payload: TaskId }
 | { type: 'updateInputs/hideInput', payload: TaskId } 
 | { type: 'users/createUser', payload: RegUser } 
-| { type: 'users/userError', payload: string } 
 
 export default Action

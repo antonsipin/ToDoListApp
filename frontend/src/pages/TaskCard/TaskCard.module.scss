@@ -1,3 +1,10 @@
+.Wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+}
+
 .TaskCard {
     display: flex;
     justify-content: center;
@@ -155,3 +162,32 @@
     color: red;
   }
   
+  .Header {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.SignUpLink {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer; 
+    margin: 0 10px 10px 10px;   
+}
+
+.SignInLink  {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+    margin: 0 10px 10px 10px;
+}
+
+.MainPageLink {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+    margin: 0 10px 10px 10px;
+}
