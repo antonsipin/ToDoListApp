@@ -26,7 +26,7 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                     <Link to={`/tasks/${task.id}`}>
                       <span className={task.status ? styles.ResolvedTaskName : styles.TaskName}>{task.name}</span>
                     </Link>
-                    <span className={styles.TaskDescription}>{task.message}</span>
+                    {/* <span className={styles.TaskDescription}>Description: {task.message}</span> */}
                   </div>
                   {
                     task.isUpdate && 
