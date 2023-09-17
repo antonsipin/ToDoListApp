@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Task from '../../types/Task'
 import Form from '../../components/Form/Form'
@@ -15,14 +15,16 @@ import ReactPaginate from 'react-paginate'
 import { AlertComponent } from '../../components/Alert'
 import { MdOutlineList, MdOutlineViewList } from 'react-icons/md'
 import { Select } from '../../components/Select/Select'
+import { ThemeContext } from '../../App/ThemeContext'
+import { TableModeContext } from '../../App/TableModeContext'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks, handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
   const location = useLocation()
   const DEFAULT_PAGE_SIZE = 8
-  const [theme, setTheme] = useState('White')
-  const [tableMode, setTableMode] = useState(false)
+  const { theme, setTheme } = useContext(ThemeContext)
+  const { tableMode, setTableMode } = useContext(TableModeContext)
   const [itemOffset, setItemOffset] = useState(0)
   const endOffset = itemOffset + DEFAULT_PAGE_SIZE
   const currentItems = useMemo(() => tasks.slice(itemOffset, endOffset), [tasks, itemOffset, endOffset])
@@ -55,7 +57,10 @@ export default function TasksList(): JSX.Element {
   }
 
   return (
-    <div className={styles[theme]}>
+    <div className={cn(
+      styles.Wrapper,
+      styles[`Wrapper--${theme}`]
+      )}>
       <div className={styles.header}>
         <Link to='/logout' className={styles.LogoutLink}>Logout</Link>
         <div className={theme}>
@@ -124,26 +129,30 @@ export default function TasksList(): JSX.Element {
                 <NoTasks />
             )
         }
-              {isLoaded && <ReactPaginate
-                nextLabel="next >"
-                onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
-                pageCount={pageCount}
-                previousLabel="< previous"
-                pageClassName="page-item"
-                pageLinkClassName="page-link"
-                previousClassName="page-item"
-                previousLinkClassName="page-link"
-                nextClassName="page-item"
-                nextLinkClassName="page-link"
-                breakLabel="..."
-                breakClassName="page-item"
-                breakLinkClassName="page-link"
-                containerClassName="pagination"
-                activeClassName="active"
-                renderOnZeroPageCount={null}
-              />
+              {isLoaded && 
+              <div className={styles.Paginate}>
+                  <ReactPaginate
+                  nextLabel="next >"
+                  onPageChange={handlePageClick}
+                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={2}
+                  pageCount={pageCount}
+                  previousLabel="< previous"
+                  pageClassName="page-item"
+                  pageLinkClassName="page-link"
+                  previousClassName="page-item"
+                  previousLinkClassName="page-link"
+                  nextClassName="page-item"
+                  nextLinkClassName="page-link"
+                  breakLabel="..."
+                  breakClassName="page-item"
+                  breakLinkClassName="page-link"
+                  containerClassName="pagination"
+                  activeClassName="active"
+                  renderOnZeroPageCount={null}
+                />
+              </div>
+              
               }
       </div>
       )

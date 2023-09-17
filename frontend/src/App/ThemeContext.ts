@@ -1,6 +1,8 @@
-import React from 'react'
-import Theme from './types/Theme'
+import { createContext } from 'react'
 
-const ThemeContext = React.createContext<Theme>('white')
+interface ThemeContextType {
+    theme: string
+    setTheme: (theme: string) => void
+} 
 
-export default ThemeContext
+export const ThemeContext = createContext<ThemeContextType>({ theme: 'White', setTheme: () => {}})

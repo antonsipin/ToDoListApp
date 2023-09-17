@@ -1,11 +1,13 @@
 import { useNavigate, useParams, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import useTasks from '../../hooks/useTasks'
 import { Button } from '../../components/Button'
 import styles from './TaskCard.module.scss' 
 import { MdEditOff, MdDoneOutline, MdRemoveDone, MdEditSquare, MdDeleteOutline, MdTurnLeft } from 'react-icons/md'
 import { UpdateInput } from '../../components/UpdateInput/UpdateInput'
 import { AlertComponent } from '../../components/Alert'
+import { ThemeContext } from '../../App/ThemeContext'
+import cn from 'classnames'
 
 export default function TaskCard(): JSX.Element {
     const { info, error, tasks, handleInfo, handleError, handleLoadTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
@@ -14,6 +16,7 @@ export default function TaskCard(): JSX.Element {
     const id = String(params.id)
     const [taskName, setTaskName] = useState<string>('')
     const [taskDescription, setTaskDescription] = useState<string>('')
+    const { theme } = useContext(ThemeContext)
 
     useEffect(() => {
         handleLoadTasks()
@@ -28,7 +31,12 @@ export default function TaskCard(): JSX.Element {
     }
 
     return (
-        <div className={styles.Wrapper}>
+        <div 
+        className={cn(
+          styles.Wrapper,
+          styles[`Wrapper--${theme}`]
+          )}
+        >
           <div className={styles.Header}>
                 <Link to='/' className={styles.MainPageLink}>Main Page</Link>
                 <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
@@ -44,7 +52,13 @@ export default function TaskCard(): JSX.Element {
             }
 
           <div className={styles.taskCard}>
-            <div className={task?.status ? styles.ResolvedTaskName : styles.TaskName}>{task?.name}</div>
+            <div className={task?.status ? 
+              cn(
+                styles.TaskName,
+                styles[`TaskName--resolved`], 
+                ) : 
+              styles.TaskName}>{task?.name}
+            </div>
 
             <div className={styles.TaskDescription}>Description: {task?.message}</div>
             {
