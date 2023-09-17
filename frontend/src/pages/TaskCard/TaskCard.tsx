@@ -5,9 +5,10 @@ import { Button } from '../../components/Button'
 import styles from './TaskCard.module.scss' 
 import { MdEditOff, MdDoneOutline, MdRemoveDone, MdEditSquare, MdDeleteOutline, MdTurnLeft } from 'react-icons/md'
 import { UpdateInput } from '../../components/UpdateInput/UpdateInput'
+import { AlertComponent } from '../../components/Alert'
 
 export default function TaskCard(): JSX.Element {
-    const { tasks,  handleLoadTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+    const { info, error, tasks, handleInfo, handleError, handleLoadTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
     const navigate = useNavigate()
     const params = useParams()
     const id = String(params.id)
@@ -33,6 +34,15 @@ export default function TaskCard(): JSX.Element {
                 <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
                 <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
           </div>
+
+          {info || error ? 
+            <AlertComponent 
+            error={error} 
+            info={info} 
+            onHandleInfo={handleInfo} 
+            onHandleError={handleError}/>: ''
+            }
+
           <div className={styles.taskCard}>
             <div className={task?.status ? styles.ResolvedTaskName : styles.TaskName}>{task?.name}</div>
 

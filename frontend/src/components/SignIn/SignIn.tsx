@@ -6,6 +6,8 @@ import { Button } from '../../components/Button'
 import { SignInUser } from '../../types/SignInUser'
 import * as api from '../../api'
 import UserAlert from '../UserAlert'
+import { MdOutlineLogin, MdOutlinePermIdentity } from 'react-icons/md'
+import { validateEmail } from '../../utils/validate'
 
 export default function SignIn(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -19,26 +21,30 @@ export default function SignIn(): JSX.Element {
         navigate('/tasks', { state: { id: 1, name, email }});
           }
  
-    const signIn = useCallback((signInUser: SignInUser) => {
-        if (signInUser) {
-            try {
-                api.signIn(signInUser).then((response) => {
-                    if (response.result === 'Error') {
-                        setSignInError(response.error)
-                    } else {
-                        if (response.result === 'Successfully' && response.data) {
-                            const { name, email } = response.data
-                            const user = { name, email }
-                            navigateToTasks(user)
-                            setSignInError('')
+    const signIn = useCallback(({ email, password }: SignInUser) => {
+        try {
+            if (email && password) {
+                if (validateEmail(email)) {
+                    api.signIn({ email, password }).then((response) => {
+                        if (response.result === 'Error') {
+                            setSignInError(response.error)
+                        } else {
+                            if (response.result === 'Successfully' && response.data) {
+                                const { name, email } = response.data
+                                const user = { name, email }
+                                navigateToTasks(user)
+                                setSignInError('')
+                            }
                         }
-                    }
-                })
-            } catch (e) {
-                setSignInError('Something went wrong')
+                    })
+                } else {
+                    setSignInError('Invalid email format')
+                }
+            } else {
+                setSignInError('Missing Email or Password')
             }
-        } else {
-            setSignInError('Missing Email or Password')
+        } catch (e) {
+            setSignInError(String(e))
         }
     }, [])
 
@@ -84,8 +90,27 @@ export default function SignIn(): JSX.Element {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </Form.Group>
-                    <Button btnType={'submit'} children={'Login'} onClick={() => setIsSubmit(true)} />or
-                    <Button btnType={'submit'} children={'Register'} onClick={handleRegister} />
+                    <Button 
+                    btnType={'submit'} 
+                    children={
+                        <div>
+                          Login{' '}
+                          <MdOutlineLogin />
+                        </div>
+                      }
+                    onClick={() => setIsSubmit(true)} 
+                    />
+                    or
+                    <Button 
+                    btnType={'submit'} 
+                    children={
+                        <div>
+                          Register{' '}
+                          <MdOutlinePermIdentity />
+                        </div>
+                      } 
+                    onClick={handleRegister} 
+                    />
                 </Form>
             </div>    
                 

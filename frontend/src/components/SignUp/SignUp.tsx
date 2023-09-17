@@ -7,6 +7,7 @@ import UserAlert from '../UserAlert'
 import { User } from '../../types/User'
 import * as api from '../../api'
 import { validateEmail } from '../../utils/validate'
+import { MdOutlineChevronRight } from 'react-icons/md'
 
 export default function SignUp(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -90,7 +91,16 @@ export default function SignUp(): JSX.Element {
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                         </Form.Group>
-                        <Button btnType={'submit'} children={'Create account'} onClick={() => setIsSubmit(true)} />
+                        <Button 
+                        btnType={'submit'} 
+                        children={
+                            <div>
+                              Create account{' '}
+                              <MdOutlineChevronRight />
+                            </div>
+                          }
+                        onClick={() => setIsSubmit(true)} 
+                        />
                     </Form>
             </div>
         </div>

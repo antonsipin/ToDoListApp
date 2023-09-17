@@ -4,6 +4,7 @@ import styles from './Logout.module.scss'
 import { Button } from '../../components/Button'
 import UserAlert from '../UserAlert'
 import * as api from '../../api'
+import { MdOutlineLogout, MdTurnLeft } from 'react-icons/md'
 
 export default function Logout(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
@@ -49,19 +50,37 @@ export default function Logout(): JSX.Element {
                 </div>
                 <div className={styles.WrapperAlert}>
                     {logoutError && <UserAlert error={logoutError} onHandleError={setLogoutError}/>}
-                    <span className={styles.Text}>
-                        Do you really want to logout ?
-                    </span>
-                    <Button 
-                        onClick={() => setIsSubmit(true)} 
-                        btnType='submit' 
-                        children={'Logout'}
-                    />or
-                    <Button 
-                        onClick={handleNo} 
-                        btnType='submit' 
-                        children={'Stay logged in'}
-                    />
+                    
+                    <div className={styles.logoutText}>
+                    Do you really want to logout ?
+                    </div>
+
+                    <div className={styles.buttons}>
+                        <Button 
+                            onClick={() => setIsSubmit(true)} 
+                            btnType='submit' 
+                            children={
+                                <div>
+                                  Logout{' '}
+                                  <MdOutlineLogout />
+                                </div>
+                              }
+                        />
+                        <span className={styles.buttonsBetweenText}>
+                            or
+                        </span>
+                        <Button 
+                            onClick={handleNo} 
+                            btnType='submit' 
+                            children={
+                                <div>
+                                  Stay logged{' '}
+                                  <MdTurnLeft />
+                                </div>
+                              }
+                        />
+                    </div>
+                    
                 </div>
                 
             </div>

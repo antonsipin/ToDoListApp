@@ -62,7 +62,6 @@ export default function TasksList(): JSX.Element {
           <Select value={theme} setTheme={setTheme} />
         </div>
 
-        <div className={styles.switchModeBtn}>
           <Button 
             onClick={() => setTableMode(!tableMode)} 
             children={
@@ -78,7 +77,6 @@ export default function TasksList(): JSX.Element {
           } 
           btnType={'mode'}
         />
-        </div>
         
       <span className={styles.userName}>
         {`Good job, ${location.state?.name}!`}

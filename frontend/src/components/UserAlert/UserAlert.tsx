@@ -14,10 +14,12 @@ function UserAlert ({ error, onHandleError }: AlertProps) {
         'info',
       ].map((variant) => (
             <Alert key={variant} variant={variant}>
-              <div className={styles.Wrapper}>
-                {error || `Something went wrong`}
-                {error && <Button onClick={() => onHandleError('')} btnType='submit' children={'Ok. Got it.'} />}
-              </div>
+              {error || `Something went wrong`}
+                {error && 
+                <span className={styles.Wrapper}>
+                  <Button onClick={() => onHandleError('')} btnType='submit' children={'Ok. Got it.'} />
+                </span>
+                }
             </Alert>
       ))}
     </div>
