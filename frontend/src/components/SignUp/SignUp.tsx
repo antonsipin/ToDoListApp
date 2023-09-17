@@ -6,6 +6,7 @@ import { Button } from '../../components/Button'
 import UserAlert from '../UserAlert'
 import { User } from '../../types/User'
 import * as api from '../../api'
+import { validateEmail } from '../../utils/validate'
 
 export default function SignUp(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -15,24 +16,29 @@ export default function SignUp(): JSX.Element {
     const navigate = useNavigate()
     const [ signUpError, setSignUpError ] = useState('')
 
-    const signUp = useCallback((signUpUser: User) => {
-        if (signUpUser) {
-            try {
-                api.signUp(signUpUser).then((response) => {
-                    if (response.result === 'Error') {
-                        setSignUpError(response.error)
-                    } else {
-                        if (response.result === 'Successfully') {
-                            navigate('/signIn')
-                            setSignUpError('')
-                        }
-                    }
-                })
-            } catch (e) {
-                setSignUpError('Something went wrong')
+    const signUp = useCallback(({ name, email, password }: User) => {
+        try {
+            if (name && email && password ) {
+                if (validateEmail(email)) {
+                        api.signUp({ name, email, password }).then((response) => {
+                            if (response.result === 'Error') {
+                                setSignUpError(response.error)
+                            } else {
+                                if (response.result === 'Successfully') {
+                                    navigate('/signIn')
+                                    setSignUpError('')
+                                }
+                            }
+                        })
+                   
+                } else {
+                    setSignUpError('Invalid email format')
+                }
+            } else {
+                setSignUpError('Missing Email or Password')
             }
-        } else {
-            setSignUpError('Missing Email or Password')
+        } catch (e) {
+            setSignUpError(String(e))
         }
     }, [])
 
