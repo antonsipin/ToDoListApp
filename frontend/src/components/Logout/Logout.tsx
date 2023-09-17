@@ -1,15 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import styles from './Logout.module.scss'
 import { Button } from '../../components/Button'
 import UserAlert from '../UserAlert'
 import * as api from '../../api'
 import { MdOutlineLogout, MdTurnLeft } from 'react-icons/md'
+import cn from 'classnames'
+import { ThemeContext } from '../../App/ThemeContext'
+import { Select } from '../Select/Select'
 
 export default function Logout(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const [ logoutError, setLogoutError ] = useState('')
     const navigate = useNavigate()
+    const { theme, setTheme } = useContext(ThemeContext)
 
     const handleNo = () => {
         navigate(-1)
@@ -41,12 +45,17 @@ export default function Logout(): JSX.Element {
     }, [setIsSubmit, isSubmit])
 
     return (
-        <div>
-            <div className={styles.Wrapper}>
+            <div className={cn(
+                styles.Wrapper,
+                styles[`Wrapper--${theme}`])
+                }>
                 <div className={styles.Header}>
                     <Link to='/' className={styles.MainPageLink}>Main Page</Link>
                     <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
                     <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
+                    <div className={theme}>
+                        <Select value={styles.Select} setTheme={setTheme} />
+                    </div>
                 </div>
                 <div className={styles.WrapperAlert}>
                     {logoutError && <UserAlert error={logoutError} onHandleError={setLogoutError}/>}
@@ -84,6 +93,5 @@ export default function Logout(): JSX.Element {
                 </div>
                 
             </div>
-        </div>
     )
 }

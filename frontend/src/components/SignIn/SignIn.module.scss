@@ -1,15 +1,26 @@
-.Form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 20px 0 0 0;
-}
-
 .Wrapper {
     display: flex;
     align-items: center;
     justify-content: start;
     flex-direction: column;
+    height: 700px;
+    width: 100%;
+
+    &--White {
+        background-color: white;
+    }
+
+    &--Black {
+        background-color: black;
+    }
+    
+}
+
+.Form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 0 0;
 }
 
 .WrapperAlertForm {
@@ -24,6 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    margin: 10px 0 0 0;
 }
 
 .SignUpLink {
@@ -48,4 +60,13 @@
     color: blue;
     cursor: pointer;
     margin: 0 10px 10px 10px;
+    flex-shrink: 0;
+}
+
+.btnText {
+    color: grey;
+}
+
+.Select {
+    margin: 0 0 0 10px;
 }

@@ -63,26 +63,26 @@ export default function TasksList(): JSX.Element {
       )}>
       <div className={styles.header}>
         <Link to='/logout' className={styles.LogoutLink}>Logout</Link>
-        <div className={theme}>
+        <div className={styles.Select}>
           <Select value={theme} setTheme={setTheme} />
         </div>
-
-          <Button 
-            onClick={() => setTableMode(!tableMode)} 
-            children={
-              tableMode ?
-                <div>
-                  Switch mode{' '}
-                  <MdOutlineList />
-                </div> :
-                <div>
-                  Switch mode{' '}
-                  <MdOutlineViewList />
-                </div>
-          } 
-          btnType={'mode'}
-        />
-        
+          <div className={styles.switchModeBtn}>
+            <Button 
+              onClick={() => setTableMode(!tableMode)} 
+              children={
+                tableMode ?
+                  <div>
+                    Switch mode{' '}
+                    <MdOutlineList />
+                  </div> :
+                  <div>
+                    Switch mode{' '}
+                    <MdOutlineViewList />
+                  </div>
+              } 
+              btnType={'mode'}
+            />
+          </div>
       <span className={styles.userName}>
         {`Good job, ${location.state?.name}!`}
       </span>

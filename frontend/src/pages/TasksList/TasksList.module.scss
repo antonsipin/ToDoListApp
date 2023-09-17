@@ -65,15 +65,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px 0 10px 0;
-}
-
-.White {
-  background-color: white;
-}
-
-.Black {
-  background-color: black;
 }
 
 .loader {
@@ -87,5 +78,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 0 0 10px;
+  margin: 5px 0 0 0;
+}
+
+.Select {
+  margin: 5px 0 0 0;
 }

@@ -18,12 +18,23 @@
     align-items: center;
     justify-content: start;
     flex-direction: column;
+    height: 700px;
+    width: 100%;
+
+    &--White {
+        background-color: white;
+    }
+
+    &--Black {
+        background-color: black;
+    }
 }
 
 .Header {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    margin: 10px 0 0 0;
 }
 
 .SignUpLink {
@@ -48,4 +59,9 @@
     color: blue;
     cursor: pointer;
     margin: 0 10px 10px 10px;
+    flex-shrink: 0;
+}
+
+.Select {
+    margin: 0 0 0 10px;
 }

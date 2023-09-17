@@ -8,6 +8,7 @@ import { UpdateInput } from '../../components/UpdateInput/UpdateInput'
 import { AlertComponent } from '../../components/Alert'
 import { ThemeContext } from '../../App/ThemeContext'
 import cn from 'classnames'
+import { Select } from '../../components/Select/Select'
 
 export default function TaskCard(): JSX.Element {
     const { info, error, tasks, handleInfo, handleError, handleLoadTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
@@ -16,7 +17,7 @@ export default function TaskCard(): JSX.Element {
     const id = String(params.id)
     const [taskName, setTaskName] = useState<string>('')
     const [taskDescription, setTaskDescription] = useState<string>('')
-    const { theme } = useContext(ThemeContext)
+    const { theme, setTheme } = useContext(ThemeContext)
 
     useEffect(() => {
         handleLoadTasks()
@@ -41,6 +42,9 @@ export default function TaskCard(): JSX.Element {
                 <Link to='/' className={styles.MainPageLink}>Main Page</Link>
                 <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
                 <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
+                <div className={styles.Select}>
+                    <Select value={theme} setTheme={setTheme} />
+                </div>
           </div>
 
           {info || error ? 
