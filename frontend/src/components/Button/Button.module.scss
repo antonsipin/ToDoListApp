@@ -3,33 +3,40 @@
 
 .btn {
   font-size: 1.1rem;
-  font-weight: bold;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: 3px;
   cursor: pointer;
-  padding: 5px;
-  width: 150px;
-  height: 2rem;
-  margin: 10px 10px 10px 10px;
+  width: 170px;
+  height: 2.2rem;
+  margin: 0 10px 10px 0;
   background-color: rgb(209, 228, 238);
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: Arial, Helvetica, sans-serif;
   flex-wrap: nowrap;
+
+    &--children {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
 
     &--resolve {
       color: blue;
+      flex-wrap: nowrap;
 
       &:hover {
-        background-color: rgb(130, 130, 130);
+        background-color: rgb(189, 204, 222);
       }
     }
 
     &--mode {
-      color: rgb(61, 34, 78);
+      color: blue;
 
       &:hover {
-        background-color: rgb(130, 130, 130);
+        background-color: rgb(189, 204, 222);
       }
     }
 
@@ -37,7 +44,7 @@
       color: red;
 
       &:hover {
-        background-color: rgb(130, 130, 130);
+        background-color: rgb(189, 204, 222);
       }
     }
 
@@ -45,7 +52,7 @@
       color: blue;
 
       &:hover {
-        background-color: rgb(130, 130, 130);
+        background-color: rgb(189, 204, 222);
       }
     }
 
@@ -53,7 +60,7 @@
       color: green;
 
       &:hover {
-        background-color: rgb(130, 130, 130)
+        background-color: rgb(189, 204, 222);
       }
     }
 
@@ -61,7 +68,7 @@
       color: rgb(96, 96, 96);
 
       &:hover {
-        background-color:rgb(163, 163, 163)
+        background-color:rgb(189, 204, 222);
       }
     }
 
@@ -69,7 +76,7 @@
       color: red;
 
       &:hover {
-        background-color: rgb(130, 130, 130);
+        background-color: rgb(189, 204, 222);
       }
     }
   }

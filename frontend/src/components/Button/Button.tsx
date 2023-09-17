@@ -3,12 +3,13 @@ import styles from './Button.module.scss'
 import cn from 'classnames'
 
 interface ButtonProps {
-    onClick: () => void
+    onClick?: () => void
+    onClickForm?: (e: React.FormEvent) => void
     children: React.ReactNode
     btnType: string
 }
 
-export const Button = ({onClick, children, btnType}: ButtonProps): JSX.Element => {
+export const Button = ({onClickForm, onClick, children, btnType}: ButtonProps): JSX.Element => {
     return (
         <>
             <button 
@@ -17,7 +18,12 @@ export const Button = ({onClick, children, btnType}: ButtonProps): JSX.Element =
                     styles.btn, 
                     styles[`btn--${btnType}`]
                     )} 
-                onClick={onClick}>{children}
+                onClick={onClick || onClickForm}>
+                    <div className={cn(
+                    styles[`btn--children`]
+                    )}>
+                        {children}
+                    </div>
             </button>
         </>
     )

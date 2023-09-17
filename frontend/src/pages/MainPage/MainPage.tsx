@@ -3,6 +3,7 @@ import styles from './MainPage.module.scss'
 import { Link, Outlet } from 'react-router-dom'
 import cn from 'classnames'
 import { Button } from '../../components/Button'
+import { MdFlightTakeoff } from 'react-icons/md'
 
 export default function MainPage(): JSX.Element {
     const navigate = useNavigate()
@@ -26,7 +27,12 @@ export default function MainPage(): JSX.Element {
                 </div>
                 <Button 
                     onClick={handleStart} 
-                    children={'Start'} 
+                    children={
+                        <div>
+                          Start{' '}
+                          <MdFlightTakeoff />
+                        </div>
+                    } 
                     btnType={'start'}
                 />
             </div>

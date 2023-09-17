@@ -13,11 +13,17 @@
   }
 
   .Form {
-    margin: 10px 0 10px 10px;
     align-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
+  }
+
+  .InputWrapper {
+    margin: 10px 0 10px 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
   }
 
 .CloseInfo {
@@ -33,14 +39,11 @@
     font-size: 1rem;
   }
 
-  .FormButton {
-    color: green;
-    border-radius: 5px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    width: 150px;
-    height: 2rem;
+  .wrapperFormButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 5px 10px;
   }
   
   .FormButton:hover {

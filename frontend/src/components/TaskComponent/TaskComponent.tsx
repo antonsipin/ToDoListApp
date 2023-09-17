@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './TaskComponent.module.scss'
 import { Button } from '../Button'
+import { UpdateInput } from '../UpdateInput/UpdateInput'
+import { MdEditOff, MdDoneOutline, MdRemoveDone, MdEditSquare, MdDeleteOutline } from 'react-icons/md'
 
 interface TaskProps {
   onHandleUpdate: (id: string, updateTaskName: string, updateTaskDescription: string) => void
@@ -29,16 +31,30 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                   {
                     task.isUpdate && 
                     <div className={styles.updateInputs}>
-                      <input placeholder='Task name' className={styles.Input} onChange={(event) => setUpdateTaskName(event.target.value)} type="text" 
-                    />
-                    <input placeholder='Description' className={styles.Input} onChange={(event) => setUpdateTaskDescription(event.target.value)} type="text" 
-                    />
+                      <UpdateInput 
+                        taskPlaceholder={'Task name'}
+                        taskDescriptionPlaceholder={'Task Description'}
+                        task={updateTaskName}
+                        taskDescription={updateTaskDescription}
+                        setTask={setUpdateTaskName}
+                        setTaskDescription={setUpdateTaskDescription}
+                      />
                     </div>
                   }
                   {
                     <Button 
                       onClick={() => onHandleResolve(task.id)} 
-                      children={task.status ? 'UnResolve ⤴️' : 'Resolve ✔️'} 
+                      children={
+                        task.status ?
+                          <div>
+                            UnResolve{' '}
+                            <MdRemoveDone />
+                          </div> :
+                          <div>
+                            Resolve{' '}
+                            <MdDoneOutline />
+                          </div>
+                      } 
                       btnType={'resolve'}
                     />
                   }
@@ -46,18 +62,33 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                     task.isUpdate && !updateTaskName.length ? 
                     <Button 
                     onClick={() => onHandleHide(task.id)}
-                    children={'Hide input ✖️'}
+                    children={
+                      <div>
+                        Hide input{' '}
+                        <MdEditOff />
+                      </div>
+                    }
                     btnType='hide'
                     />:
                     <Button 
                       onClick={() => onHandleUpdate(task.id, updateTaskName, updateTaskDescription)} 
-                      children={'Update ✏️'} 
+                      children={
+                        <div>
+                          Update{' '}
+                        <MdEditSquare />
+                      </div>
+                      } 
                       btnType='update'
                     />
                   }
                     <Button 
                       onClick={() => onHandleDelete(task.id)} 
-                      children={'Delete ✖️'}
+                      children={
+                        <div>
+                          Delete{' '}
+                          <MdDeleteOutline />
+                        </div>
+                      }
                       btnType='delete'
                     />
                 </div>

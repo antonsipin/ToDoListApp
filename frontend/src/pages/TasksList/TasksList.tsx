@@ -13,12 +13,14 @@ import cn from 'classnames'
 import Button from '../../components/Button'
 import ReactPaginate from 'react-paginate'
 import { AlertComponent } from '../../components/Alert'
+import { MdOutlineList, MdOutlineViewList } from 'react-icons/md'
+import { Select } from '../../components/Select/Select'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
   const { info, error, tasks, handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
   const location = useLocation()
-  const DEFAULT_PAGE_SIZE = 7
+  const DEFAULT_PAGE_SIZE = 5
   const [theme, setTheme] = useState('White')
   const [tableMode, setTableMode] = useState(false)
   const [itemOffset, setItemOffset] = useState(0)
@@ -56,25 +58,44 @@ export default function TasksList(): JSX.Element {
     <div className={styles[theme]}>
       <div className={styles.header}>
         <Link to='/logout' className={styles.LogoutLink}>Logout</Link>
+        <div className={theme}>
+          <Select value={theme} setTheme={setTheme} />
+        </div>
 
-        <select className={theme} value={theme} onChange={(e) => setTheme(e.currentTarget.value)}>
-            <option value='White'>White</option>
-            <option value='Black'>Black</option>
-        </select>
-        <Button 
-        onClick={() => setTableMode(!tableMode)} 
-        children={'Switch mode'} 
-        btnType={'mode'}
-      />
+        <div className={styles.switchModeBtn}>
+          <Button 
+            onClick={() => setTableMode(!tableMode)} 
+            children={
+              tableMode ?
+                <div>
+                  Switch mode{' '}
+                  <MdOutlineList />
+                </div> :
+                <div>
+                  Switch mode{' '}
+                  <MdOutlineViewList />
+                </div>
+          } 
+          btnType={'mode'}
+        />
+        </div>
+        
       <span className={styles.userName}>
         {`Good job, ${location.state?.name}!`}
       </span>
       </div>
-      {info || error ? <AlertComponent error={error} info={info} onHandleInfo={handleInfo} onHandleError={handleError}/>: ''}
+
+      {info || error ? 
+      <AlertComponent 
+      error={error} 
+      info={info} 
+      onHandleInfo={handleInfo} 
+      onHandleError={handleError}/>: 
+      ''}
+
       <Form onHandleSubmit={handleSubmit} />
-      
+
       {tableMode ? (
-        
         !isLoaded ?
         <div className={styles.loader}>
         <Spinner />
