@@ -89,7 +89,7 @@ const updateTask = async (req, res) => {
     const { id, taskName, taskDescription } = req.body
     const { email } = req.session.user
     const user = await User.findOne({ email }).lean()
-    if (user.tasks.some((task) => task.name === taskName)) {
+    if (user.tasks.some((task) => task.name === taskName && task.message === taskDescription)) {
       res.send(response('Error', 'The task already exists'))
     } else {
       const updatedTasks = user.tasks.map((task) => {
