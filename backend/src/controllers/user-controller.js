@@ -21,7 +21,8 @@ const signUp = async (req, res) => {
             const newUser = new User({
                 name,
                 email,
-                password: hashPass
+                password: hashPass,
+                tasks: []
             })
             await newUser.save()
             req.session.user = serializeUser(newUser)

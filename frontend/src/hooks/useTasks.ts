@@ -1,3 +1,4 @@
+import { error } from 'console';
 import { useState, useReducer } from 'react'
 import Task from '../types/Task'
 import * as api from '../api/api'
@@ -15,51 +16,87 @@ export default function useTasks() {
     const [info, setInfo] = useState<boolean>(false)
 
     function handleLoadTasks(): void {
-        api.getTasks().then((response) => dispatch({type: 'tasks/getTasks', payload: response.data}))
+      try {
+        api.getTasks().then((response) => {
+          if (response.result === 'Error' && response.error) {
+            setError(response.error)
+          } else if (response.result === 'Successfully' && response.data) {
+            dispatch({type: 'tasks/getTasks', payload: response.data})
+            setError('')
+          } else {
+            setError('Something went wrong')
+          }
+        })
+      } catch (e) {
+        setError(String(e))
+      }
     }
 
     function handleResolve(id: string): void {
+      try {
         api.resolveTask(id).then((response) => {
-          if (!response.error) {
+          if (response.result === 'Successfully') {
             dispatch({type: 'tasks/resolveTask', payload: id})
             setError('')
-          } else {
+          } else if (response.result === 'Error' && response.error) {
             setError(response.error)
+          } else {
+            setError('Something went wrong')
           }
         })
+      } catch (e) {
+        setError(String(e))
+      }
+        
       }
 
       function handleDelete(id: string): void {
-        api.deleteTask(id).then((response) => {
-          if (response.error) {
-            setError(response.error) 
-          } else {
-            dispatch({type: 'tasks/deleteTask', payload: id})
-            setError('')
-          }
-        })
+        try {
+          api.deleteTask(id).then((response) => {
+            if (response.result === 'Error') {
+              setError(response.error) 
+            } else if (response.result === 'Successfully') {
+              dispatch({type: 'tasks/deleteTask', payload: id})
+              setError('')
+            } else {
+              setError('Something went wrong')
+            }
+          })
+        } catch (e) {
+          setError(String(e))
+        }
       }
 
       function handleHide(id: string): void {
-        dispatch({type: 'updateInputs/hideInput', payload: id})
-        setError('')
+        try {
+          dispatch({type: 'updateInputs/hideInput', payload: id})
+          setError('')
+        } catch (e) {
+          setError(String(e))
+        }
       }
 
       function handleCreateTask(task: string, taskDescription: string) {
-        if (task.length) {
+        try {
+          if (task.length) {
             api.addTask(task, taskDescription).then((response) => {
-              if (response.error) {
+              if (response.result === 'Error') {
                 setError(response.error)
-              } else if (response.data) {
+              } else if (response.result === 'Successfully' && response.data) {
                 dispatch({type: 'tasks/createTask', payload: response.data})
                 setError('')
                 setInfo(false)
+              } else {
+                setError('Something went wrong')
               }
             })
           } else {
             setError('Can not add empty task')
             setInfo(false)
           }
+        } catch (e) {
+          setError(String(e))
+        }
       }
 
       function handleInfo(currentInfo: boolean): void {
@@ -71,34 +108,40 @@ export default function useTasks() {
       }
 
       function handleUpdate(id: string, taskName: string, taskDescription: string): void {
-        tasks.map((task) => {
-          if (!tasks.some((el: Task) => el.isUpdate === true)) {
-                if (task.id === id) {
-                  dispatch({type: 'updateInputs/hideInput', payload: id})
-                  setError('')
-                  handleInfo(false)
-              }
-            } else if (task.isUpdate && taskName && task.id === id) {
-                    api.updateTask(id, taskName, taskDescription).then((response) => {
-                      if (response.error) {
-                        setError(response.error)
-                      } else {
-                        dispatch({type: 'tasks/updateTask', payload: {
-                          updateInput: { taskName, taskDescription }, taskId: id
-                        }})
-                        setError('')
-                      }
-                      handleInfo(false)
-                    })
-          } else if (!task.isUpdate && task.id === id) {
-              handleInfo(true)
-              setError('')
-          } else if (task.isUpdate && !taskName && task.id === id) {
-            dispatch({type: 'updateInputs/hideInput', payload: id})
-            handleInfo(false)
-          }
-          return task
-        })
+        try {
+          tasks.map((task) => {
+            if (!tasks.some((el: Task) => el.isUpdate === true)) {
+                  if (task.id === id) {
+                    dispatch({type: 'updateInputs/hideInput', payload: id})
+                    setError('')
+                    handleInfo(false)
+                }
+              } else if (task.isUpdate && taskName && task.id === id) {
+                      api.updateTask(id, taskName, taskDescription).then((response) => {
+                        if (response.result === 'Error' &&  response.error) {
+                          setError(response.error)
+                        } else if (response.result === 'Successfully' && response.data) {
+                          dispatch({type: 'tasks/updateTask', payload: {
+                            updateInput: { taskName, taskDescription }, taskId: id
+                          }})
+                          setError('')
+                        } else {
+                          setError('Something went wrong')
+                        }
+                        handleInfo(false)
+                      })
+            } else if (!task.isUpdate && task.id === id) {
+                handleInfo(true)
+                setError('')
+            } else if (task.isUpdate && !taskName && task.id === id) {
+              dispatch({type: 'updateInputs/hideInput', payload: id})
+              handleInfo(false)
+            }
+            return task
+          })
+        } catch (e) {
+          setError(String(e))
+        }
       }
 
      return {

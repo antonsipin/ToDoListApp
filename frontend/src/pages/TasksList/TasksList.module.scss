@@ -15,6 +15,14 @@
   align-items: center;
 }
 
+.noTasks {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 40px 0;
+}
+
 .userName {
   font-weight: 700;
   color: red;
@@ -63,4 +71,5 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 150px 0 0 0;
 }

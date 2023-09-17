@@ -16,7 +16,7 @@ import { AlertComponent } from '../../components/Alert'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
-  const { info, error, tasks,  handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+  const { info, error, tasks, handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
   const location = useLocation()
   const DEFAULT_PAGE_SIZE = 7
   const [theme, setTheme] = useState('White')
@@ -25,6 +25,7 @@ export default function TasksList(): JSX.Element {
   const endOffset = itemOffset + DEFAULT_PAGE_SIZE
   const currentItems = useMemo(() => tasks.slice(itemOffset, endOffset), [tasks, itemOffset, endOffset])
   const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
+  const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
     const ws = new WebSocket(URL)
@@ -32,7 +33,13 @@ export default function TasksList(): JSX.Element {
     }
     ws.onmessage = (event) => {
     }
+
     handleLoadTasks()
+
+    const timer = setTimeout(() => {
+      setIsLoaded(true)
+    }, 1000)
+    return () => clearTimeout(timer)
   }, [])
 
   function handleSubmit(event: React.FormEvent, task: string, taskDescription: string): void {
@@ -67,32 +74,38 @@ export default function TasksList(): JSX.Element {
       <Form onHandleSubmit={handleSubmit} />
       
       {tableMode ? (
-        tasks.length  ?
-          <div
+        
+        !isLoaded ?
+        <div className={styles.loader}>
+        <Spinner />
+        </div>:
+        <div>
+          {currentItems.length ? <div
           className={cn(
             styles.tableWrapper, 
             styles[`tableWrapper--${theme}`]
             )}
           >
             <MaterialTable tasks={tasks} />
-          </div> :
-          <div className={styles.loader}>
-          <Spinner />
-          </div> || <NoTasks />
+          </div>:
+           <NoTasks />
+           }
+        </div>
+          
       ) : (
         <div className={styles.taskWrapper}>
-        {   
-            currentItems.length ?  
-            
+        {   !isLoaded ? 
+            <div className={styles.loader}>
+            <Spinner />
+            </div> : (
+              currentItems.length ?  
               currentItems.map(
-              
               (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} className={theme}/>
-              ):
-              <div className={styles.loader}>
-                <Spinner />
-              </div> || <NoTasks />
+              ): 
+                <NoTasks />
+            )
         }
-              <ReactPaginate
+              {isLoaded && <ReactPaginate
                 nextLabel="next >"
                 onPageChange={handlePageClick}
                 pageRangeDisplayed={3}
@@ -112,6 +125,7 @@ export default function TasksList(): JSX.Element {
                 activeClassName="active"
                 renderOnZeroPageCount={null}
               />
+              }
       </div>
       )
       }

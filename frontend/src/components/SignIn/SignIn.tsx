@@ -14,8 +14,9 @@ export default function SignIn(): JSX.Element {
     const [ signInError, setSignInError ] = useState('')
     const navigate = useNavigate()
 
-    const navigateToTasks = (userName: string) => {
-        navigate('/tasks', { state: { id: 1, name: userName }});
+    const navigateToTasks = (user: { name: string, email: string }) => {
+        const { name, email } = user
+        navigate('/tasks', { state: { id: 1, name, email }});
           }
  
     const signIn = useCallback((signInUser: SignInUser) => {
@@ -26,7 +27,8 @@ export default function SignIn(): JSX.Element {
                         setSignInError(response.error)
                     } else {
                         if (response.result === 'Successfully' && response.data) {
-                            const user = response.data.name
+                            const { name, email } = response.data
+                            const user = { name, email }
                             navigateToTasks(user)
                             setSignInError('')
                         }
