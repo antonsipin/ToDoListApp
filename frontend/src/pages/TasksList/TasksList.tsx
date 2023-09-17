@@ -20,7 +20,7 @@ const URL = 'ws://localhost:3100'
 export default function TasksList(): JSX.Element {
   const { info, error, tasks, handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
   const location = useLocation()
-  const DEFAULT_PAGE_SIZE = 5
+  const DEFAULT_PAGE_SIZE = 8
   const [theme, setTheme] = useState('White')
   const [tableMode, setTableMode] = useState(false)
   const [itemOffset, setItemOffset] = useState(0)
