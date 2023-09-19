@@ -1,3 +1,6 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
 .Form {
     display: flex;
     align-items: center;
@@ -43,6 +46,16 @@
     color: blue;
     cursor: pointer; 
     margin: 0 10px 10px 10px;   
+
+    @include viewport--smd {
+        font-size: 1rem;
+      }
+  
+      @include viewport--sm {
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: 0 5px 10px 5px;
+      }
 }
 
 .SignInLink  {
@@ -51,6 +64,16 @@
     color: blue;
     cursor: pointer;
     margin: 0 10px 10px 10px;
+
+    @include viewport--smd {
+        font-size: 1rem;
+      }
+  
+      @include viewport--sm {
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: 0 5px 10px 5px;
+      }
 }
 
 .MainPageLink {
@@ -60,6 +83,16 @@
     cursor: pointer;
     margin: 0 10px 10px 10px;
     flex-shrink: 0;
+
+    @include viewport--smd {
+        font-size: 1rem;
+      }
+  
+      @include viewport--sm {
+        font-size: 0.8rem;
+        font-weight: 500;
+        margin: 0 5px 10px 5px;
+      }
 }
 
 .Select {

@@ -64,7 +64,7 @@ export default function TaskCard(): JSX.Element {
               styles.TaskName}>{task?.name}
             </div>
 
-            <div className={styles.TaskDescription}>Description: {task?.message}</div>
+            <div className={styles.taskDescription}>Description: {task?.message}</div>
             {
               task && task.isUpdate && 
                     <div className={styles.updateInputs}>
@@ -79,10 +79,9 @@ export default function TaskCard(): JSX.Element {
                     </div>
             }
 
-            {task && <div className={styles.buttons}>
-                  
+            {task &&          
+            <div className={styles.buttons}>
                   {
-                    
                     <Button 
                     onClick={() => handleResolve(task.id)} 
                     children={

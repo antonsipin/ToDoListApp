@@ -64,11 +64,6 @@
     margin: 640px 0 0 0;
    }
 
-  // @include viewport--smd {
-  //   position: absolute;
-  //   margin: 640px 0 0 0;
-  //  }
-
   @include viewport--sm {
     position: absolute;
     margin: 850px 0 0 0;
@@ -147,7 +142,6 @@
   justify-content: center;
   margin: 0 10px 10px 10px;
   flex-wrap: wrap;
-
 }
 
 .loader {

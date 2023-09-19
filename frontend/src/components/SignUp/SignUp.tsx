@@ -105,7 +105,7 @@ export default function SignUp(): JSX.Element {
                         btnType={'submit'} 
                         children={
                             <div>
-                              Create account{' '}
+                              Register{' '}
                               <MdOutlineChevronRight />
                             </div>
                           }
