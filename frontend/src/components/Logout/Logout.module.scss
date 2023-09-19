@@ -138,7 +138,7 @@
     }
 
     @include viewport--sm {
-        font-size: 0.8rem;
+        font-size: 0.9rem;
         font-weight: 500;
     }
 }
@@ -147,6 +147,15 @@
     font-size: 1.1rem;
     font-weight: 400;
     color: blue;
+
+    @include viewport--smd {
+      font-size: 1rem;
+  }
+
+  @include viewport--sm {
+      font-size: 0.8rem;
+      font-weight: 500;
+  }
 }
 
 .buttons {
