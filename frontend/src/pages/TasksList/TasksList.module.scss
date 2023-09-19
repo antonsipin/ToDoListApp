@@ -8,17 +8,17 @@
 
   @include viewport--2xl {
     width: 100%;
-    height: 850px;
+    height: 950px;
   }
 
   @include viewport--xl {
     width: 100%;
-    height: 850px;
+    height: 950px;
   }
 
   @include viewport--lg {
     width: 100%;
-    height: 850px;
+    height: 950px;
   }
 
   @include viewport--md {
@@ -76,12 +76,12 @@
 
   @include viewport--xs {
     position: absolute;
-    margin: 950px 0 0 0;
+    margin: 1024px 0 0 0;
    }
 
   @include viewport--x {
     position: absolute;
-    margin: 950px 0 0 0;
+    margin: 1024px 0 0 0;
    }
 }
 
