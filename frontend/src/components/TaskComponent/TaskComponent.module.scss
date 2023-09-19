@@ -13,34 +13,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
-  // @include viewport--lg {
-  //   width: $viewport--md;
-  //  }
-
-  // @include viewport--md {
-  //   width: $viewport--smd;
-  //  }
-
-  // @include viewport--smd {
-  //   width: $viewport--sm;
-  //  }
-
-  // @include viewport--sm {
-  //   width: $viewport--xs;
-  //  }
 }
 
 .updateInputs {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15px 10px 0 0;
-
-  // @include viewport--md {
-  //   width: $viewport--smd;
-  //   margin: 15px 0 0 0;
-  //  }
+  margin: 25px 10px 0 0;
   }
 
   .buttons {
