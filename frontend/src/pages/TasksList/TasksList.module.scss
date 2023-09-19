@@ -6,8 +6,18 @@
   height: 760px;
   width: 100%;
 
+  @include viewport--2xl {
+    width: 100%;
+    height: 850px;
+  }
+
+  @include viewport--xl {
+    width: 100%;
+    height: 850px;
+  }
+
   @include viewport--lg {
-    width: 100%;;
+    width: 100%;
     height: 850px;
   }
 
@@ -18,22 +28,22 @@
 
   @include viewport--smd {
     width: 100%;
-    height: 850px;
+    height: 1200px;
    }
 
   @include viewport--sm {
     width: 100%;
-    height: 1050px;
+    height: 1240px
    }
 
   @include viewport--xs {
     width: 100%;
-    height: 1050px;
+    height: 1240px
    }
 
   @include viewport--x {
     width: 100%;
-    height: 1050px;
+    height: 1350px
    }
 
   &--White {
@@ -49,9 +59,34 @@
   margin: 620px 0 0 0;
   position: absolute;
 
-  @include viewport--lg {
+  @include viewport--md {
     position: absolute;
-    margin: 900px 0 0 0;
+    margin: 640px 0 0 0;
+   }
+
+  // @include viewport--smd {
+  //   position: absolute;
+  //   margin: 640px 0 0 0;
+  //  }
+
+  @include viewport--sm {
+    position: absolute;
+    margin: 850px 0 0 0;
+   }
+
+  @include viewport--smd {
+    position: absolute;
+    margin: 950px 0 0 0;
+   }
+
+  @include viewport--xs {
+    position: absolute;
+    margin: 950px 0 0 0;
+   }
+
+  @include viewport--x {
+    position: absolute;
+    margin: 950px 0 0 0;
    }
 }
 
