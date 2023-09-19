@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MaterialReactTable, { MRT_ColumnDef } from "material-react-table"
 import Task from '../../types/Task'
+import { ThemeContext } from '../../App/ThemeContext'
 
 export const columns: MRT_ColumnDef<Task>[] = [
     {
@@ -15,6 +16,7 @@ export const columns: MRT_ColumnDef<Task>[] = [
   ]
 
   export function MaterialTable({ tasks }: any) {
+    const { theme } = useContext(ThemeContext)
     const tasksData: Task[] = useMemo(() => tasks || [], [tasks])
     const navigate = useNavigate()
 
@@ -27,7 +29,6 @@ export const columns: MRT_ColumnDef<Task>[] = [
             <MaterialReactTable
             columns={columns}
             data={tasksData}
-            enableRowSelection={(row) => row.original.status === false}
             enableRowNumbers
             rowNumberMode='static'
             enableFullScreenToggle={false}
@@ -35,8 +36,19 @@ export const columns: MRT_ColumnDef<Task>[] = [
             muiTableBodyRowProps={({ row }) => ({
                 onClick: () => handleClick(row.id),
                 sx: {
-                cursor: 'pointer'
+                cursor: 'pointer',
+                backgroundColor: theme === 'White' ? 'white' : 'rgb(80, 80, 80)',
                 },
+            })}
+            muiTableHeadCellProps={() => ({
+              sx: {
+                backgroundColor: theme === 'White' ? 'white' : 'rgb(80, 80, 80)',
+              },
+            })}
+            muiTablePaginationProps={() => ({
+              sx: {
+                backgroundColor: theme === 'White' ? 'white' : 'rgb(80, 80, 80)',
+              },
             })}
             />
     );

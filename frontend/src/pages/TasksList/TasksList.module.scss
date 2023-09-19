@@ -33,12 +33,12 @@
 
   @include viewport--sm {
     width: 100%;
-    height: 1240px
+    height: 1350px
    }
 
   @include viewport--xs {
     width: 100%;
-    height: 1240px
+    height: 1350px
    }
 
   @include viewport--x {
@@ -66,12 +66,12 @@
 
   @include viewport--sm {
     position: absolute;
-    margin: 850px 0 0 0;
+    margin: 950px 0 0 0;
    }
 
   @include viewport--smd {
     position: absolute;
-    margin: 950px 0 0 0;
+    margin: 1024px 0 0 0;
    }
 
   @include viewport--xs {
@@ -155,7 +155,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5px 0 0 0;
+  margin: 0 0 5px 0;
 }
 
 .Select {
