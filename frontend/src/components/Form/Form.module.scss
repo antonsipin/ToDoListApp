@@ -1,42 +1,39 @@
-.InputForm {
-    border-color: darkgray;
-    height: 2rem;
-    text-align: center;
-    border-radius: 5px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin: 10px 10px 10px 10px;;
-    font-size: 1.3rem;
-    color: red;
-    font-weight: bold;
-    border-style:groove;
-    border-color: darkgray;
-  }
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
 
-  .Form {
+.Wrapper {
     align-items: center;
     justify-content: center;
     display: flex;
-    flex-direction: column;
-  }
+    margin: 0 10px 0 10px;
 
-  .InputWrapper {
-    margin: 10px 0 10px 0;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-  }
+    @include viewport--sm {
+      flex-wrap: wrap;
+    }
+}
 
-.CloseInfo {
-    color: blue;
-    margin-left: 20px;
-    height: 20px;
-    cursor: pointer;
-  }
+.InputWrapper {
+    width: $viewport--lg;
 
-.FormError {
-    color: red;
-    margin: 20px 0 20px 50px;
-    font-size: 1rem;
+    @include viewport--xl {
+      width: $viewport--lg;
+    }
+
+    @include viewport--md {
+      width: $viewport--md;
+    }
+
+    @include viewport--sm {
+      width: $viewport--sm;
+    }
+
+    @include viewport--smd {
+      width: $viewport--smd;
+    }
+
+    @include viewport--xs {
+      width: $viewport--xs;
+    }
   }
 
   .wrapperFormButton {
@@ -44,9 +41,5 @@
     justify-content: center;
     align-items: center;
     margin: 0 0 15px 0;
-  }
-  
-  .FormButton:hover {
-    background-color: rgb(130, 130, 130);
   }
  

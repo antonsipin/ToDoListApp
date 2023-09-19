@@ -67,7 +67,13 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    margin: 10px 0 0 0;
+    margin: 10px 0 10px 0;
+}
+
+.Alert {
+  position: absolute;
+  margin: 100px 0 0 0;
+  z-index: 10;
 }
 
 .SignUpLink {

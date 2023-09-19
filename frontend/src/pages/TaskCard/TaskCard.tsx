@@ -47,13 +47,13 @@ export default function TaskCard(): JSX.Element {
                 </div>
           </div>
 
-          {info || error ? 
-            <AlertComponent 
-            error={error} 
-            info={info} 
-            onHandleInfo={handleInfo} 
-            onHandleError={handleError}/>: ''
-            }
+          {info || error ?
+              <AlertComponent 
+                error={error} 
+                info={info} 
+                onHandleInfo={handleInfo} 
+                onHandleError={handleError}
+                />: ''}
 
           <div className={styles.taskCard}>
             <div className={task?.status ? 

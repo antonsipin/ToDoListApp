@@ -20,26 +20,25 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
   const [updateTaskDescription, setUpdateTaskDescription] = useState<string>('')
 
     return (
-        <div className={className}>
-            <div className={task.status ? styles.Resolved : styles.UnResolved} >
-                  <div>
+            <div className={styles.Wrapper} >
+                  <div className={styles.taskAndInput}>
                     <Link to={`/tasks/${task.id}`}>
-                      <span className={task.status ? styles.ResolvedTaskName : styles.TaskName}>{task.name}</span>
-                    </Link>
+                        <span className={task.status ? styles['Task--resolved'] : styles.Task}>{task.name}</span>
+                      </Link>
+                    { task.isUpdate && 
+                      <div className={styles.updateInputs}>
+                        <UpdateInput 
+                          taskPlaceholder={'Task name'}
+                          taskDescriptionPlaceholder={'Task Description'}
+                          task={updateTaskName}
+                          taskDescription={updateTaskDescription}
+                          setTask={setUpdateTaskName}
+                          setTaskDescription={setUpdateTaskDescription}
+                        />
+                      </div>}
                   </div>
-                  {
-                    task.isUpdate && 
-                    <div className={styles.updateInputs}>
-                      <UpdateInput 
-                        taskPlaceholder={'Task name'}
-                        taskDescriptionPlaceholder={'Task Description'}
-                        task={updateTaskName}
-                        taskDescription={updateTaskDescription}
-                        setTask={setUpdateTaskName}
-                        setTaskDescription={setUpdateTaskDescription}
-                      />
-                    </div>
-                  }
+
+                  <div className={styles.buttons}>
                   {
                     <Button 
                       onClick={() => onHandleResolve(task.id)} 
@@ -90,7 +89,7 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                       }
                       btnType='delete'
                     />
+                  </div>
                 </div>
-        </div>
     )
 }

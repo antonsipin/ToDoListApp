@@ -23,15 +23,18 @@ export default function Form({onHandleSubmit}: FormProps): JSX.Element {
   }, [onHandleSubmit])
 
     return (
-        <div className={styles.Form}>
-          <div className={styles.InputWrapper}>
-            <Input 
-              taskPlaceholder={'Task name'} 
-              taskDescriptionPlaceholder={'Task description'} 
-              task={task} taskDescription={taskDescription}
-              setTask={setTask}
-              setTaskDescription={setTaskDescription} 
-            />
+          <div className={styles.Wrapper}>
+            <div className={styles.InputWrapper}>
+              <Input 
+                taskPlaceholder={'Name'}
+                taskDescriptionPlaceholder={'Description'} 
+                task={task} 
+                taskDescription={taskDescription}
+                setTask={setTask}
+                setTaskDescription={setTaskDescription} 
+              />
+            </div>
+            
             <div className={styles.wrapperFormButton}>
               <Button 
               children={
@@ -44,8 +47,6 @@ export default function Form({onHandleSubmit}: FormProps): JSX.Element {
               onClickForm={(e: React.FormEvent) => handleSubmit(e)}
               />
             </div>
-            
           </div>
-      </div>
     )
 }

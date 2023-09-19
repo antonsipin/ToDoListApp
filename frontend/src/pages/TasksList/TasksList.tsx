@@ -88,13 +88,14 @@ export default function TasksList(): JSX.Element {
       </span>
       </div>
 
-      {info || error ? 
-      <AlertComponent 
+      {info || error ?
+      <div className={styles.Alert}>
+        <AlertComponent 
       error={error} 
       info={info} 
       onHandleInfo={handleInfo} 
-      onHandleError={handleError}/>: 
-      ''}
+      onHandleError={handleError}/>
+      </div> : ''}
 
       <Form onHandleSubmit={handleSubmit} />
 

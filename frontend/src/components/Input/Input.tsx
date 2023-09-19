@@ -12,7 +12,7 @@ interface InputProps {
 
 export function Input({ taskPlaceholder, taskDescriptionPlaceholder, task, taskDescription, setTask, setTaskDescription } : InputProps) {
   return (
-    <InputGroup className="mb-3">
+    <InputGroup size='sm' className="mb-3">
       <InputGroup.Text>{taskPlaceholder}{' '}{'&'}{' '}{taskDescriptionPlaceholder}</InputGroup.Text>
       <Form.Control onChange={(e) => setTask(e.target.value)} placeholder={taskPlaceholder} value={task} />
       <Form.Control onChange={(e) => setTaskDescription(e.target.value)} placeholder={taskDescriptionPlaceholder} value={taskDescription} />

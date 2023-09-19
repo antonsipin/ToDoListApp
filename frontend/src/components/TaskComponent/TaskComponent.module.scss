@@ -1,75 +1,70 @@
-.White {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: bold;
-    color: blue;
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.Wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 20px 0 20px;
+  flex-wrap: wrap;
 }
 
-.Black {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: bold;
-    color: blue;
-    background-color: black;
-}
+.taskAndInput {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-.Input {
-    border-style:groove;
-    border-color: darkgray;
-    height: 2rem;
-    text-align: center;
-    border-radius: 5px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin-right: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    color: red;
-  }
+  // @include viewport--lg {
+  //   width: $viewport--md;
+  //  }
+
+  // @include viewport--md {
+  //   width: $viewport--smd;
+  //  }
+
+  // @include viewport--smd {
+  //   width: $viewport--sm;
+  //  }
+
+  // @include viewport--sm {
+  //   width: $viewport--xs;
+  //  }
+}
 
 .updateInputs {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15px 10px 0 10px;
+  margin: 15px 10px 0 0;
+
+  // @include viewport--md {
+  //   width: $viewport--smd;
+  //   margin: 15px 0 0 0;
+  //  }
   }
 
-  .Resolved {
+  .buttons {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: right;
-    margin-right: 20px;
-    margin-left: 20px;
   }
 
-  .UnResolved {
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    margin-left: 20px;
-    margin-right: 20px;
-  }
-
-  .TaskName {
+  .Task {
     height: 2.5rem;
     align-items: center;
     justify-content: center;
     display: flex;
-    margin: 15px 20px 5px 0;
-    font-size: 1.4rem;
+    margin: 15px 20px 15px 0;
+    font-size: 1rem;
     font-weight: bold;
     color: red;
-  }
 
-  .ResolvedTaskName {
-    text-decoration-line: line-through;
-    height: 2.5rem;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    margin: 15px 20px 5px 0;
+    &--resolved {
+      text-decoration-line: line-through;
+    }
+
+    @include viewport--md {
+      font-size: 1rem;
+   }
   }
  
