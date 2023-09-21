@@ -1,17 +1,11 @@
-import { error } from 'console';
-import { useState, useReducer } from 'react'
+import { useState, useContext } from 'react'
 import Task from '../types/Task'
 import * as api from '../api/api'
-import { taskReducer } from '../reducer/taskReducer'
-import TasksListState from '../types/TasksListState'
-
-const initialState: TasksListState = {
-    tasks: []
-}
+import { StateContext } from '../App/StateContext'
 
 export default function useTasks() {
     const [error, setError] = useState<string>('')
-    const [state, dispatch] = useReducer(taskReducer, initialState)
+    const { state, dispatch } = useContext(StateContext)
     const { tasks } = state 
     const [info, setInfo] = useState<boolean>(false)
 

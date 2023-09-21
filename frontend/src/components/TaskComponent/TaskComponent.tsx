@@ -1,5 +1,5 @@
-import Task from '../../types/Task'
 import { useState } from 'react'
+import Task from '../../types/Task'
 import { Link } from 'react-router-dom'
 import styles from './TaskComponent.module.scss'
 import { Button } from '../Button'

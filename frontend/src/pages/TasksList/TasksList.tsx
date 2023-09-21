@@ -32,12 +32,34 @@ export default function TasksList(): JSX.Element {
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
-    const ws = new WebSocket(URL)
-    ws.onopen = () => {
-    }
-    ws.onmessage = (event) => {
-    }
+    if(tasks.length) {
+      const ws = new WebSocket(URL)
 
+      ws.onopen = () => {
+        ws.send(JSON.stringify('tasks updated'))
+      }
+
+      ws.onmessage = (event) => {
+        console.log('Server message: ', event.data)
+        if (event.data.includes('tasks updated')) {
+        }
+      }
+
+      ws.onmessage = (event) => {
+        console.log('Server message: ', event.data)
+        if (event.data.includes('tasks updated')) {
+          console.log(tasks)
+        }
+      }
+
+      ws.onclose = ((event) => {
+        ws.send(JSON.stringify('close'))
+        console.log('Close connection')
+      })
+    }
+  }, [])
+
+  useEffect(() => {
     handleLoadTasks()
 
     const timer = setTimeout(() => {
