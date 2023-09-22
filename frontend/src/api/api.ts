@@ -1,7 +1,6 @@
 import { ResponseTask, ResponseUser } from '../types/Response'
 import { User } from '../types/User'
 import { SignInUser } from '../types/SignInUser'
-import { error } from 'console'
 
 export async function getTasks(): Promise<any> {
   try {

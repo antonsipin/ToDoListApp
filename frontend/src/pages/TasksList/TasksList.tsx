@@ -40,21 +40,17 @@ export default function TasksList(): JSX.Element {
       }
 
       ws.onmessage = (event) => {
-        console.log('Server message: ', event.data)
         if (event.data.includes('tasks updated')) {
         }
       }
 
       ws.onmessage = (event) => {
-        console.log('Server message: ', event.data)
         if (event.data.includes('tasks updated')) {
-          console.log(tasks)
         }
       }
 
       ws.onclose = ((event) => {
         ws.send(JSON.stringify('close'))
-        console.log('Close connection')
       })
     }
   }, [])
@@ -124,7 +120,7 @@ export default function TasksList(): JSX.Element {
       {tableMode ? (
         !isLoaded ?
         <div className={styles.loader}>
-        <Spinner />
+          <Spinner />
         </div>:
         <div>
           {currentItems.length ? <div
@@ -138,7 +134,6 @@ export default function TasksList(): JSX.Element {
            <NoTasks />
            }
         </div>
-          
       ) : (
         <div className={styles.taskWrapper}>
         {   !isLoaded ? 
@@ -175,7 +170,6 @@ export default function TasksList(): JSX.Element {
                   renderOnZeroPageCount={null}
                 />
               </div>
-              
               }
       </div>
       )

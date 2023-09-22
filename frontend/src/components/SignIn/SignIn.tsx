@@ -11,6 +11,8 @@ import { validateEmail } from '../../utils/validate'
 import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Select } from '../Select/Select'
+import { addUser } from '../../store/actions'
+import { useDispatch } from 'react-redux'
 
 export default function SignIn(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -19,10 +21,11 @@ export default function SignIn(): JSX.Element {
     const [ signInError, setSignInError ] = useState('')
     const navigate = useNavigate()
     const { theme, setTheme } = useContext(ThemeContext)
+    const dispatch = useDispatch()
 
-    const navigateToTasks = (user: { name: string, email: string }) => {
-        const { name, email } = user
-        navigate('/tasks', { state: { id: 1, name, email }});
+    const navigateToTasks = (user: { id: string, name: string, email: string }) => {
+        const { id, name, email } = user
+        navigate('/tasks', { state: { id, name, email }});
           }
  
     const signIn = useCallback(({ email, password }: SignInUser) => {
@@ -34,8 +37,9 @@ export default function SignIn(): JSX.Element {
                             setSignInError(response.error)
                         } else {
                             if (response.result === 'Successfully' && response.data) {
-                                const { name, email } = response.data
-                                const user = { name, email }
+                                const { id, name, email } = response.data
+                                const user = { id, name, email }
+                                dispatch(addUser(user))
                                 navigateToTasks(user)
                                 setSignInError('')
                             }

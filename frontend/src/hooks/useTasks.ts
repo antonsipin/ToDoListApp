@@ -1,12 +1,14 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import Task from '../types/Task'
 import * as api from '../api/api'
-import { StateContext } from '../App/StateContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask } from '../store/actions'
+import { State } from '../types/State'
 
 export default function useTasks() {
     const [error, setError] = useState<string>('')
-    const { state, dispatch } = useContext(StateContext)
-    const { tasks } = state 
+    const dispatch = useDispatch()
+    const tasks = useSelector((store: State) => store.tasks)
     const [info, setInfo] = useState<boolean>(false)
 
     function handleLoadTasks(): void {
@@ -15,7 +17,7 @@ export default function useTasks() {
           if (response.result === 'Error' && response.error) {
             setError(response.error)
           } else if (response.result === 'Successfully' && response.data) {
-            dispatch({type: 'tasks/getTasks', payload: response.data})
+            dispatch(getTasks(response.data))
             setError('')
           } else {
             setError('Something went wrong')
@@ -30,7 +32,7 @@ export default function useTasks() {
       try {
         api.resolveTask(id).then((response) => {
           if (response.result === 'Successfully') {
-            dispatch({type: 'tasks/resolveTask', payload: id})
+            dispatch(resolveTask(id))
             setError('')
           } else if (response.result === 'Error' && response.error) {
             setError(response.error)
@@ -50,7 +52,7 @@ export default function useTasks() {
             if (response.result === 'Error') {
               setError(response.error) 
             } else if (response.result === 'Successfully') {
-              dispatch({type: 'tasks/deleteTask', payload: id})
+              dispatch(deleteTask(id))
               setError('')
             } else {
               setError('Something went wrong')
@@ -63,7 +65,7 @@ export default function useTasks() {
 
       function handleHide(id: string): void {
         try {
-          dispatch({type: 'updateInputs/hideInput', payload: id})
+          dispatch(hideInput(id))
           setError('')
         } catch (e) {
           setError(String(e))
@@ -77,7 +79,7 @@ export default function useTasks() {
               if (response.result === 'Error') {
                 setError(response.error)
               } else if (response.result === 'Successfully' && response.data) {
-                dispatch({type: 'tasks/createTask', payload: response.data})
+                dispatch(createTask(response.data))
                 setError('')
                 setInfo(false)
               } else {
@@ -106,7 +108,8 @@ export default function useTasks() {
           tasks.map((task) => {
             if (!tasks.some((el: Task) => el.isUpdate === true)) {
                   if (task.id === id) {
-                    dispatch({type: 'updateInputs/hideInput', payload: id})
+                    // dispatch({type: 'updateInputs/hideInput', payload: id})
+                    dispatch(hideInput(id))
                     setError('')
                     handleInfo(false)
                 }
@@ -115,9 +118,10 @@ export default function useTasks() {
                         if (response.result === 'Error' &&  response.error) {
                           setError(response.error)
                         } else if (response.result === 'Successfully' && response.data) {
-                          dispatch({type: 'tasks/updateTask', payload: {
-                            updateInput: { taskName, taskDescription }, taskId: id
-                          }})
+                          // dispatch({type: 'tasks/updateTask', payload: {
+                          //   updateInput: { taskName, taskDescription }, taskId: id
+                          // }})
+                          dispatch(updateTask(id, taskName, taskDescription))
                           setError('')
                         } else {
                           setError('Something went wrong')
@@ -128,7 +132,8 @@ export default function useTasks() {
                 handleInfo(true)
                 setError('')
             } else if (task.isUpdate && !taskName && task.id === id) {
-              dispatch({type: 'updateInputs/hideInput', payload: id})
+              // dispatch({type: 'updateInputs/hideInput', payload: id})
+              dispatch(hideInput(id))
               handleInfo(false)
             }
             return task

@@ -1,38 +1,18 @@
-import { Dispatch, SetStateAction } from 'react'
-import { CREATE_USER, CREATE_USER_ERROR } from './types'
+import { CREATE_USER, DELETE_TASK, RESOLVE_TASK, GET_TASKS, CREATE_TASK, HIDE_INPUT, UPDATE_TASK } from './types'
 import { RegUser } from '../types/RegUser'
-import { RegUserState } from '../types/RegUserState'
-import { User } from '../types/User'
-import * as api from '../api'
+import Task from '../types/Task'
+import { TaskId } from '../types/Task'
 
-type DispatchType = 
-| Dispatch<SetStateAction<RegUserState>>
-| Dispatch<SetStateAction<string>>
-| Dispatch<SetStateAction<RegUser>>
+export const addUser = (user: RegUser) => ({type: CREATE_USER, payload: user})
 
-export const createUser = (user: RegUser) => ({type: CREATE_USER, payload: user})
+export const getTasks = (tasks: Task[]) => ({type: GET_TASKS, payload: tasks})
 
-export const createUserError = (error: string) => ({
-    type: CREATE_USER_ERROR, payload: error
-})
+export const resolveTask = (id: TaskId) => ({type: RESOLVE_TASK, payload: id})
 
-// export const thunkCreateUser = (user: User) => async (dispatch: DispatchType) => {
-//     if (user) {
-//         try {
-//             api.createUser(user).then((response) => {
-//                 if (response.error) {
-//                     dispatch(createUserError(response.error))
-//                 } else {
-//                     if (response.data) {
-//                         dispatch(createUser(response.data))
-//                     }
-//                 }
-//             })
-//         } catch (e) {
-//             dispatch(createUserError('Something went wrong') as { type: string; payload: string; })
-//             console.log(e)
-//         }
-//     } else {
-//         dispatch(createUserError('Missing Email or Password'))
-//     }
-// }
+export const createTask = (task: Task) => ({type: CREATE_TASK, payload: task})
+
+export const deleteTask = (id: TaskId) => ({type: DELETE_TASK, payload: id})
+
+export const hideInput = (id: TaskId) => ({type: HIDE_INPUT, payload: id})
+
+export const updateTask = (id: string, taskName: string, taskDescription: string) => ({type: UPDATE_TASK, payload: {taskId: id, updateInput: {taskName, taskDescription} } })

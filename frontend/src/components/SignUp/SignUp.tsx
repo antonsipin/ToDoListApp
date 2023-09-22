@@ -35,7 +35,6 @@ export default function SignUp(): JSX.Element {
                                 }
                             }
                         })
-                   
                 } else {
                     setSignUpError('Invalid email format')
                 }
