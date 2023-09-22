@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState } from 'react'
 import TasksList from '../pages/TasksList/TasksList'
 import {  BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SignIn from '../components/SignIn/SignIn'
@@ -8,14 +8,11 @@ import Logout from '../components/Logout/Logout'
 import TaskCard from '../pages/TaskCard/TaskCard'
 import { ThemeContext } from '../App/ThemeContext'
 import { TableModeContext } from '../App/TableModeContext'
-import { StateContext } from '../App/StateContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
 import styles from './App.module.scss'
 import { Provider } from 'react-redux'
 import { store } from '../store'
-import { initialState } from '../reducer/state'
-import { taskReducer } from '../reducer/taskReducer'
 
 interface FallbackComponentType {
   error: { message: string }
@@ -36,7 +33,6 @@ export default function App(): JSX.Element {
   const queryClient = new QueryClient()
   const [theme, setTheme] = useState('White')
   const [tableMode, setTableMode] = useState(false)
-  const [state, dispatch] = useReducer(taskReducer, initialState)
 
   return (
     <ErrorBoundary
@@ -46,7 +42,6 @@ export default function App(): JSX.Element {
       }}
       resetKeys={['someKey']}
     >
-      <StateContext.Provider value={{ state, dispatch }}>
         <TableModeContext.Provider value={{ tableMode, setTableMode }}>
           <ThemeContext.Provider value={{ theme, setTheme }} >
             <QueryClientProvider client={queryClient}>
@@ -63,7 +58,6 @@ export default function App(): JSX.Element {
             </QueryClientProvider>
           </ThemeContext.Provider>
         </TableModeContext.Provider>
-      </StateContext.Provider>
       
     </ErrorBoundary>
   )
