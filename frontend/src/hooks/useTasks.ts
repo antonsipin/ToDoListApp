@@ -108,7 +108,6 @@ export default function useTasks() {
           tasks.map((task) => {
             if (!tasks.some((el: Task) => el.isUpdate === true)) {
                   if (task.id === id) {
-                    // dispatch({type: 'updateInputs/hideInput', payload: id})
                     dispatch(hideInput(id))
                     setError('')
                     handleInfo(false)
@@ -118,9 +117,6 @@ export default function useTasks() {
                         if (response.result === 'Error' &&  response.error) {
                           setError(response.error)
                         } else if (response.result === 'Successfully' && response.data) {
-                          // dispatch({type: 'tasks/updateTask', payload: {
-                          //   updateInput: { taskName, taskDescription }, taskId: id
-                          // }})
                           dispatch(updateTask(id, taskName, taskDescription))
                           setError('')
                         } else {
@@ -132,7 +128,6 @@ export default function useTasks() {
                 handleInfo(true)
                 setError('')
             } else if (task.isUpdate && !taskName && task.id === id) {
-              // dispatch({type: 'updateInputs/hideInput', payload: id})
               dispatch(hideInput(id))
               handleInfo(false)
             }
