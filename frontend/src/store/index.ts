@@ -1,8 +1,13 @@
-import { createStore, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
-import { reducers } from './reducers'
+import { taskReducer, userReducer } from './reducers'
 
 const composeEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware))
 
-export const store = createStore(reducers, composeEnhancers)
+export const store = createStore(combineReducers({
+    tasks: taskReducer,
+    user: userReducer
+}), composeEnhancers)
+
+export type RootState = ReturnType<typeof store.getState>

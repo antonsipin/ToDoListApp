@@ -2,9 +2,14 @@ import Action from '../types/Action'
 import Task from '../types/Task'
 import { State } from '../types/State'
 import { CREATE_USER, DELETE_TASK, RESOLVE_TASK, GET_TASKS, CREATE_TASK, HIDE_INPUT, UPDATE_TASK } from './types'
+import { RegUserState } from '../types/RegUserState'
+import TasksListState from '../types/TasksListState'
 
-export const initialTasksState: State = {
+export const initialTasksState: TasksListState = {
     tasks: [],
+}
+
+export const initialUserState: RegUserState = {
     user: {
         id: '',
         name: '',
@@ -12,18 +17,12 @@ export const initialTasksState: State = {
     }
 }
 
-export const reducers = (state = initialTasksState, action: Action) => {
+export const taskReducer = (state = initialTasksState, action: Action) => {
     function sortByName() {
         return (a: Task, b: Task) => a.name.localeCompare(b.name)
     }
 
     switch(action.type) {
-        case CREATE_USER: {
-            return {
-                ...state,
-                user: action.payload
-            }
-        }
         case DELETE_TASK: {
             return {
 
@@ -76,6 +75,22 @@ export const reducers = (state = initialTasksState, action: Action) => {
                     } 
                     return task
                 }).sort(sortByName())
+            }
+        }
+        default: {
+            return {
+                ...state
+            }
+        }
+    }
+}
+
+export const userReducer = (state = initialUserState, action: Action) => {
+    switch(action.type) {
+        case CREATE_USER: {
+            return {
+                ...state,
+                user: action.payload
             }
         }
         default: {

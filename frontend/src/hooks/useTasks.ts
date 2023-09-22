@@ -3,12 +3,12 @@ import Task from '../types/Task'
 import * as api from '../api/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask } from '../store/actions'
-import { State } from '../types/State'
+import RootState from '../types/RootState'
 
 export default function useTasks() {
     const [error, setError] = useState<string>('')
     const dispatch = useDispatch()
-    const tasks = useSelector((store: State) => store.tasks)
+    const tasks = useSelector((store: RootState) => store.tasks.tasks)
     const [info, setInfo] = useState<boolean>(false)
 
     function handleLoadTasks(): void {
