@@ -4,5 +4,4 @@ export type RegUserState = {
         email: string
         id: string
     }
-    createUserError: string
 }
