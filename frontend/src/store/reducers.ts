@@ -1,6 +1,5 @@
 import Action from '../types/Action'
 import Task from '../types/Task'
-import { State } from '../types/State'
 import { CREATE_USER, DELETE_TASK, RESOLVE_TASK, GET_TASKS, CREATE_TASK, HIDE_INPUT, UPDATE_TASK } from './types'
 import { RegUserState } from '../types/RegUserState'
 import TasksListState from '../types/TasksListState'

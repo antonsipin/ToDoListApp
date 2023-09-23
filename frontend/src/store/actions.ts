@@ -15,4 +15,7 @@ export const deleteTask = (id: TaskId) => ({type: DELETE_TASK, payload: id})
 
 export const hideInput = (id: TaskId) => ({type: HIDE_INPUT, payload: id})
 
-export const updateTask = (id: string, taskName: string, taskDescription: string) => ({type: UPDATE_TASK, payload: {taskId: id, updateInput: {taskName, taskDescription} } })
+export const updateTask = (id: string, taskName: string, taskDescription: string) => ({
+    type: UPDATE_TASK, 
+    payload: {taskId: id, updateInput: {taskName, taskDescription}}
+})
