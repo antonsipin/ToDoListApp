@@ -1,13 +1,15 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension'
-import thunkMiddleware from 'redux-thunk'
-import { taskReducer, userReducer } from './reducers'
+import { configureStore } from '@reduxjs/toolkit'
+import { useDispatch } from 'react-redux'
+import {tasksReducer } from './tasksSlice'
+import { userReducer } from './userSlice'
 
-const composeEnhancers = composeWithDevTools(applyMiddleware(thunkMiddleware))
+export const store = configureStore({
+    reducer: {
+        tasks: tasksReducer,
+        user: userReducer
+    }
+})
 
-export const store = createStore(combineReducers({
-    tasks: taskReducer,
-    user: userReducer
-}), composeEnhancers)
-
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
 export type RootState = ReturnType<typeof store.getState>

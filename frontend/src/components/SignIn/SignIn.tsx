@@ -11,8 +11,8 @@ import { validateEmail } from '../../utils/validate'
 import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Select } from '../Select/Select'
-import { addUser } from '../../store/actions'
-import { useDispatch } from 'react-redux'
+import { addUser } from '../../store/userSlice'
+import { useAppDispatch } from '../../store/index'
 
 export default function SignIn(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -21,7 +21,7 @@ export default function SignIn(): JSX.Element {
     const [ signInError, setSignInError ] = useState('')
     const navigate = useNavigate()
     const { theme, setTheme } = useContext(ThemeContext)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
 
     const navigateToTasks = (user: { id: string, name: string, email: string }) => {
         const { id, name, email } = user

@@ -40,7 +40,6 @@ export const useTableSort = <T extends Record<string, string>>({
   const sortTable = useCallback(
     (column: string) => {
       const sortKey = columnSortMap[column as keyof typeof columnSortMap]
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setQuery((current: any) => {
         const filtered = Object.fromEntries(Object
           .entries(current)

@@ -9,6 +9,7 @@ import { AlertComponent } from '../../components/Alert'
 import { ThemeContext } from '../../App/ThemeContext'
 import cn from 'classnames'
 import { Select } from '../../components/Select/Select'
+import Task from '../../types/Task'
 
 export default function TaskCard(): JSX.Element {
     const { info, error, tasks, handleInfo, handleError, handleLoadTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
@@ -24,9 +25,9 @@ export default function TaskCard(): JSX.Element {
       }, [])
 
     const handleBack = () => navigate(-1)
-    const task = tasks.find((task) => task.id === id)
+    const task = tasks.find((task: Task) => task.id === id)
 
-    const onHandleDelete = (id: string) => {
+    const currentHandleDelete = (id: string) => {
         handleDelete(id)
         handleBack()
     }
@@ -122,7 +123,7 @@ export default function TaskCard(): JSX.Element {
                     />
                   }
                   <Button 
-                      onClick={() => handleDelete(task.id)} 
+                      onClick={() => currentHandleDelete(task.id)} 
                       children={
                         <div>
                           Delete{' '}

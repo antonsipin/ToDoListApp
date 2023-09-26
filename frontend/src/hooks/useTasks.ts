@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import Task from '../types/Task'
 import * as api from '../api/api'
-import { useDispatch, useSelector } from 'react-redux'
-import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask } from '../store/actions'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../store/index'
+import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask } from '../store/tasksSlice'
 import { selectTasks } from '../store/selectors'
 
 export default function useTasks() {
     const [error, setError] = useState<string>('')
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const tasks = useSelector(selectTasks)
     const [info, setInfo] = useState<boolean>(false)
 
@@ -105,7 +106,7 @@ export default function useTasks() {
 
       function handleUpdate(id: string, taskName: string, taskDescription: string): void {
         try {
-          tasks.map((task) => {
+          tasks.map((task: Task) => {
             if (!tasks.some((el: Task) => el.isUpdate === true)) {
                   if (task.id === id) {
                     dispatch(hideInput(id))
@@ -117,7 +118,7 @@ export default function useTasks() {
                         if (response.result === 'Error' &&  response.error) {
                           setError(response.error)
                         } else if (response.result === 'Successfully' && response.data) {
-                          dispatch(updateTask(id, taskName, taskDescription))
+                          dispatch(updateTask({taskId: id, updateInput: {taskName, taskDescription}}))
                           setError('')
                         } else {
                           setError('Something went wrong')
