@@ -10,22 +10,26 @@ const addTask = async (req, res) => {
     const user = await User.findOne({ email }).lean()
     const existTasks = user.tasks
     
-    if (!existTasks.some((task) => task.name === taskName)) {
-      const id = Math.floor(Math.random()*100000).toString()
-      const newTask = new Task({
-        id,
-        name: taskName,
-        status: false,
-        isUpdate: false,
-        isLoaded: false,
-        message: taskDescription || ''
-      })
-    
-    await User.findOneAndUpdate({ email }, { tasks: [...existTasks, newTask] })
-    res.send(response('Successfully', '', newTask))
+    if (taskName) {
+      if (!existTasks.some((task) => task.name === taskName)) {
+        const id = Math.floor(Math.random()*100000).toString()
+        const newTask = new Task({
+          id,
+          name: taskName,
+          status: false,
+          isUpdate: false,
+          isLoaded: false,
+          message: taskDescription || ''
+        })
       
+      await User.findOneAndUpdate({ email }, { tasks: [...existTasks, newTask] })
+      res.send(response('Successfully', '', newTask))
+        
+      } else {
+        res.send(response('Error', 'The task already exists'))
+      }
     } else {
-      res.send(response('Error', 'The task already exists'))
+        res.send(response('Error', 'Can not add empty task'))
     }
     } catch (e) {
     res.send(response('Error', String(e)))
@@ -41,7 +45,7 @@ const deleteTask = async (req, res) => {
     const updatedTasks = user.tasks.filter((task) => task.id !== id)
 
     await User.findOneAndUpdate({ email }, { tasks: updatedTasks})
-    res.send(response('Successfully'))
+    res.send(response('Successfully', '', { id }))
 
   } catch (e) {
     res.send(response('Error', String(e)))
@@ -61,7 +65,7 @@ const resolveTask = async (req, res) => {
       return task
     })
     await User.findOneAndUpdate({ email }, { tasks: updatedTasks })
-    res.send(response('Successfully'))
+    res.send(response('Successfully', '', { id }))
 
   } catch (e) {
     res.send(response('Error', String(e)))
@@ -100,7 +104,7 @@ const updateTask = async (req, res) => {
         return task
       })
       await User.findOneAndUpdate({ email }, { tasks: updatedTasks })
-      res.send(response('Successfully'))
+      res.send(response('Successfully', '', { id, name: taskName, message: taskDescription }))
     }
   } catch (e) {
     res.send(response('Error', String(e)))

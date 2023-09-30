@@ -1,107 +1,41 @@
-import { useState } from 'react'
 import Task from '../types/Task'
-import * as api from '../api/api'
 import { useSelector } from 'react-redux'
-import { useAppDispatch } from '../store/index'
-import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask } from '../store/tasksSlice'
-import { selectTasks } from '../store/selectors'
+import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
+import { selectTasks, selectError, selectInfo } from '../store/selectors'
+import { useAppDispatch } from '../store'
 
 export default function useTasks() {
-    const [error, setError] = useState<string>('')
-    const dispatch = useAppDispatch()
     const tasks = useSelector(selectTasks)
-    const [info, setInfo] = useState<boolean>(false)
+    const error = useSelector(selectError)
+    const info = useSelector(selectInfo)
+    const dispatch = useAppDispatch()
 
-    function handleLoadTasks(): void {
-      try {
-        api.getTasks().then((response) => {
-          if (response.result === 'Error' && response.error) {
-            setError(response.error)
-          } else if (response.result === 'Successfully' && response.data) {
-            dispatch(getTasks(response.data))
-            setError('')
-          } else {
-            setError('Something went wrong')
-          }
-        })
-      } catch (e) {
-        setError(String(e))
-      }
-    }
-
-    function handleResolve(id: string): void {
-      try {
-        api.resolveTask(id).then((response) => {
-          if (response.result === 'Successfully') {
-            dispatch(resolveTask(id))
-            setError('')
-          } else if (response.result === 'Error' && response.error) {
-            setError(response.error)
-          } else {
-            setError('Something went wrong')
-          }
-        })
-      } catch (e) {
-        setError(String(e))
-      }
-        
-      }
-
-      function handleDelete(id: string): void {
-        try {
-          api.deleteTask(id).then((response) => {
-            if (response.result === 'Error') {
-              setError(response.error) 
-            } else if (response.result === 'Successfully') {
-              dispatch(deleteTask(id))
-              setError('')
-            } else {
-              setError('Something went wrong')
-            }
-          })
-        } catch (e) {
-          setError(String(e))
-        }
+      function handleGetTasks(): void {
+        dispatch(getTasks())
       }
 
       function handleHide(id: string): void {
-        try {
-          dispatch(hideInput(id))
-          setError('')
-        } catch (e) {
-          setError(String(e))
-        }
+        dispatch(hideInput(id))
       }
 
-      function handleCreateTask(task: string, taskDescription: string) {
-        try {
-          if (task.length) {
-            api.addTask(task, taskDescription).then((response) => {
-              if (response.result === 'Error') {
-                setError(response.error)
-              } else if (response.result === 'Successfully' && response.data) {
-                dispatch(createTask(response.data))
-                setError('')
-                setInfo(false)
-              } else {
-                setError('Something went wrong')
-              }
-            })
-          } else {
-            setError('Can not add empty task')
-            setInfo(false)
-          }
-        } catch (e) {
-          setError(String(e))
-        }
+      function handleInfo(info: boolean): void {
+        dispatch(setInfo(info))
       }
 
-      function handleInfo(currentInfo: boolean): void {
-        setInfo(currentInfo)
+      function handleError(error: string): void {
+        dispatch(setError(error))
       }
 
-      function handleError(currentError: string): void {
-        setError(currentError)
+      function handleDelete(id: string): void {
+        dispatch(deleteTask(id))
+      }
+
+      function handleResolve(id: string): void {
+        dispatch(resolveTask(id))
+      }
+
+      function handleCreateTask({task, taskDescription}: {task: string, taskDescription: string}) {
+        dispatch(createTask({taskName: task, taskDescription}))
       }
 
       function handleUpdate(id: string, taskName: string, taskDescription: string): void {
@@ -109,38 +43,29 @@ export default function useTasks() {
           tasks.map((task: Task) => {
             if (!tasks.some((el: Task) => el.isUpdate === true)) {
                   if (task.id === id) {
-                    dispatch(hideInput(id))
-                    setError('')
+                    handleHide(id)
+                    handleError('')
                     handleInfo(false)
                 }
               } else if (task.isUpdate && taskName && task.id === id) {
-                      api.updateTask(id, taskName, taskDescription).then((response) => {
-                        if (response.result === 'Error' &&  response.error) {
-                          setError(response.error)
-                        } else if (response.result === 'Successfully' && response.data) {
-                          dispatch(updateTask({taskId: id, updateInput: {taskName, taskDescription}}))
-                          setError('')
-                        } else {
-                          setError('Something went wrong')
-                        }
-                        handleInfo(false)
-                      })
+                  dispatch(updateTask({taskId: id, updateInput: {taskName, taskDescription}}))
+                  handleHide(id)
             } else if (!task.isUpdate && task.id === id) {
                 handleInfo(true)
-                setError('')
+                handleError('')
             } else if (task.isUpdate && !taskName && task.id === id) {
-              dispatch(hideInput(id))
-              handleInfo(false)
+                hideInput(id)
+                handleInfo(false)
             }
             return task
           })
         } catch (e) {
-          setError(String(e))
+          handleError(String(e))
         }
       }
 
      return {
-        handleLoadTasks,
+        handleGetTasks,
         handleResolve,
         handleCreateTask,
         handleDelete,

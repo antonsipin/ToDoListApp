@@ -20,7 +20,7 @@ import { TableModeContext } from '../../App/TableModeContext'
 const URL = 'ws://localhost:3100'
 
 export default function TasksList(): JSX.Element {
-  const { info, error, tasks, handleCreateTask, handleLoadTasks, handleInfo, handleError, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+  const { info, error, tasks, handleCreateTask, handleGetTasks, handleInfo, handleError } = useTasks()
   const location = useLocation()
   const DEFAULT_PAGE_SIZE = 8
   const { theme, setTheme } = useContext(ThemeContext)
@@ -30,10 +30,9 @@ export default function TasksList(): JSX.Element {
   const currentItems = useMemo(() => tasks.slice(itemOffset, endOffset), [tasks, itemOffset, endOffset])
   const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
   const [isLoaded, setIsLoaded] = useState(false)
+  const ws = new WebSocket(URL)
 
   useEffect(() => {
-    if(tasks.length) {
-      const ws = new WebSocket(URL)
 
       ws.onopen = () => {
         ws.send(JSON.stringify('tasks updated'))
@@ -41,32 +40,25 @@ export default function TasksList(): JSX.Element {
 
       ws.onmessage = (event) => {
         if (event.data.includes('tasks updated')) {
-        }
-      }
-
-      ws.onmessage = (event) => {
-        if (event.data.includes('tasks updated')) {
+          handleGetTasks()
         }
       }
 
       ws.onclose = ((event) => {
         ws.send(JSON.stringify('close'))
       })
-    }
-  }, [])
 
-  useEffect(() => {
-    handleLoadTasks()
-
-    const timer = setTimeout(() => {
-      setIsLoaded(true)
-    }, 1000)
-    return () => clearTimeout(timer)
+      const timer = setTimeout(() => {
+        setIsLoaded(true)
+      }, 1000)
+      
+  
+      return () => clearTimeout(timer)
   }, [])
 
   function handleSubmit(event: React.FormEvent, task: string, taskDescription: string): void {
     event.preventDefault() 
-    handleCreateTask(task, taskDescription)
+    handleCreateTask({task, taskDescription})
   }
 
   const handlePageClick = (event: any) => {
@@ -142,7 +134,7 @@ export default function TasksList(): JSX.Element {
             </div> : (
               currentItems.length ?  
               currentItems.map(
-              (task: Task) => <TaskComponent key={task.id} task={task} onHandleUpdate={handleUpdate} onHandleDelete={handleDelete} onHandleHide={handleHide} onHandleResolve={handleResolve} className={theme}/>
+              (task: Task) => <TaskComponent key={task.id} task={task} />
               ): 
                 <NoTasks />
             )

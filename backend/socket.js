@@ -11,6 +11,7 @@ module.exports = function createSocketServer(server) {
 
         socketClient.on('message', (message) => {
             message = message.slice(0, 50)
+            console.log(message)
 
             for(let client of clients) {
                 client.send(message)

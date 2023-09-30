@@ -12,7 +12,7 @@ import { Select } from '../../components/Select/Select'
 import Task from '../../types/Task'
 
 export default function TaskCard(): JSX.Element {
-    const { info, error, tasks, handleInfo, handleError, handleLoadTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
+    const { info, error, tasks, handleInfo, handleError, handleGetTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
     const navigate = useNavigate()
     const params = useParams()
     const id = String(params.id)
@@ -21,7 +21,7 @@ export default function TaskCard(): JSX.Element {
     const { theme, setTheme } = useContext(ThemeContext)
 
     useEffect(() => {
-        handleLoadTasks()
+      handleGetTasks()
       }, [])
 
     const handleBack = () => navigate(-1)

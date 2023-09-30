@@ -5,19 +5,12 @@ import styles from './TaskComponent.module.scss'
 import { Button } from '../Button'
 import { UpdateInput } from '../UpdateInput/UpdateInput'
 import { MdEditOff, MdDoneOutline, MdRemoveDone, MdEditSquare, MdDeleteOutline } from 'react-icons/md'
+import useTasks from '../../hooks/useTasks'  
 
-interface TaskProps {
-  onHandleUpdate: (id: string, updateTaskName: string, updateTaskDescription: string) => void
-  onHandleDelete: (id: string) => void
-  onHandleHide: (id: string) => void
-  onHandleResolve: (id: string) => void
-  className: string
-  task: Task
-}
-
-export default function TaskComponent({className, task, onHandleUpdate, onHandleDelete, onHandleHide, onHandleResolve}: TaskProps): JSX.Element {
+export default function TaskComponent({task}: {task : Task}): JSX.Element {
   const [updateTaskName, setUpdateTaskName] = useState<string>('')
   const [updateTaskDescription, setUpdateTaskDescription] = useState<string>('')
+  const { handleDelete, handleUpdate, handleResolve, handleHide } = useTasks()
 
     return (
             <div className={styles.Wrapper} >
@@ -41,7 +34,7 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                   <div className={styles.buttons}>
                   {
                     <Button 
-                      onClick={() => onHandleResolve(task.id)} 
+                      onClick={() => handleResolve(task.id)} 
                       children={
                         task.status ?
                           <div>
@@ -59,7 +52,7 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                   {
                     task.isUpdate && !updateTaskName.length ? 
                     <Button 
-                    onClick={() => onHandleHide(task.id)}
+                    onClick={() => handleHide(task.id)}
                     children={
                       <div>
                         Hide input{' '}
@@ -69,7 +62,7 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                     btnType='hide'
                     />:
                     <Button 
-                      onClick={() => onHandleUpdate(task.id, updateTaskName, updateTaskDescription)} 
+                      onClick={() => handleUpdate(task.id, updateTaskName, updateTaskDescription)} 
                       children={
                         <div>
                           Update{' '}
@@ -80,7 +73,7 @@ export default function TaskComponent({className, task, onHandleUpdate, onHandle
                     />
                   }
                     <Button 
-                      onClick={() => onHandleDelete(task.id)} 
+                      onClick={() =>handleDelete(task.id)} 
                       children={
                         <div>
                           Delete{' '}
