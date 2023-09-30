@@ -5,7 +5,7 @@ const User = require('../models/user.model')
 const response = require('../types/response')
 
 const serializeUser = (user) => {
-    const { name, email, id} = user
+    const { name, email, id } = user
     return {
         id,
         name,
