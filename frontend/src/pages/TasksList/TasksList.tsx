@@ -33,26 +33,21 @@ export default function TasksList(): JSX.Element {
   const ws = new WebSocket(URL)
 
   useEffect(() => {
-
       ws.onopen = () => {
         ws.send(JSON.stringify('tasks updated'))
       }
-
       ws.onmessage = (event) => {
         if (event.data.includes('tasks updated')) {
           handleGetTasks()
         }
       }
-
       ws.onclose = ((event) => {
         ws.send(JSON.stringify('close'))
       })
-
       const timer = setTimeout(() => {
         setIsLoaded(true)
       }, 1000)
       
-  
       return () => clearTimeout(timer)
   }, [])
 
