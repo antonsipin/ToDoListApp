@@ -48,77 +48,78 @@ export const tasksSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(
-            getTasks.fulfilled,
-            (state, action) => {
-                if (action.payload.result === 'Error' && action.payload.error) {
-                    state.error = action.payload.error
-                  } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                    state.tasks = action.payload.data.sort(sortByName())
-                  } else {
-                    state.error = 'Something went wrong'
-                  }
-            }
-        )
-        builder.addCase(
-            resolveTask.fulfilled,
-            (state, action) => {
-                if (action.payload.result === 'Error' && action.payload.error) {
-                    state.error = action.payload.error
-                  } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                    state.tasks = state.tasks.map((task) => {
-                        if (task.id === action.payload.data?.id) {
-                            task.status = !task.status
-                        }
-                        return task
-                    })
-                  } else {
-                    state.error = 'Something went wrong'
-                  }
-            } 
-        )
-        builder.addCase(
-            deleteTask.fulfilled,
-            (state, action) => {
-                if (action.payload.result === 'Error' && action.payload.error) {
-                    state.error = action.payload.error
-                  } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                    state.tasks = state.tasks.filter((task) => task.id !== action.payload.data?.id)
-                  } else {
-                    state.error = 'Something went wrong'
-                  }
-            }
-        )
-        builder.addCase(
-            createTask.fulfilled,
-            (state, action) => {
-                if (action.payload.result === 'Error' && action.payload.error) {
-                    state.error = action.payload.error
-                  } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                    state.tasks = [...state.tasks, action.payload.data].sort(sortByName())
-                  } else {
-                    state.error = 'Something went wrong'
-                  }
-            }
-        )
-        builder.addCase(
-            updateTask.fulfilled,
-            (state, action) => {
-                if (action.payload.result === 'Error' && action.payload.error) {
-                    state.error = action.payload.error
-                  } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                    state.tasks = state.tasks.map((task) => {
-                        if (task.id === action.payload.data?.id) {
-                            task.name = action.payload.data.name
-                            task.message = action.payload.data.message
-                        }
-                        return task
-                    })
-                  } else {
-                    state.error = 'Something went wrong'
-                  }
-            }
-        )
+        builder
+            .addCase(
+                getTasks.fulfilled,
+                (state, action) => {
+                    if (action.payload.result === 'Error' && action.payload.error) {
+                        state.error = action.payload.error
+                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                        state.tasks = action.payload.data.sort(sortByName())
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
+                }
+            )
+            .addCase(
+                resolveTask.fulfilled,
+                (state, action) => {
+                    if (action.payload.result === 'Error' && action.payload.error) {
+                        state.error = action.payload.error
+                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                        state.tasks = state.tasks.map((task) => {
+                            if (task.id === action.payload.data?.id) {
+                                task.status = !task.status
+                            }
+                            return task
+                        })
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
+                } 
+            )
+            .addCase(
+                deleteTask.fulfilled,
+                (state, action) => {
+                    if (action.payload.result === 'Error' && action.payload.error) {
+                        state.error = action.payload.error
+                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                        state.tasks = state.tasks.filter((task) => task.id !== action.payload.data?.id)
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
+                }
+            )
+            .addCase(
+                createTask.fulfilled,
+                (state, action) => {
+                    if (action.payload.result === 'Error' && action.payload.error) {
+                        state.error = action.payload.error
+                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                        state.tasks = [...state.tasks, action.payload.data].sort(sortByName())
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
+                }
+            )
+            .addCase(
+                updateTask.fulfilled,
+                (state, action) => {
+                    if (action.payload.result === 'Error' && action.payload.error) {
+                        state.error = action.payload.error
+                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                        state.tasks = state.tasks.map((task) => {
+                            if (task.id === action.payload.data?.id) {
+                                task.name = action.payload.data.name
+                                task.message = action.payload.data.message
+                            }
+                            return task
+                        })
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
+                }
+            )
     }
 })
 
