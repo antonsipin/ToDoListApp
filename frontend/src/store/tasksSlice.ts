@@ -14,34 +14,19 @@ function sortByName() {
     return (a: Task, b: Task) => a.name.localeCompare(b.name)
 }
 
-export const getTasks = createAsyncThunk(GET_TASKS, async () => {
-    const response = await api.getTasks()
-    return response
-})
+export const getTasks = createAsyncThunk(GET_TASKS, () => api.getTasks())
 
-export const resolveTask = createAsyncThunk(RESOLVE_TASK, async (id: string) => {
-    const response = await api.resolveTask(id)
-    return response
-})
+export const resolveTask = createAsyncThunk(RESOLVE_TASK, (id: string) => api.resolveTask(id))
 
-export const deleteTask = createAsyncThunk(DELETE_TASK, async (id: string) => {
-    const response = await api.deleteTask(id)
-    return response
-})
+export const deleteTask = createAsyncThunk(DELETE_TASK, (id: string) => api.deleteTask(id))
 
-export const createTask = createAsyncThunk(CREATE_TASK, async ({taskName, taskDescription}: {taskName: string, taskDescription: string}) => {
-    const response = await api.addTask(taskName, taskDescription)
-    return response
-})
+export const createTask = createAsyncThunk(CREATE_TASK, ({taskName, taskDescription}: {taskName: string, taskDescription: string}) => api.addTask(taskName, taskDescription))
 
-export const updateTask = createAsyncThunk(UPDATE_TASK, async ({
+export const updateTask = createAsyncThunk(UPDATE_TASK, ({
     taskId: id, updateInput: {taskName, taskDescription}
 }: {
     taskId: string, updateInput: {taskName: string, taskDescription: string}
-}) => {
-    const response = await api.updateTask(id, taskName, taskDescription)
-    return response
-})
+}) => api.updateTask(id, taskName, taskDescription))
 
 export const tasksSlice = createSlice({
     name: 'tasks',
