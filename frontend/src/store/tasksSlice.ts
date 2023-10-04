@@ -108,13 +108,8 @@ export const tasksSlice = createSlice({
                     if (action.payload.result === 'Error' && action.payload.error) {
                         state.error = action.payload.error
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                        state.tasks = state.tasks.map((task) => {
-                            if (task.id === action.payload.data?.id) {
-                                task.name = action.payload.data.name
-                                task.message = action.payload.data.message
-                            }
-                            return task
-                        })
+                        const oldTask = state.tasks.find((task) => task.id === action.payload.data?.id)
+                        Object.assign(oldTask as Task, action.payload.data)
                     } else {
                         state.error = 'Something went wrong'
                     }
