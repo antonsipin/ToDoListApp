@@ -3,15 +3,12 @@ import { TasksState } from '../types/TasksState'
 import Task from '../types/Task'
 import * as api from '../api'
 import { DELETE_TASK, RESOLVE_TASK, GET_TASKS, CREATE_TASK, UPDATE_TASK } from './types'
+import { sortByName } from '../utils/sort'
 
 export const initialTasksState: TasksState = {
     tasks: [],
     info: false,
     error: ''
-}
-
-function sortByName() {
-    return (a: Task, b: Task) => a.name.localeCompare(b.name)
 }
 
 export const getTasks = createAsyncThunk(GET_TASKS, () => api.getTasks())
@@ -110,6 +107,7 @@ export const tasksSlice = createSlice({
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         const oldTask = state.tasks.find((task) => task.id === action.payload.data?.id)
                         Object.assign(oldTask as Task, action.payload.data)
+                        state.tasks = state.tasks.sort(sortByName())
                     } else {
                         state.error = 'Something went wrong'
                     }

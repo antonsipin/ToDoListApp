@@ -111,7 +111,7 @@ function TasksList(): JSX.Element {
             styles[`tableWrapper--${theme}`]
             )}
           >
-            <MaterialTable tasks={tasks} />
+            <MaterialTable tasks={currentItems} />
           </div>:
            <NoTasks />
            }
