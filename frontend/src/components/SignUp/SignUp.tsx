@@ -10,7 +10,7 @@ import { validateEmail } from '../../utils/validate'
 import { MdOutlineChevronRight } from 'react-icons/md'
 import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
-import { Select } from '../Select/Select'
+import { Header } from '../Header'
 
 export default function SignUp(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -58,14 +58,7 @@ export default function SignUp(): JSX.Element {
             styles.Wrapper,
             styles[`Wrapper--${theme}`]
             )}>
-            <div className={styles.Header}>
-                <Link to='/' className={styles.MainPageLink}>Main Page</Link>
-                <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
-                <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
-                <div className={styles.Select}>
-                    <Select value={theme} setTheme={setTheme} />
-                </div>
-            </div>
+            <Header />
             <div className={styles.WrapperAlertForm}>
                     {signUpError && <UserAlert error={signUpError} onHandleError={setSignUpError}/>}
                     <Form>

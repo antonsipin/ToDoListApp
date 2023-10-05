@@ -13,6 +13,7 @@ import { ThemeContext } from '../../App/ThemeContext'
 import { Select } from '../Select/Select'
 import { addUser } from '../../store/userSlice'
 import { useAppDispatch } from '../../store/index'
+import { Header } from '../Header'
 
 export default function SignIn(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -72,14 +73,7 @@ export default function SignIn(): JSX.Element {
             styles.Wrapper,
             styles[`Wrapper--${theme}`]
             )}>
-            <div className={styles.Header}>
-                <Link to='/' className={styles.MainPageLink}>Main Page</Link>
-                <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
-                <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
-                <div className={styles.Select}>
-                    <Select value={theme} setTheme={setTheme} />
-                </div>
-            </div>
+            <Header />
             <div className={styles.Form}>
             <div className={styles.WrapperAlertForm}>
                 {signInError && <UserAlert error={signInError} onHandleError={setSignInError}/>}
