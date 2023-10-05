@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import Task from '../types/Task'
 import { useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
@@ -10,35 +11,35 @@ export default function useTasks() {
     const info = useSelector(selectInfo)
     const dispatch = useAppDispatch()
 
-      function handleGetTasks(): void {
+      const handleGetTasks = useCallback((): void => {
         dispatch(getTasks())
-      }
+      }, [dispatch])
 
-      function handleHide(id: string): void {
+      const handleHide = useCallback((id: string): void => {
         dispatch(hideInput(id))
-      }
+      }, [dispatch])
 
-      function handleInfo(info: boolean): void {
+      const handleInfo = useCallback((info: boolean): void => {
         dispatch(setInfo(info))
-      }
+      }, [dispatch])
 
-      function handleError(error: string): void {
+      const handleError = useCallback((error: string): void => {
         dispatch(setError(error))
-      }
+      }, [dispatch])
 
-      function handleDelete(id: string): void {
+      const handleDelete = useCallback((id: string): void => {
         dispatch(deleteTask(id))
-      }
+      }, [dispatch])
 
-      function handleResolve(id: string): void {
+      const handleResolve = useCallback((id: string): void => {
         dispatch(resolveTask(id))
-      }
+      }, [dispatch])
 
-      function handleCreateTask({task, taskDescription}: {task: string, taskDescription: string}) {
+      const handleCreateTask = useCallback(({task, taskDescription}: {task: string, taskDescription: string}) => {
         dispatch(createTask({taskName: task, taskDescription}))
-      }
+      }, [dispatch])
 
-      function handleUpdate(id: string, taskName: string, taskDescription: string): void {
+      const handleUpdate = useCallback((id: string, taskName: string, taskDescription: string): void => {
         try {
           tasks.map((task: Task) => {
             if (!tasks.some((el: Task) => el.isUpdate === true)) {
@@ -62,7 +63,7 @@ export default function useTasks() {
         } catch (e) {
           handleError(String(e))
         }
-      }
+      }, [dispatch, handleError, handleHide, handleInfo, tasks])
 
      return {
         handleGetTasks,

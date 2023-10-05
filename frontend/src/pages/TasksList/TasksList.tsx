@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react'
+import React, { useEffect, useState, useMemo, useContext, useCallback } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Task from '../../types/Task'
 import Form from '../../components/Form/Form'
@@ -20,7 +20,7 @@ import { TableModeContext } from '../../App/TableModeContext'
 const URL = 'ws://localhost:3100'
 
 function TasksList(): JSX.Element {
-  const { info, error, tasks, handleCreateTask, handleGetTasks, handleInfo, handleError } = useTasks()
+  const { info, error, tasks, handleGetTasks, handleInfo, handleError } = useTasks()
   const location = useLocation()
   const DEFAULT_PAGE_SIZE = 8
   const { theme, setTheme } = useContext(ThemeContext)
@@ -51,15 +51,10 @@ function TasksList(): JSX.Element {
       return () => clearTimeout(timer)
   }, [])
 
-  function handleSubmit(event: React.FormEvent, task: string, taskDescription: string): void {
-    event.preventDefault() 
-    handleCreateTask({task, taskDescription})
-  }
-
-  const handlePageClick = (event: any) => {
-    const newOffset = (event.selected * DEFAULT_PAGE_SIZE) % tasks.length;
-    setItemOffset(newOffset);
-  }
+  const handlePageClick = useCallback((event: any) => {
+    const newOffset = (event.selected * DEFAULT_PAGE_SIZE) % tasks.length
+    setItemOffset(newOffset)
+  }, [tasks.length])
 
   return (
     <div className={cn(
@@ -102,7 +97,7 @@ function TasksList(): JSX.Element {
       onHandleError={handleError}/>
       </div> : ''}
 
-      <Form onHandleSubmit={handleSubmit} />
+      <Form />
 
       {tableMode ? (
         !isLoaded ?

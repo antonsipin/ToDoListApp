@@ -17,7 +17,7 @@ function TaskComponent({task}: {task : Task}): JSX.Element {
                   <div className={styles.taskAndInput}>
                     <Link to={`/tasks/${task.id}`}>
                         <span className={task.status ? styles['Task--resolved'] : styles.Task}>{task.name}</span>
-                      </Link>
+                    </Link>
                     { task.isUpdate && 
                       <div className={styles.updateInputs}>
                         <UpdateInput 
@@ -28,7 +28,8 @@ function TaskComponent({task}: {task : Task}): JSX.Element {
                           setTask={setUpdateTaskName}
                           setTaskDescription={setUpdateTaskDescription}
                         />
-                      </div>}
+                      </div>
+                    }
                   </div>
 
                   <div className={styles.buttons}>

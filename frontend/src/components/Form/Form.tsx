@@ -1,29 +1,24 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useCallback } from 'react'
 import styles from './Form.module.scss'
 import { Input } from '../Input'
 import { Button } from '../Button'
 import { MdPushPin } from 'react-icons/md'
+import { useTasks } from '../../hooks'
 
-interface FormProps {
-    onHandleSubmit: (event:React.FormEvent, task: string, taskDescription: string) => void
-}
-
-function Form ({onHandleSubmit}: FormProps): JSX.Element {
+function Form (): JSX.Element {
   const [task, setTask] = useState<string>('')
   const [taskDescription, setTaskDescription] = useState<string>('')
+  const { handleCreateTask } = useTasks()
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = useCallback((event: React.FormEvent) => {
     event.preventDefault()
-    onHandleSubmit(event, task, taskDescription)
-  }
-
-  useEffect(() => {
+    handleCreateTask({task, taskDescription})
     setTask('')
     setTaskDescription('')
-  }, [onHandleSubmit])
+  }, [handleCreateTask, task, taskDescription])
 
     return (
-          <div className={styles.Wrapper}>
+          <form className={styles.Wrapper}>
             <div className={styles.InputWrapper}>
               <Input 
                 taskPlaceholder={'Name'}
@@ -47,7 +42,7 @@ function Form ({onHandleSubmit}: FormProps): JSX.Element {
               onClickForm={(e: React.FormEvent) => handleSubmit(e)}
               />
             </div>
-          </div>
+          </form>
     )
 }
 
