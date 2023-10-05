@@ -27,7 +27,7 @@ function FallbackComponent({ error, resetErrorBoundary } : FallbackComponentType
   )
 }
 
-export default function App(): JSX.Element {
+function App(): JSX.Element {
   const queryClient = new QueryClient()
   const [theme, setTheme] = useState('White')
   const [tableMode, setTableMode] = useState(false)
@@ -57,3 +57,5 @@ export default function App(): JSX.Element {
     </ErrorBoundary>
   )
 }
+
+export default React.memo(App)

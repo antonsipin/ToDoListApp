@@ -1,5 +1,5 @@
-import { useNavigate, useParams, Link } from 'react-router-dom'
-import { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import useTasks from '../../hooks/useTasks'
 import { Button } from '../../components/Button'
 import styles from './TaskCard.module.scss' 
@@ -8,17 +8,17 @@ import { UpdateInput } from '../../components/UpdateInput/UpdateInput'
 import { AlertComponent } from '../../components/Alert'
 import { ThemeContext } from '../../App/ThemeContext'
 import cn from 'classnames'
-import { Select } from '../../components/Select/Select'
+import { Header } from '../../components/Header'
 import Task from '../../types/Task'
 
-export default function TaskCard(): JSX.Element {
+function TaskCard(): JSX.Element {
     const { info, error, tasks, handleInfo, handleError, handleGetTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
     const navigate = useNavigate()
     const params = useParams()
     const id = String(params.id)
     const [taskName, setTaskName] = useState<string>('')
     const [taskDescription, setTaskDescription] = useState<string>('')
-    const { theme, setTheme } = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
 
     useEffect(() => {
       handleGetTasks()
@@ -39,15 +39,7 @@ export default function TaskCard(): JSX.Element {
           styles[`Wrapper--${theme}`]
           )}
         >
-          <div className={styles.Header}>
-                <Link to='/' className={styles.MainPageLink}>Main Page</Link>
-                <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
-                <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
-                <div className={styles.Select}>
-                    <Select value={theme} setTheme={setTheme} />
-                </div>
-          </div>
-
+          <Header />
           {info || error ?
               <AlertComponent 
                 error={error} 
@@ -149,3 +141,5 @@ export default function TaskCard(): JSX.Element {
         
     )
 }
+
+export default React.memo(TaskCard)

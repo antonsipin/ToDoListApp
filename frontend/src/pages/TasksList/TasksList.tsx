@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useContext } from 'react'
+import React, { useEffect, useState, useMemo, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import Task from '../../types/Task'
 import Form from '../../components/Form/Form'
@@ -19,7 +19,7 @@ import { ThemeContext } from '../../App/ThemeContext'
 import { TableModeContext } from '../../App/TableModeContext'
 const URL = 'ws://localhost:3100'
 
-export default function TasksList(): JSX.Element {
+function TasksList(): JSX.Element {
   const { info, error, tasks, handleCreateTask, handleGetTasks, handleInfo, handleError } = useTasks()
   const location = useLocation()
   const DEFAULT_PAGE_SIZE = 8
@@ -164,3 +164,5 @@ export default function TasksList(): JSX.Element {
     </div>
   )
 }
+
+export default React.memo(TasksList)

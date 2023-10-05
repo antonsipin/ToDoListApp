@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Task from '../../types/Task'
 import { Link } from 'react-router-dom'
 import styles from './TaskComponent.module.scss'
@@ -7,7 +7,7 @@ import { UpdateInput } from '../UpdateInput/UpdateInput'
 import { MdEditOff, MdDoneOutline, MdRemoveDone, MdEditSquare, MdDeleteOutline } from 'react-icons/md'
 import useTasks from '../../hooks/useTasks'  
 
-export default function TaskComponent({task}: {task : Task}): JSX.Element {
+function TaskComponent({task}: {task : Task}): JSX.Element {
   const [updateTaskName, setUpdateTaskName] = useState<string>('')
   const [updateTaskDescription, setUpdateTaskDescription] = useState<string>('')
   const { handleDelete, handleUpdate, handleResolve, handleHide } = useTasks()
@@ -86,3 +86,5 @@ export default function TaskComponent({task}: {task : Task}): JSX.Element {
                 </div>
     )
 }
+
+export default React.memo(TaskComponent)

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './SignUp.module.scss'
 import Form from 'react-bootstrap/Form'
 import { Button } from '../../components/Button'
@@ -12,14 +12,14 @@ import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Header } from '../Header'
 
-export default function SignUp(): JSX.Element {
+function SignUp(): JSX.Element {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ name, setName ] = useState('')
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
     const [ signUpError, setSignUpError ] = useState('')
-    const { theme, setTheme } = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
 
     const signUp = useCallback(({ name, email, password }: User) => {
         try {
@@ -108,3 +108,5 @@ export default function SignUp(): JSX.Element {
         </div>
     )
 }
+
+export default React.memo(SignUp)

@@ -1,10 +1,11 @@
+import React from 'react'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Header.module.scss'
 import { Select } from '../Select/Select'
 import { ThemeContext } from '../../App/ThemeContext'
 
-export const Header = () => {
+const HeaderComponent = () => {
     const { theme, setTheme } = useContext(ThemeContext)
 
     return (
@@ -18,3 +19,5 @@ export const Header = () => {
         </div>
     )
 }
+
+export const Header = React.memo(HeaderComponent)

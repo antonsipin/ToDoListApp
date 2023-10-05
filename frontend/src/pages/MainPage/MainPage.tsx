@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import React, { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './MainPage.module.scss'
 import cn from 'classnames'
@@ -7,7 +7,7 @@ import { MdFlightTakeoff } from 'react-icons/md'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Header } from '../../components/Header'
 
-export default function MainPage(): JSX.Element {
+function MainPage(): JSX.Element {
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
 
@@ -41,3 +41,5 @@ export default function MainPage(): JSX.Element {
         </div>
     )
 }
+
+export default React.memo(MainPage)

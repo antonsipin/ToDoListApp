@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, FormEvent } from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Form.module.scss'
 import { Input } from '../Input'
 import { Button } from '../Button'
@@ -8,7 +8,7 @@ interface FormProps {
     onHandleSubmit: (event:React.FormEvent, task: string, taskDescription: string) => void
 }
 
-export default function Form({onHandleSubmit}: FormProps): JSX.Element {
+function Form ({onHandleSubmit}: FormProps): JSX.Element {
   const [task, setTask] = useState<string>('')
   const [taskDescription, setTaskDescription] = useState<string>('')
 
@@ -50,3 +50,5 @@ export default function Form({onHandleSubmit}: FormProps): JSX.Element {
           </div>
     )
 }
+
+export default React.memo(Form)

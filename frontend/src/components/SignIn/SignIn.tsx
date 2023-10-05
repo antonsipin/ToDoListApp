@@ -10,18 +10,17 @@ import { MdOutlineLogin, MdOutlinePermIdentity } from 'react-icons/md'
 import { validateEmail } from '../../utils/validate'
 import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
-import { Select } from '../Select/Select'
 import { addUser } from '../../store/userSlice'
 import { useAppDispatch } from '../../store/index'
 import { Header } from '../Header'
 
-export default function SignIn(): JSX.Element {
+function SignIn(): JSX.Element {
     const [ email, setEmail ] = useState('')
     const [ password, setPassword ] = useState('')
     const [ isSubmit, setIsSubmit ] = useState(false)
     const [ signInError, setSignInError ] = useState('')
     const navigate = useNavigate()
-    const { theme, setTheme } = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
     const dispatch = useAppDispatch()
 
     const navigateToTasks = (user: { id: string, name: string, email: string }) => {
@@ -126,3 +125,5 @@ export default function SignIn(): JSX.Element {
         </div>
     )
 }
+
+export default React.memo(SignIn)
