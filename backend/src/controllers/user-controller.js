@@ -26,15 +26,15 @@ const signUp = async (req, res) => {
             })
             await newUser.save()
             req.session.user = serializeUser(newUser)
-            res.send(response('Successfully', '', req.session.user))
+            res.status(200).send(response('Successfully', '', req.session.user))
         } else {
-            res.send(response('Error', 'Missing Email or Password'))
+            res.status(401).send(response('Error', 'Missing Email or Password'))
         }
     } catch (e) {
         if (e.message.includes('duplicate key')) {
-            res.send(response('Error', 'The user already exists'))
+            res.status(401).send(response('Error', 'The user already exists'))
         } else {
-        res.send(response('Error', String(e)))
+        res.status(500).send(response('Error', String(e)))
         }
     }
 }
@@ -48,28 +48,28 @@ const signIn = async (req, res) => {
                 const validPassword = await bcrypt.compare(password, user.password)
                 if (validPassword) {
                     req.session.user = serializeUser(user)
-                    res.send(response('Successfully', '', req.session.user))
+                    res.status(200).send(response('Successfully', '', req.session.user))
                 } else {
-                    res.send(response('Error', 'Wrong Email or Password'))
+                    res.status(401).send(response('Error', 'Wrong Email or Password'))
                 }
             } else {
-                res.send(response('Error', 'User does not exist'))
+                res.status(401).send(response('Error', 'User does not exist'))
             }
         } else {
-            res.send(response('Error', 'Missing Email or Password'))
+            res.status(401).send(response('Error', 'Missing Email or Password'))
         }
     } catch (e) {
-        res.send(response('Error', String(e)))
+        res.status(500).send(response('Error', String(e)))
     }
 }
 
 const logout = (req, res) => {
     req.session.destroy((err) => {
         if (err) {
-            res.send(response('Error', String(err)))
+            res.status(503).send(response('Error', String(err)))
         } else {
             res.clearCookie(req.app.get('session cookie name'))
-            res.send(response('Successfully'))
+            res.status(200).send(response('Successfully'))
         }
     })
 }

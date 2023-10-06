@@ -6,18 +6,10 @@ import { selectTasks, selectError, selectInfo } from '../store/selectors'
 import { useAppDispatch } from '../store'
 
 export default function useTasks() {
-    const tasks = useSelector(selectTasks)
-    const error = useSelector(selectError)
-    const info = useSelector(selectInfo)
-    const dispatch = useAppDispatch()
-
-      const handleGetTasks = useCallback((): void => {
-        dispatch(getTasks())
-      }, [dispatch])
-
-      const handleHide = useCallback((id: string): void => {
-        dispatch(hideInput(id))
-      }, [dispatch])
+      const tasks = useSelector(selectTasks)
+      const error = useSelector(selectError)
+      const info = useSelector(selectInfo)
+      const dispatch = useAppDispatch()
 
       const handleInfo = useCallback((info: boolean): void => {
         dispatch(setInfo(info))
@@ -27,17 +19,33 @@ export default function useTasks() {
         dispatch(setError(error))
       }, [dispatch])
 
+      const handleGetTasks = useCallback((): void => {
+        dispatch(getTasks())
+      }, [dispatch])
+
+      const handleHide = useCallback((id: string): void => {
+        dispatch(hideInput(id))
+        handleError('')
+        handleInfo(false)
+      }, [dispatch, handleError, handleInfo])
+
       const handleDelete = useCallback((id: string): void => {
         dispatch(deleteTask(id))
-      }, [dispatch])
+        handleError('')
+        handleInfo(false)
+      }, [dispatch, handleError, handleInfo])
 
       const handleResolve = useCallback((id: string): void => {
         dispatch(resolveTask(id))
-      }, [dispatch])
+        handleError('')
+        handleInfo(false)
+      }, [dispatch, handleError, handleInfo])
 
       const handleCreateTask = useCallback(({task, taskDescription}: {task: string, taskDescription: string}) => {
         dispatch(createTask({taskName: task, taskDescription}))
-      }, [dispatch])
+        handleError('')
+        handleInfo(false)
+      }, [dispatch, handleError, handleInfo])
 
       const handleUpdate = useCallback((id: string, taskName: string, taskDescription: string): void => {
         try {
@@ -51,12 +59,15 @@ export default function useTasks() {
               } else if (task.isUpdate && taskName && task.id === id) {
                   dispatch(updateTask({taskId: id, updateInput: {taskName, taskDescription}}))
                   handleHide(id)
+                  handleInfo(false)
+                  handleError('')
             } else if (!task.isUpdate && task.id === id) {
                 handleInfo(true)
                 handleError('')
             } else if (task.isUpdate && !taskName && task.id === id) {
                 hideInput(id)
                 handleInfo(false)
+                handleError('')
             }
             return task
           })

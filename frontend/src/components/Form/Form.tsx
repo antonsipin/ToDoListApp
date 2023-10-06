@@ -8,14 +8,22 @@ import { useTasks } from '../../hooks'
 function Form (): JSX.Element {
   const [task, setTask] = useState<string>('')
   const [taskDescription, setTaskDescription] = useState<string>('')
-  const { handleCreateTask } = useTasks()
+  const { handleCreateTask, handleError, handleInfo } = useTasks()
 
   const handleSubmit = useCallback((event: React.FormEvent) => {
     event.preventDefault()
-    handleCreateTask({task, taskDescription})
-    setTask('')
-    setTaskDescription('')
-  }, [handleCreateTask, task, taskDescription])
+    if (task) {
+      handleCreateTask({task, taskDescription})
+      setTask('')
+      setTaskDescription('')
+      handleError('')
+      handleInfo(false)
+    } else {
+      handleInfo(false)
+      handleError('Can not add empty task')
+    }
+    
+  }, [handleCreateTask, handleError, task, taskDescription])
 
     return (
           <form className={styles.Wrapper}>
