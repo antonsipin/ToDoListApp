@@ -39,7 +39,7 @@ function SignUp(): JSX.Element {
                     setSignUpError('Invalid email format')
                 }
             } else {
-                setSignUpError('Missing Email or Password')
+                setSignUpError('All fields must be filled')
             }
         } catch (e) {
             setSignUpError(String(e))
