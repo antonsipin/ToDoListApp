@@ -23,7 +23,7 @@ function SignUp(): JSX.Element {
 
     const signUp = useCallback(({ name, email, password }: User) => {
         try {
-            if (name && email && password ) {
+            if (name.trim() && email.trim() && password.trim() ) {
                 if (validateEmail(email)) {
                         api.signUp({ name, email, password }).then((response) => {
                             if (response.result === 'Error') {

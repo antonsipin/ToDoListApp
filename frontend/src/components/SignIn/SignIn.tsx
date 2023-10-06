@@ -30,7 +30,7 @@ function SignIn(): JSX.Element {
  
     const signIn = useCallback(({ email, password }: SignInUser) => {
         try {
-            if (email && password) {
+            if (email.trim() && password.trim()) {
                 if (validateEmail(email)) {
                     api.signIn({ email, password }).then((response) => {
                         if (response.result === 'Error') {
