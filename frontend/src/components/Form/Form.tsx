@@ -12,16 +12,16 @@ function Form (): JSX.Element {
 
   const handleSubmit = useCallback((event: React.FormEvent) => {
     event.preventDefault()
-    if (task) {
+    // if (task) {
       handleCreateTask({task, taskDescription})
       setTask('')
       setTaskDescription('')
       handleError('')
       handleInfo(false)
-    } else {
-      handleInfo(false)
-      handleError('Can not add empty task')
-    }
+    // } else {
+    //   handleInfo(false)
+    //   handleError('Can not add empty task')
+    // }
     
   }, [handleCreateTask, handleError, task, taskDescription])
 

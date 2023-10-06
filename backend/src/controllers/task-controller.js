@@ -23,16 +23,16 @@ const addTask = async (req, res) => {
         })
       
       await User.findOneAndUpdate({ email }, { tasks: [...existTasks, newTask] })
-      res.status(201).send(response('Successfully', '', newTask))
+      res.status(201).json(response('Successfully', '', newTask))
         
       } else {
-        res.status(400).send(response('Error', 'The task already exists'))
+        res.status(400).json(response('Error', 'The task already exists'))
       }
     } else {
-        res.status(400).send(response('Error', 'Can not add empty task'))
+        res.status(400).json(response('Error', 'Can not add empty task'))
     }
     } catch (e) {
-    res.status(500).send(response('Error', String(e)))
+    res.status(500).json(response('Error', String(e)))
   }
 }
 
@@ -45,10 +45,10 @@ const deleteTask = async (req, res) => {
     const updatedTasks = user.tasks.filter((task) => task.id !== id)
 
     await User.findOneAndUpdate({ email }, { tasks: updatedTasks})
-    res.status(200).send(response('Successfully', '', { id }))
+    res.status(200).json(response('Successfully', '', { id }))
 
   } catch (e) {
-    res.status(500).send(response('Error', String(e)))
+    res.status(500).json(response('Error', String(e)))
   }
 }
 
@@ -65,10 +65,10 @@ const resolveTask = async (req, res) => {
       return task
     })
     await User.findOneAndUpdate({ email }, { tasks: updatedTasks })
-    res.status(200).send(response('Successfully', '', { id }))
+    res.status(200).json(response('Successfully', '', { id }))
 
   } catch (e) {
-    res.status(500).send(response('Error', String(e)))
+    res.status(500).json(response('Error', String(e)))
   }
 }
 
@@ -78,13 +78,13 @@ const getTasks = async (req, res) => {
       const { email } = req.session.user
       const user = await User.findOne({ email }).lean()
       const tasks = user.tasks
-      res.status(200).send(response('Successfully', '', tasks))
+      res.status(200).json(response('Successfully', '', tasks))
     } else {
-      res.status(404).send(response('Error', 'The user is not found'))
+      res.status(404).json(response('Error', 'The user is not found'))
     }
     
   } catch (e) {
-    res.status(500).send(response('Error', String(e)))
+    res.status(500).json(response('Error123', String(e)))
   }
 }
 
@@ -94,7 +94,7 @@ const updateTask = async (req, res) => {
     const { email } = req.session.user
     const user = await User.findOne({ email }).lean()
     if (user.tasks.some((task) => task.name === taskName && task.message === taskDescription)) {
-      res.status(400).send(response('Error', 'The task already exists'))
+      res.status(400).json(response('Error', 'The task already exists'))
     } else {
       const updatedTasks = user.tasks.map((task) => {
         if (task.id === id) {
@@ -104,10 +104,10 @@ const updateTask = async (req, res) => {
         return task
       })
       await User.findOneAndUpdate({ email }, { tasks: updatedTasks })
-      res.status(200).send(response('Successfully', '', { id, name: taskName, message: taskDescription }))
+      res.status(200).json(response('Successfully', '', { id, name: taskName, message: taskDescription }))
     }
   } catch (e) {
-    res.status(500).send(response('Error', String(e)))
+    res.status(500).json(response('Error', String(e)))
   }
 }
 
