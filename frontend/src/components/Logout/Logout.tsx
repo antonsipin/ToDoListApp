@@ -1,19 +1,22 @@
 import React, { useState, useEffect, useCallback, useContext } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import styles from './Logout.module.scss'
 import { Button } from '../../components/Button'
 import UserAlert from '../UserAlert'
-import * as api from '../../api'
 import { MdOutlineLogout, MdTurnLeft } from 'react-icons/md'
 import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
-import { Select } from '../Select/Select'
+import { Header } from '../Header'
+import { useAuth } from '../../hooks/useAuth'
+import useTasks from '../../hooks/useTasks'
 
 export default function Logout(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const [ logoutError, setLogoutError ] = useState('')
     const navigate = useNavigate()
-    const { theme, setTheme } = useContext(ThemeContext)
+    const { theme } = useContext(ThemeContext)
+    const { handleLogout, error } = useAuth()
+    const { handleError, handleInfo } = useTasks()
 
     const handleNo = () => {
         navigate(-1)
@@ -21,21 +24,17 @@ export default function Logout(): JSX.Element {
 
     const logout = useCallback(() => {
             try {
-                api.logout().then((response) => {
-                    if (response.result === 'Error') {
-                        setLogoutError(response.error)
-                    } else {
-                        if (response.result === 'Successfully') {
-                            navigate('/')
-                            setLogoutError('')
-                        }
-                    }
-                })
+                handleLogout()
+                if (!error) {
+                    handleError('')
+                    handleInfo(false)
+                    navigate('/')
+                }
             } catch (e) {
                 setLogoutError('Something went wrong')
             }
        
-    }, [])
+    }, [error, handleError, handleInfo, handleLogout, navigate])
 
     useEffect(() => {
         if (isSubmit) {
@@ -49,14 +48,7 @@ export default function Logout(): JSX.Element {
                 styles.Wrapper,
                 styles[`Wrapper--${theme}`])
                 }>
-                <div className={styles.Header}>
-                    <Link to='/' className={styles.MainPageLink}>Main Page</Link>
-                    <Link to='/signIn' className={styles.SignInLink}>SignIn</Link>
-                    <Link to='/signUp' className={styles.SignUpLink}>SignUp</Link>
-                    <div className={theme}>
-                        <Select value={styles.Select} setTheme={setTheme} />
-                    </div>
-                </div>
+                <Header />
                 <div className={styles.WrapperAlert}>
                     {logoutError && <UserAlert error={logoutError} onHandleError={setLogoutError}/>}
                     
@@ -89,9 +81,7 @@ export default function Logout(): JSX.Element {
                               }
                         />
                     </div>
-                    
                 </div>
-                
             </div>
     )
 }

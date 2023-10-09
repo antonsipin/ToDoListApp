@@ -5,12 +5,13 @@ import Form from 'react-bootstrap/Form'
 import { Button } from '../../components/Button'
 import UserAlert from '../UserAlert'
 import { User } from '../../types/User'
-import * as api from '../../api'
 import { validateEmail } from '../../utils/validate'
 import { MdOutlineChevronRight } from 'react-icons/md'
 import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Header } from '../Header'
+import { useAuth } from '../../hooks/useAuth'
+import * as api from '../../api'
 
 function SignUp(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -18,31 +19,31 @@ function SignUp(): JSX.Element {
     const [ name, setName ] = useState('')
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
-    const [ signUpError, setSignUpError ] = useState('')
     const { theme } = useContext(ThemeContext)
+    const { error, handleError } = useAuth()
 
     const signUp = useCallback(({ name, email, password }: User) => {
         try {
             if (name.trim() && email.trim() && password.trim() ) {
                 if (validateEmail(email)) {
-                        api.signUp({ name, email, password }).then((response) => {
-                            if (response.result === 'Error') {
-                                setSignUpError(response.error)
-                            } else {
-                                if (response.result === 'Successfully') {
-                                    navigate('/signIn')
-                                    setSignUpError('')
-                                }
-                            }
-                        })
+                    api.signUp({ name, email, password }).then((response) => {
+                        if (response.result === 'Error') {
+                            handleError(response.error)
+                        } else if (response.result === 'Successfully' && response.data) {
+                            handleError('')
+                            navigate('/signIn')
+                        } else {
+                            handleError('Something went wrong')
+                        }
+                    })
                 } else {
-                    setSignUpError('Invalid email format')
+                    handleError('Invalid email format')
                 }
             } else {
-                setSignUpError('All fields must be filled')
+                handleError('All fields must be filled')
             }
         } catch (e) {
-            setSignUpError(String(e))
+            handleError(String(e))
         }
     }, [])
 
@@ -60,7 +61,7 @@ function SignUp(): JSX.Element {
             )}>
             <Header />
             <div className={styles.WrapperAlertForm}>
-                    {signUpError && <UserAlert error={signUpError} onHandleError={setSignUpError}/>}
+                    {error && <UserAlert error={error} onHandleError={handleError}/>}
                     <Form>
                         <Form.Group style={{color: 'grey'}} className="mb-3" controlId="text">
                             <Form.Label>Name</Form.Label>

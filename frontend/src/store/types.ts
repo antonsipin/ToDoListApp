@@ -1,4 +1,6 @@
-export const CREATE_USER = 'user/createUser'
+export const SIGN_IN = 'user/signIn'
+export const SIGN_UP = 'user/signUp'
+export const LOGOUT = 'user/logout'
 export const DELETE_TASK = 'tasks/deleteTask'
 export const RESOLVE_TASK = 'tasks/resolveTask'
 export const GET_TASKS = 'tasks/getTasks'

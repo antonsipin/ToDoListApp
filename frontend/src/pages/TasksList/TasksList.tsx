@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext, useCallback } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Task from '../../types/Task'
 import Form from '../../components/Form/Form'
 import NoTasks from '../../components/NoTasks/NoTasks'
@@ -17,11 +17,11 @@ import { MdOutlineList, MdOutlineViewList } from 'react-icons/md'
 import { Select } from '../../components/Select/Select'
 import { ThemeContext } from '../../App/ThemeContext'
 import { TableModeContext } from '../../App/TableModeContext'
+import { useAuth } from '../../hooks/useAuth'
 const URL = 'ws://localhost:3100'
 
 function TasksList(): JSX.Element {
   const { info, error, tasks, handleGetTasks, handleInfo, handleError } = useTasks()
-  const location = useLocation()
   const DEFAULT_PAGE_SIZE = 8
   const { theme, setTheme } = useContext(ThemeContext)
   const { tableMode, setTableMode } = useContext(TableModeContext)
@@ -31,6 +31,7 @@ function TasksList(): JSX.Element {
   const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
   const [isLoaded, setIsLoaded] = useState(false)
   const ws = new WebSocket(URL)
+  const { user } = useAuth()
 
   useEffect(() => {
       ws.onopen = () => {
@@ -84,7 +85,7 @@ function TasksList(): JSX.Element {
             />
           </div>
       <span className={styles.userName}>
-        {`Good job, ${location.state?.name}!`}
+        {`Good job, ${user.name}!`}
       </span>
       </div>
 

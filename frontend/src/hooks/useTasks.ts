@@ -2,12 +2,12 @@ import { useCallback } from 'react'
 import Task from '../types/Task'
 import { useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
-import { selectTasks, selectError, selectInfo } from '../store/selectors'
+import { selectTasks, selectTasksError, selectInfo } from '../store/selectors'
 import { useAppDispatch } from '../store'
 
 export default function useTasks() {
       const tasks = useSelector(selectTasks)
-      const error = useSelector(selectError)
+      const error = useSelector(selectTasksError)
       const info = useSelector(selectInfo)
       const dispatch = useAppDispatch()
 
