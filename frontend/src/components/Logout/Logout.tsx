@@ -8,37 +8,32 @@ import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Header } from '../Header'
 import { useAuth } from '../../hooks/useAuth'
-import useTasks from '../../hooks/useTasks'
 
 export default function Logout(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
-    const [ logoutError, setLogoutError ] = useState('')
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
-    const { handleLogout, error } = useAuth()
-    const { handleError, handleInfo } = useTasks()
+    const { handleLogout, error, logout, handleError } = useAuth()
 
     const handleNo = () => {
         navigate(-1)
     }
 
-    const logout = useCallback(() => {
+    const currentLogout = useCallback(async () => {
             try {
-                handleLogout()
-                if (!error) {
-                    handleError('')
-                    handleInfo(false)
+                const response = await handleLogout()
+                if (logout.fulfilled.match(response)) {
                     navigate('/')
                 }
             } catch (e) {
-                setLogoutError('Something went wrong')
+                handleError('Something went wrong')
             }
        
-    }, [error, handleError, handleInfo, handleLogout, navigate])
+    }, [handleError, handleLogout, logout.fulfilled, navigate])
 
     useEffect(() => {
         if (isSubmit) {
-            logout()
+            currentLogout()
             setIsSubmit(false)
         }
     }, [setIsSubmit, isSubmit])
@@ -50,7 +45,7 @@ export default function Logout(): JSX.Element {
                 }>
                 <Header />
                 <div className={styles.WrapperAlert}>
-                    {logoutError && <UserAlert error={logoutError} onHandleError={setLogoutError}/>}
+                    {error && <UserAlert error={error} onHandleError={handleError}/>}
                     
                     <div className={styles.logoutText}>
                     Do you really want to logout ?

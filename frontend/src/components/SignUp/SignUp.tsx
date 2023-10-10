@@ -20,22 +20,16 @@ function SignUp(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
-    const { error, handleError } = useAuth()
+    const { error, handleError, handleRegister, register } = useAuth()
 
-    const signUp = useCallback(({ name, email, password }: User) => {
+    const signUp = useCallback(async ({ name, email, password }: User) => {
         try {
             if (name.trim() && email.trim() && password.trim() ) {
                 if (validateEmail(email)) {
-                    api.signUp({ name, email, password }).then((response) => {
-                        if (response.result === 'Error') {
-                            handleError(response.error)
-                        } else if (response.result === 'Successfully' && response.data) {
-                            handleError('')
-                            navigate('/signIn')
-                        } else {
-                            handleError('Something went wrong')
-                        }
-                    })
+                    const response = await handleRegister({ name, email, password })
+                    if (register.fulfilled.match(response)) {
+                        navigate('/signIn')
+                    }
                 } else {
                     handleError('Invalid email format')
                 }

@@ -36,40 +36,45 @@ export const userSlice = createSlice({
             .addCase(
                 register.fulfilled,
                 (state, action) => {
-                    if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
-                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                    if (action.payload.data) {
                         state.user = initialUserState.user
                         state.error = initialUserState.error
-                    } else {
-                        state.error = 'Something went wrong'
                     }
+                }
+            )
+            .addCase(
+                register.rejected,
+                (state, action) => {
+                    state.error = action.error.message || 'Something went wrong'
                 }
             )
             .addCase(
                 login.fulfilled,
                 (state, action) => {
-                    if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
-                    } else if (action.payload.result === 'Successfully' && action.payload.data) {
+                    if (action.payload.data) {
                         state.user = action.payload.data
                         state.error = initialUserState.error
-                    } else {
-                        state.error = 'Something went wrong'
                     }
                 }
             )
             .addCase(
-                logout.fulfilled,
+                login.rejected,
                 (state, action) => {
-                    if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
-                    } else if (action.payload.result === 'Successfully') {
-                        state.user = initialUserState.user
-                        state.error = initialUserState.error
-                    } else {
-                        state.error = 'Something went wrong'
-                    }
+                    state.error = action.error.message || 'Something went wrong'
+                }
+            )
+            .addCase(
+                logout.fulfilled,
+                (state) => {
+                    state.user = initialUserState.user
+                    state.error = initialUserState.error
+                }
+            )
+            .addCase(
+                logout.rejected,
+                (state, action) => {
+                    state.error = action.error.message || 'Something went wrong'
+                    
                 }
             )
     },

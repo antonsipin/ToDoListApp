@@ -12,15 +12,15 @@ export function useAuth () {
         const dispatch = useAppDispatch()
 
         const handleLogout = () => {
-                dispatch(logout())
+                return dispatch(logout())
         }
 
         const handleLogin = (user: SignInUser) => {
-                dispatch(login(user))
+                return dispatch(login(user))
         }
 
         const handleRegister = (user: User) => {
-                dispatch(register(user))
+                return dispatch(register(user))
         }
 
         const handleError = (error: string) => {
@@ -34,6 +34,9 @@ export function useAuth () {
         return { 
                 user,
                 error,
+                login,
+                logout,
+                register,
                 handleLogout,
                 handleLogin,
                 handleRegister,

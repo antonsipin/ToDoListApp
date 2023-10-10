@@ -58,7 +58,6 @@ export async function addTask(taskName: string, taskDescription: string): Promis
 }
 
 export async function signUp(user: User): Promise<ResponseUser> {
-  try {
     const response = await fetch('/user/signUp', {
       method: 'POST',
       headers: {
@@ -66,17 +65,14 @@ export async function signUp(user: User): Promise<ResponseUser> {
       },
       body: JSON.stringify(user)
     })
-    return await response.json()
-  } catch (e) {
-    return {
-      result: 'Error',
-      error: String(e)
+    const result = await response.json()
+    if (response.status >= 400) {
+      throw new Error(result.error)
     }
-  }
-}
+    return result
+  } 
 
 export async function signIn(user: SignInUser): Promise<ResponseUser> {
-  try {
     const response = await fetch('/user/signIn', {
       method: 'POST',
       headers: {
@@ -84,30 +80,25 @@ export async function signIn(user: SignInUser): Promise<ResponseUser> {
       },
       body: JSON.stringify(user)
     })
-    return await response.json()
-  } catch (e) {
-    return {
-      result: 'Error',
-      error: String(e)
+    const result = await response.json()
+    if (response.status >= 400) {
+      throw new Error(result.error)
     }
-  }
+    return result
 }
 
 export async function logout(): Promise<ResponseUser> {
-  try {
     const response = await fetch('/user/logout', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       },
     })
-    return await response.json()
-  } catch (e) {
-    return {
-      result: 'Error',
-      error: String(e)
+    const result = await response.json()
+    if (response.status >= 400) {
+      throw new Error(result.error)
     }
-  }
+    return result
 }
 
 export async function deleteTask(id: string): Promise<ResponseTask> {

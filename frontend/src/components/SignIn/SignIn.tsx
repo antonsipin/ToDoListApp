@@ -11,7 +11,6 @@ import cn from 'classnames'
 import { ThemeContext } from '../../App/ThemeContext'
 import { useAuth } from '../../hooks/useAuth'
 import { Header } from '../Header'
-import * as api from '../../api'
 
 function SignIn(): JSX.Element {
     const [ email, setEmail ] = useState('')
@@ -19,23 +18,16 @@ function SignIn(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
-    const { handleLogin, error, user, handleError, handleSetUser } = useAuth()
+    const { handleLogin, error, handleError, login } = useAuth()
 
-    const signIn = useCallback(({ email, password }: SignInUser) => {
+    const signIn = useCallback(async ({ email, password }: SignInUser) => {
         try {
             if (email.trim() && password.trim()) {
                 if (validateEmail(email)) {
-                    api.signIn({ email, password }).then((response) => {
-                        if (response.result === 'Error') {
-                            handleError(response.error)
-                        } else if (response.result === 'Successfully' && response.data) {
-                            handleError('')
-                            handleSetUser(response.data)
-                            navigate('/tasks')
-                        } else {
-                            handleError('Something went wrong')
-                        }
-                    })
+                    const response = await handleLogin({ email, password })
+                    if (login.fulfilled.match(response)) {
+                        navigate('/tasks')
+                    }
                 } else {
                     handleError('Invalid email format')
                 }
@@ -45,7 +37,7 @@ function SignIn(): JSX.Element {
         } catch (e) {
             handleError(String(e))
         }
-    }, [handleError, handleLogin, navigate, user])
+    }, [handleError, handleLogin, login.fulfilled, navigate])
 
     useEffect(() => {
         if (isSubmit) {
