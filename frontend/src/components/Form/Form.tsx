@@ -1,55 +1,53 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import styles from './Form.module.scss'
-import { Input } from '../Input'
-import { Button } from '../Button'
-import { MdPushPin } from 'react-icons/md'
+import cn from 'classnames'
 import { useTasks } from '../../hooks'
+import {  useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 
 function Form (): JSX.Element {
-  const [task, setTask] = useState<string>('')
-  const [taskDescription, setTaskDescription] = useState<string>('')
+  const [inputError, setInputError] = useState<string>('')
   const { handleCreateTask, handleError, handleInfo } = useTasks()
+  const { register, handleSubmit } = useForm()
 
-  const handleSubmit = useCallback((event: React.FormEvent) => {
-    event.preventDefault()
-    if (task) {
-      handleCreateTask({task, taskDescription})
-      setTask('')
-      setTaskDescription('')
-      handleError('')
-      handleInfo(false)
-    } else {
-      handleInfo(false)
-      handleError('Can not add empty task')
-    }
-    
-  }, [handleCreateTask, handleError, handleInfo, task, taskDescription])
+  const onSubmit: SubmitHandler<FieldValues> = data => {
+        if (data.task) {
+          handleCreateTask({task: data.task, taskDescription: data.taskDescription})
+          handleError('')
+          handleInfo(false)
+          setInputError('')
+        } else {
+          handleInfo(false)
+          handleError('Can not add empty task')
+          setInputError('error')
+        }
+  }
 
     return (
-          <form className={styles.Wrapper}>
-            <div className={styles.InputWrapper}>
-              <Input 
-                taskPlaceholder={'Name'}
-                taskDescriptionPlaceholder={'Description'} 
-                task={task} 
-                taskDescription={taskDescription}
-                setTask={setTask}
-                setTaskDescription={setTaskDescription} 
-              />
-            </div>
-            
-            <div className={styles.wrapperFormButton}>
-              <Button 
-              children={
-                <div>
-                  Add task{' '}
-                  <MdPushPin />
-                </div>
-              } 
-              btnType='submit' 
-              onClickForm={(e: React.FormEvent) => handleSubmit(e)}
-              />
-            </div>
+          <form onSubmit={handleSubmit(onSubmit)} className={styles.Wrapper}>
+                <label className={styles.Label}>
+                  Task&Description
+                </label>
+                <input
+                  placeholder='Task name' 
+                  className={cn(
+                    styles.InputWrapper,
+                    styles[`InputWrapper--${inputError}`]
+                    )}
+                  {...register('task')} 
+                />
+
+                <input 
+                  placeholder='Task description' 
+                  className={cn(
+                    styles.InputWrapper
+                    )}
+                  {...register("taskDescription")} 
+                />
+                <input 
+                  className={styles.btn}
+                  type="submit" 
+                  value={`Add task`}
+                />
           </form>
     )
 }
