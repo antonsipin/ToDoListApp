@@ -67,6 +67,10 @@
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     flex-shrink: 0;
+
+    &:hover {
+      background-color: rgb(189, 204, 222);
+    }
   
      @include viewport--lg {
       width: 120px;
