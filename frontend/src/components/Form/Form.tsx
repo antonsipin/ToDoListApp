@@ -7,7 +7,7 @@ import {  useForm, SubmitHandler, FieldValues } from 'react-hook-form'
 function Form (): JSX.Element {
   const [inputError, setInputError] = useState<string>('')
   const { handleCreateTask, handleError, handleInfo } = useTasks()
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, reset } = useForm()
 
   const onSubmit: SubmitHandler<FieldValues> = data => {
         if (data.task) {
@@ -15,6 +15,7 @@ function Form (): JSX.Element {
           handleError('')
           handleInfo(false)
           setInputError('')
+          reset()
         } else {
           handleInfo(false)
           handleError('Can not add empty task')
