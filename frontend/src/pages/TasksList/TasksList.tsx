@@ -18,10 +18,9 @@ import { Select } from '../../components/Select/Select'
 import { ThemeContext } from '../../App/ThemeContext'
 import { TableModeContext } from '../../App/TableModeContext'
 import { useAuth } from '../../hooks/useAuth'
-const URL = 'ws://localhost:3100'
 
 function TasksList(): JSX.Element {
-  const { info, error, tasks, handleGetTasks, handleInfo, handleError } = useTasks()
+  const { info, error, tasks, handleGetTasks, handleInfo, handleError, handleResolve, resolveTask, dispatch } = useTasks()
   const DEFAULT_PAGE_SIZE = 8
   const { theme, setTheme } = useContext(ThemeContext)
   const { tableMode, setTableMode } = useContext(TableModeContext)
@@ -30,26 +29,15 @@ function TasksList(): JSX.Element {
   const currentItems = useMemo(() => tasks.slice(itemOffset, endOffset), [tasks, itemOffset, endOffset])
   const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
   const [isLoaded, setIsLoaded] = useState(false)
-  const ws = new WebSocket(URL)
   const { user } = useAuth()
 
   useEffect(() => {
-      ws.onopen = () => {
-        ws.send(JSON.stringify('tasks updated'))
-      }
-      ws.onmessage = (event) => {
-        if (event.data.includes('tasks updated')) {
-          handleGetTasks()
-        }
-      }
-      ws.onclose = ((event) => {
-        ws.send(JSON.stringify('close'))
-      })
-      const timer = setTimeout(() => {
-        setIsLoaded(true)
-      }, 1000)
-      
-      return () => clearTimeout(timer)
+    handleGetTasks()
+
+    const timer = setTimeout(() => {
+      setIsLoaded(true)
+    }, 1000)
+    return () => clearTimeout(timer)
   }, [])
 
   const handlePageClick = useCallback((event: any) => {

@@ -3,19 +3,17 @@ const clients = new Set()
 
 module.exports = function createSocketServer(server) {
     const socketServer = new WebSocket.Server({ server })
-    require('events').EventEmitter.defaultMaxListeners = 15
+    require('events').EventEmitter.defaultMaxListeners = 100
 
     socketServer.on('connection', (socketClient) => {
         console.log('SocketClient connected')
         clients.add(socketClient)
 
         socketClient.on('message', (message) => {
-            message = message.slice(0, 50)
             console.log(message)
-
-            for(let client of clients) {
-                client.send(message)
-            }
+                for (let client of clients) {
+                    client.send(message)
+                }
         })
 
         socketServer.on('close', () => {

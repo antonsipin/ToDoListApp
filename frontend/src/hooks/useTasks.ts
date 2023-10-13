@@ -4,12 +4,37 @@ import { useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
 import { selectTasks, selectTasksError, selectInfo } from '../store/selectors'
 import { useAppDispatch } from '../store'
+const URL = 'ws://localhost:3100'
 
 export default function useTasks() {
       const tasks = useSelector(selectTasks)
       const error = useSelector(selectTasksError)
       const info = useSelector(selectInfo)
       const dispatch = useAppDispatch()
+
+      const handleWebSocket = useCallback((id: string, task: string) => {
+        const ws = new WebSocket(URL)
+
+        ws.onopen = () => {
+          if (id || task) {
+            ws.send(JSON.stringify({ id, task }))
+          } 
+        }
+        ws.onmessage = async (event) => {
+          if (event.data) {
+              const { id, task } = JSON.parse(event.data)
+              if (id || task) {
+                handleGetTasks()
+                handleInfo(false)
+                handleError('')
+              }
+          } 
+        }
+        ws.onclose = ((event) => {
+          ws.send(JSON.stringify('close'))
+        })
+      }, [])
+      
 
       const handleInfo = useCallback((info: boolean): void => {
         dispatch(setInfo(info))
@@ -31,20 +56,17 @@ export default function useTasks() {
 
       const handleDelete = useCallback((id: string): void => {
         dispatch(deleteTask(id))
-        handleError('')
-        handleInfo(false)
+        handleWebSocket(id, '')
       }, [dispatch, handleError, handleInfo])
 
       const handleResolve = useCallback((id: string): void => {
         dispatch(resolveTask(id))
-        handleError('')
-        handleInfo(false)
+        handleWebSocket(id, '')
       }, [dispatch, handleError, handleInfo])
 
       const handleCreateTask = useCallback(({task, taskDescription}: {task: string, taskDescription: string}) => {
         dispatch(createTask({taskName: task, taskDescription}))
-        handleError('')
-        handleInfo(false)
+        handleWebSocket('', task)
       }, [dispatch, handleError, handleInfo])
 
       const handleUpdate = useCallback((id: string, taskName: string, taskDescription: string): void => {
@@ -59,8 +81,7 @@ export default function useTasks() {
               } else if (task.isUpdate && taskName && task.id === id) {
                   dispatch(updateTask({taskId: id, updateInput: {taskName, taskDescription}}))
                   handleHide(id)
-                  handleInfo(false)
-                  handleError('')
+                  handleWebSocket(id, taskName)
             } else if (!task.isUpdate && task.id === id) {
                 handleInfo(true)
                 handleError('')
@@ -85,6 +106,8 @@ export default function useTasks() {
         handleUpdate,
         handleInfo,
         handleError,
+        dispatch,
+        resolveTask,
         tasks,
         error,
         info
