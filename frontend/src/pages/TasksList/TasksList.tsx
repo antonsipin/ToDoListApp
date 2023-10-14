@@ -20,7 +20,7 @@ import { TableModeContext } from '../../App/TableModeContext'
 import { useAuth } from '../../hooks/useAuth'
 
 function TasksList(): JSX.Element {
-  const { info, error, tasks, handleGetTasks, handleInfo, handleError, handleResolve, resolveTask, dispatch } = useTasks()
+  const { info, error, tasks, handleGetTasks, handleInfo, handleError } = useTasks()
   const DEFAULT_PAGE_SIZE = 8
   const { theme, setTheme } = useContext(ThemeContext)
   const { tableMode, setTableMode } = useContext(TableModeContext)
