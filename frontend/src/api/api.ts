@@ -6,7 +6,7 @@ const URL = `http://${host}:3100`
 
 export async function getTasks(): Promise<any> {
   try {
-    const response = await fetch('/api/task', {
+    const response = await fetch(`${URL}/api/task`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
