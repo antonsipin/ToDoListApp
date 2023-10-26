@@ -36,8 +36,8 @@ app.use(
 app.use(methodOverride('_method'))
 app.use(userMiddle.userName)
 app.use('/', indexRouter)
-app.use('/api/task', userMiddle.isAuth, taskRouter)
-app.use('/api/user', userRouter)
+app.use('/task', userMiddle.isAuth, taskRouter)
+app.use('/user', userRouter)
 app.use('*', mainRouter)
 
 server.on('request', app)
