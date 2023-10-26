@@ -35,10 +35,10 @@ app.use(
 )
 app.use(methodOverride('_method'))
 app.use(userMiddle.userName)
-app.use('/', indexRouter)
+app.use('/', mainRouter)
 app.use('/task', userMiddle.isAuth, taskRouter)
 app.use('/user', userRouter)
-app.use('*', mainRouter)
+// app.use('*', mainRouter)
 
 server.on('request', app)
 server.listen(PORT, () => {
