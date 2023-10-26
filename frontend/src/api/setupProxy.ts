@@ -1,5 +1,6 @@
-const { createProxyMiddleware } = require('http-proxy-middleware')
+import { createProxyMiddleware } from 'http-proxy-middleware'
 
-module.exports = function(app: { use: (arg0: any) => void }) {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default function(app: { use: (arg0: any) => void }) {
     app.use(createProxyMiddleware('/api', {target: 'http://localhost:3100'}))
 }
