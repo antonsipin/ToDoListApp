@@ -1,6 +1,6 @@
 # The ToDoList App
 
-<h3> This is animated interactive application for adding, editing and storing a to-do list.
+<h3> The application simulates an interactive notepad for writing and storing a to-do list. The application allows you to add, edit, store and delete your to-do list. The user has the opportunity to register. Viewing the to-do list is implemented in the form of a table and in the form of a list. The application works on various mobile devices.
 </h3>
   <h3>
     Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, Express Session Authentication, MongoDB, React, Redux Toolkit, Redux Persist, REST API, WebSocket, Sass/SCSS, CSS Modules, Adaptive layout.
