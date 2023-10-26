@@ -1,7 +1,7 @@
 const index = (req, res) => {
-  res.redirect('/tasks')
+  res.redirect('/task')
 };
 
 module.exports = {
   index
-};
+}

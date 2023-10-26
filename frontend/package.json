@@ -79,6 +79,5 @@
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
     "typescript-plugin-css-modules": "^5.0.1"
-  },
-  "proxy": "http://localhost:3100/"
+  }
 }
