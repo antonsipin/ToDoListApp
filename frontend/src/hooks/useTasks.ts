@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
 import { selectTasks, selectTasksError, selectInfo } from '../store/selectors'
 import { useAppDispatch } from '../store'
-const URL = 'ws://localhost:3100'
+const host = window.location.hostname
+const URL = `ws://${host}:3100`
 
 export default function useTasks() {
       const tasks = useSelector(selectTasks)
