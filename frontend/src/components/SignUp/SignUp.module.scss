@@ -21,8 +21,11 @@
     align-items: center;
     justify-content: start;
     flex-direction: column;
-    height: 760px;
     width: 100%;
+
+    @include viewport--2xl {
+        height: $viewport--lg;
+    }
 
     &--White {
         background-color: white;
