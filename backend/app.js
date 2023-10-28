@@ -30,7 +30,9 @@ app.use(express.static(path.resolve('../frontend/build')))
 app.use(
   session({
       secret: process.env.SESSION_SECRET,
+      resave: true,
       saveUninitialized: true,
+      cookie: { secure: false }
   })
 )
 app.use(methodOverride('_method'))

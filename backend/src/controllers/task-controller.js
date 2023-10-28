@@ -84,7 +84,7 @@ const getTasks = async (req, res) => {
     }
     
   } catch (e) {
-    res.status(500).json(response('Error123', String(e)))
+    res.status(500).json(response('Error', String(e)))
   }
 }
 

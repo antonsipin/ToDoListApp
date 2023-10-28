@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useContext, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Task from '../../types/Task'
 import Form from '../../components/Form/Form'
 import NoTasks from '../../components/NoTasks/NoTasks'
@@ -30,14 +30,19 @@ function TasksList(): JSX.Element {
   const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
   const [isLoaded, setIsLoaded] = useState(false)
   const { user } = useAuth()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    handleGetTasks()
+    if (user.name) {
+      handleGetTasks()
 
-    const timer = setTimeout(() => {
-      setIsLoaded(true)
-    }, 1000)
-    return () => clearTimeout(timer)
+      const timer = setTimeout(() => {
+        setIsLoaded(true)
+      }, 1000)
+      return () => clearTimeout(timer)
+    } else {
+      navigate('/')
+    }
   }, [])
 
   const handlePageClick = useCallback((event: any) => {
@@ -50,7 +55,10 @@ function TasksList(): JSX.Element {
       styles.Wrapper,
       styles[`Wrapper--${theme}`]
       )}>
-      <div className={styles.header}>
+
+      { user.name ?
+        <div>
+          <div className={styles.header}>
         <Link to='/logout' className={styles.LogoutLink}>Logout</Link>
         <div className={styles.Select}>
           <Select value={theme} setTheme={setTheme} />
@@ -145,6 +153,11 @@ function TasksList(): JSX.Element {
       </div>
       )
       }
+        </div>:
+        <div className={styles.loader}>
+          <Spinner />
+        </div>
+      }  
     </div>
   )
 }
