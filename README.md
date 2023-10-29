@@ -3,7 +3,7 @@
 <h3> This is animated interactive application for adding, editing and storing a to-do list.
 </h3>
   <h3>
-    Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, Express Session Authentication, MongoDB, React, Redux Toolkit, Redux Persist, REST API, WebSocket, Sass/SCSS, CSS Modules, Adaptive layout.
+    Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, Express Session Authentication, MongoDB, MongoStore, React, Redux Toolkit, Redux Persist, REST API, WebSocket, Sass/SCSS, CSS Modules, Adaptive layout.
   </h3>
   <h3>
    This app is available by link: http://http://62.113.108.208:3100/

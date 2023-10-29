@@ -1,6 +1,7 @@
 require('dotenv').config()
 const express = require('express')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 const createSocketServer = require('./socket')
 const methodOverride = require('method-override')
 const { createServer } = require('http')
@@ -30,6 +31,7 @@ app.use(express.static(path.resolve('../frontend/build')))
 app.use(
   session({
       secret: process.env.SESSION_SECRET,
+      store: MongoStore.create({ mongoUrl: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}` }),
       resave: true,
       saveUninitialized: true,
       cookie: { secure: false }
