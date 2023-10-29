@@ -6,7 +6,7 @@
     Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, Express Session Authentication, MongoDB, React, Redux Toolkit, Redux Persist, REST API, WebSocket, Sass/SCSS, CSS Modules, Adaptive layout.
   </h3>
   <h3>
-   This app is available by link: http://62.113.103.202:3100/
+   This app is available by link: http://http://62.113.108.208:3100/
   </h3>
   <h3>
    How to start the app locally:
