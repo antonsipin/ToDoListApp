@@ -12,7 +12,7 @@ const taskRouter = require('./src/routes/task')
 const userRouter = require('./src/routes/user')
 const mainRouter = require('./src/routes/main')
 const userMiddle = require('./src/middleware/user')
-const dbConnect = require('./src/config/dbConnect')
+const { dbConnect, dbConnectionURL } = require('./src/config/dbConnect')
 const cors = require('cors')
 const PORT = process.env.PORT || 3100
 
@@ -31,7 +31,7 @@ app.use(express.static(path.resolve('../frontend/build')))
 app.use(
   session({
       secret: process.env.SESSION_SECRET,
-      store: MongoStore.create({ mongoUrl: `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}` }),
+      store: MongoStore.create({ mongoUrl: dbConnectionURL }),
       resave: true,
       saveUninitialized: true,
       cookie: { secure: false }
