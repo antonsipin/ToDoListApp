@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm ci && npm i --save-dev @types/react-table && npm run build",
+    "build": "cd frontend && npm ci && npm run build",
     "start": "cd backend && npm ci && npm start"
   },
   "engines": {
