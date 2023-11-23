@@ -7,6 +7,7 @@ WORKDIR /app
 COPY . .
 
 RUN npm run build
+RUN npm run server:ci
 
 EXPOSE 3100
 
