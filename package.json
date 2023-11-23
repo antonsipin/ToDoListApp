@@ -1,14 +1,14 @@
 {
   "name": "ToDoListApp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "start": "cd backend && npm install && npm start"
+    "build": "cd frontend && npm ci && npm run build",
+    "start": "cd backend && npm ci && npm start"
   },
   "engines": {
-    "node": "14.x"
+    "node": "18.x"
   },
   "repository": {
     "type": "git",
