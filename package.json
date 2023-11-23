@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm ci && npm i serve && serve -s build",
+    "build": "cd frontend && npm ci && npm run build",
     "server:ci": "cd backend && npm ci",
     "start": "cd backend && npm start"
   },
