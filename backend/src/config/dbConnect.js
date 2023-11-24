@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 
 const getDbConnectionURL = () => {
   if (process.env.NODE_ENV) {
-   return `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.wrnxb.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+    
+   return `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.wxqmpnk.mongodb.net/?retryWrites=true&w=majority`
   } else {
    return `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`
   }

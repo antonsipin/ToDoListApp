@@ -4,8 +4,17 @@ import { useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
 import { selectTasks, selectTasksError, selectInfo } from '../store/selectors'
 import { useAppDispatch } from '../store'
-const host = window.location.hostname
-const URL = `ws://${host}:3100`
+
+function getUrl() {
+  const host = window.location.hostname
+  if (process.env.NODE_ENV === 'production') {
+    return `wss://${host}:3100`
+  } else {
+    return `ws://${host}:3100`
+  }
+
+}
+const URL = getUrl()
 
 export default function useTasks() {
       const tasks = useSelector(selectTasks)
