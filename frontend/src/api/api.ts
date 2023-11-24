@@ -4,7 +4,7 @@ import { SignInUser } from '../types/SignInUser'
 
 export async function getTasks(): Promise<any> {
   try {
-    const response = await fetch('/task', {
+    const response = await fetch('/tasks', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export async function getTasks(): Promise<any> {
 
 export async function resolveTask(id: string): Promise<ResponseTask> {
   try {
-    const response = await fetch('/task/resolve', {
+    const response = await fetch('/tasks/status', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ export async function resolveTask(id: string): Promise<ResponseTask> {
 
 export async function addTask(taskName: string, taskDescription: string): Promise<ResponseTask> {
   try {
-    const response = await fetch('/task/add', {
+    const response = await fetch('/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ export async function addTask(taskName: string, taskDescription: string): Promis
 }
 
 export async function signUp(user: User): Promise<ResponseUser> {
-    const response = await fetch('/user/signUp', {
+    const response = await fetch('/users/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ export async function signUp(user: User): Promise<ResponseUser> {
   } 
 
 export async function signIn(user: SignInUser): Promise<ResponseUser> {
-    const response = await fetch('/user/signIn', {
+    const response = await fetch('/users/signIn', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -88,7 +88,7 @@ export async function signIn(user: SignInUser): Promise<ResponseUser> {
 }
 
 export async function logout(): Promise<ResponseUser> {
-    const response = await fetch('/user/logout', {
+    const response = await fetch('/users/logout', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ export async function logout(): Promise<ResponseUser> {
 
 export async function deleteTask(id: string): Promise<ResponseTask> {
   try {
-    const response = await fetch(`/task/delete/${id}`, {
+    const response = await fetch(`/tasks/${id}`, {
       method: 'DELETE'
     })
     return await response.json()
@@ -117,7 +117,7 @@ export async function deleteTask(id: string): Promise<ResponseTask> {
 
 export async function updateTask(id: string, taskName: string, taskDescription: string): Promise<ResponseTask> {
   try {
-    const response = await fetch('/task/update', {
+    const response = await fetch('/tasks/name', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

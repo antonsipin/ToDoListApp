@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "cd frontend && npm i && npm run build",
-    "start": "cd backend && npm i && npm start"
+    "build": "cd frontend && npm ci && npm run build",
+    "server:ci": "cd backend && npm ci",
+    "start": "cd backend && npm start"
   },
   "engines": {
     "node": "18.x"
