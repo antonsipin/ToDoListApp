@@ -2,7 +2,8 @@ const isAuth = (req, res, next) => {
     if (req.session && req.session.user) {
         return next()
     } else {
-        console.log('User not found')
+        console.log('User is not authorized')
+        res.status(400).json({ error: 'User is not authorized'})
     }
 }
 
