@@ -9,3 +9,7 @@ export const selectInfo = (store: RootState) => store.tasks.info
 export const selectTasksError = (store: RootState) => store.tasks.error
 
 export const selectUser = (store: RootState) => store.user.user
+
+export const selectAccessToken = (store: RootState) => store.user.user.accessToken
+
+export const selectRefreshToken = (store: RootState) => store.user.user.refreshToken

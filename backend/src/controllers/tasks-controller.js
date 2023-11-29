@@ -5,9 +5,8 @@ const response = require('../types/response')
 
 const addTask = async (req, res) => {
   try {
-    const { email } = req.session.user
-    const { taskName, taskDescription } = req.body
-    const user = await User.findOne({ email }).lean()
+    const { taskName, taskDescription, userId } = req.body
+    const user = await User.findOne({ _id: userId }).lean()
     const existTasks = user.tasks
     
     if (taskName) {
@@ -22,7 +21,7 @@ const addTask = async (req, res) => {
           message: taskDescription || ''
         })
       
-      await User.findOneAndUpdate({ email }, { tasks: [...existTasks, newTask] })
+      await User.findOneAndUpdate({ _id: userId }, { tasks: [...existTasks, newTask] })
       res.status(201).json(response('Successfully', '', newTask))
         
       } else {
@@ -40,11 +39,11 @@ const deleteTask = async (req, res) => {
 
   try {
     const { id } = req.params
-    const { email } = req.session.user
-    const user = await User.findOne({ email }).lean()
+    const { userId } = req.body
+    const user = await User.findOne({ _id: userId }).lean()
     const updatedTasks = user.tasks.filter((task) => task.id !== id)
 
-    await User.findOneAndUpdate({ email }, { tasks: updatedTasks})
+    await User.findOneAndUpdate({ _id: userId }, { tasks: updatedTasks})
     res.status(200).json(response('Successfully', '', { id }))
 
   } catch (e) {
@@ -55,16 +54,15 @@ const deleteTask = async (req, res) => {
 const resolveTask = async (req, res) => {
 
   try {
-    const { id } = req.body
-    const { email } = req.session.user
-    const user = await User.findOne({ email }).lean()
+    const { id, userId } = req.body
+    const user = await User.findById({ _id: userId })
     const updatedTasks = user.tasks.map((task) => {
       if (task.id === id) {
         task.status = !task.status
       }
       return task
     })
-    await User.findOneAndUpdate({ email }, { tasks: updatedTasks })
+    await User.findOneAndUpdate({ _id: userId }, { tasks: updatedTasks })
     res.status(200).json(response('Successfully', '', { id }))
 
   } catch (e) {
@@ -73,12 +71,18 @@ const resolveTask = async (req, res) => {
 }
 
 const getTasks = async (req, res) => {
+  const { userId } = req.body
   try {
-    if (req.session.user) {
-      const { email } = req.session.user
-      const user = await User.findOne({ email }).lean()
-      const tasks = user.tasks
-      res.status(200).json(response('Successfully', '', tasks))
+  const token = req.headers.authorization.split(' ')[1]
+
+    if (token) {
+      const user = await User.findById({ _id: userId })
+      if (user) {
+        const tasks = user.tasks
+        res.status(200).json(response('Successfully', '', tasks))
+      } else {
+        res.status(404).json(response('Error', 'The user is not found'))
+      }
     } else {
       res.status(404).json(response('Error', 'The user is not found'))
     }
@@ -90,9 +94,8 @@ const getTasks = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const { id, taskName, taskDescription } = req.body
-    const { email } = req.session.user
-    const user = await User.findOne({ email }).lean()
+    const { id, taskName, taskDescription, userId } = req.body
+    const user = await User.findOne({ _id: userId }).lean()
     if (user.tasks.some((task) => task.name === taskName && task.message === taskDescription)) {
       res.status(400).json(response('Error', 'The task already exists'))
     } else {
@@ -103,7 +106,7 @@ const updateTask = async (req, res) => {
         }
         return task
       })
-      await User.findOneAndUpdate({ email }, { tasks: updatedTasks })
+      await User.findOneAndUpdate({ _id: userId }, { tasks: updatedTasks })
       res.status(200).json(response('Successfully', '', { id, name: taskName, message: taskDescription }))
     }
   } catch (e) {

@@ -3,6 +3,8 @@ const bcrypt = require('bcrypt')
 const salt = process.env.saltRounds || 10
 const User = require('../models/user.model')
 const response = require('../types/response')
+const createToken = require('../helpers/createToken')
+const userDestructuring = require('../helpers/userDestructuring')
 
 const serializeUser = (user) => {
     const { name, email, id } = user
@@ -24,11 +26,14 @@ const signUp = async (req, res) => {
                 password: hashPass,
                 tasks: []
             })
+            const payload = { id: newUser._id }
+            newUser.accessToken = createToken('access', payload)
+            newUser.refreshToken = createToken('refresh', payload)
+
             await newUser.save()
-            req.session.user = serializeUser(newUser)
-            res.status(201).json(response('Successfully', '', { name }))
+            res.status(201).json(response('Successfully', '', userDestructuring(newUser)))
         } else {
-            res.status(401).json(response('Error', 'Missing Email or Password'))
+            res.status(401).json(response('Error', 'All fields must be filled'))
         }
     } catch (e) {
         if (e.message.includes('duplicate key')) {
@@ -43,13 +48,16 @@ const signIn = async (req, res) => {
     const { email, password } = req.body
     try {
         if (email && password) {
-            const user = await User.findOne({ email }).lean()
+            let user = await User.findOne({ email })
             if (user) {
-                const validPassword = await bcrypt.compare(password, user.password)
-                if (validPassword) {
-                    req.session.user = serializeUser(user)
-                    const { name } = req.session.user
-                    res.status(200).json(response('Successfully', '', { name }))
+                const isValidPassword = await bcrypt.compare(password, user.password)
+                if (isValidPassword) {
+                    const payload = { id: user._id }
+                    user.accessToken = createToken('access', payload)
+                    user.refreshToken = createToken('refresh', payload)
+                    await user.save()
+
+                    res.status(200).json(response('Successfully', '', userDestructuring(user)))
                 } else {
                     res.status(401).json(response('Error', 'Wrong Email or Password'))
                 }

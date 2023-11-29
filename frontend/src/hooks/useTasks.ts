@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { getTasks, resolveTask, createTask, deleteTask, hideInput, updateTask, setInfo, setError } from '../store/tasksSlice'
 import { selectTasks, selectTasksError, selectInfo } from '../store/selectors'
 import { useAppDispatch } from '../store'
+import { useAuth } from '../hooks/useAuth'
 
 function getUrl() {
   const host = window.location.hostname
@@ -17,6 +18,7 @@ function getUrl() {
 const URL = getUrl()
 
 export default function useTasks() {
+      const { accessToken } = useAuth()
       const tasks = useSelector(selectTasks)
       const error = useSelector(selectTasksError)
       const info = useSelector(selectInfo)
@@ -55,7 +57,7 @@ export default function useTasks() {
       }, [dispatch])
 
       const handleGetTasks = useCallback((): void => {
-        dispatch(getTasks())
+        dispatch(getTasks(accessToken))
       }, [dispatch])
 
       const handleHide = useCallback((id: string): void => {
@@ -65,17 +67,17 @@ export default function useTasks() {
       }, [dispatch, handleError, handleInfo])
 
       const handleDelete = useCallback((id: string): void => {
-        dispatch(deleteTask(id))
+        dispatch(deleteTask({id, accessToken}))
         handleWebSocket(id, '')
       }, [dispatch, handleError, handleInfo])
 
       const handleResolve = useCallback((id: string): void => {
-        dispatch(resolveTask(id))
+        dispatch(resolveTask({id , accessToken}))
         handleWebSocket(id, '')
       }, [dispatch, handleError, handleInfo])
 
       const handleCreateTask = useCallback(({task, taskDescription}: {task: string, taskDescription: string}) => {
-        dispatch(createTask({taskName: task, taskDescription}))
+        dispatch(createTask({taskName: task, taskDescription, accessToken}))
         handleWebSocket('', task)
       }, [dispatch, handleError, handleInfo])
 
@@ -89,7 +91,7 @@ export default function useTasks() {
                     handleInfo(false)
                 }
               } else if (task.isUpdate && taskName && task.id === id) {
-                  dispatch(updateTask({taskId: id, updateInput: {taskName, taskDescription}}))
+                  dispatch(updateTask({taskId: id, accessToken, updateInput: {taskName, taskDescription}}))
                   handleHide(id)
                   handleWebSocket(id, taskName)
             } else if (!task.isUpdate && task.id === id) {

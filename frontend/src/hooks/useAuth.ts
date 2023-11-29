@@ -1,5 +1,5 @@
 import { useSelector  } from 'react-redux'
-import { selectUser, selectError } from '../store/selectors'
+import { selectUser, selectError, selectAccessToken, selectRefreshToken } from '../store/selectors'
 import { login, logout, register, setError, setUser } from '../store/userSlice'
 import { useAppDispatch } from '../store'
 import { SignInUser } from '../types/SignInUser'
@@ -8,6 +8,8 @@ import { ResponseUser } from '../types/ResponseUser'
 
 export function useAuth () {
         const user = useSelector(selectUser)
+        const accessToken = useSelector(selectAccessToken)
+        const refreshToken = useSelector(selectRefreshToken)
         const error = useSelector(selectError)
         const dispatch = useAppDispatch()
 
@@ -37,6 +39,8 @@ export function useAuth () {
                 login,
                 logout,
                 register,
+                accessToken,
+                refreshToken,
                 handleLogout,
                 handleLogin,
                 handleRegister,

@@ -11,19 +11,46 @@ export const initialTasksState: TasksState = {
     error: ''
 }
 
-export const getTasks = createAsyncThunk(GET_TASKS, () => api.getTasks())
+export const getTasks = createAsyncThunk(GET_TASKS, (accessToken: string) => api.getTasks(accessToken))
 
-export const resolveTask = createAsyncThunk(RESOLVE_TASK, (id: string) => api.resolveTask(id))
+export const resolveTask = createAsyncThunk(RESOLVE_TASK, ({
+    id, 
+    accessToken
+} : {
+    id: string, 
+    accessToken: string
+}) => api.resolveTask(id, accessToken))
 
-export const deleteTask = createAsyncThunk(DELETE_TASK, (id: string) => api.deleteTask(id))
+export const deleteTask = createAsyncThunk(DELETE_TASK, ({
+    id, 
+    accessToken
+} : {
+    id: string, 
+    accessToken: string
+}) => api.deleteTask(id, accessToken))
 
-export const createTask = createAsyncThunk(CREATE_TASK, ({taskName, taskDescription}: {taskName: string, taskDescription: string}) => api.addTask(taskName, taskDescription))
+export const createTask = createAsyncThunk(CREATE_TASK, ({
+    taskName, 
+    taskDescription, 
+    accessToken
+}: {
+    taskName: string, 
+    taskDescription: string, 
+    accessToken: string
+}) => api.addTask(taskName, taskDescription, accessToken))
 
 export const updateTask = createAsyncThunk(UPDATE_TASK, ({
-    taskId: id, updateInput: {taskName, taskDescription}
+    taskId: id, 
+    accessToken, 
+    updateInput: {taskName, taskDescription}
 }: {
-    taskId: string, updateInput: {taskName: string, taskDescription: string}
-}) => api.updateTask(id, taskName, taskDescription))
+    taskId: string, 
+    accessToken: string, 
+    updateInput: {
+        taskName: string, 
+        taskDescription: string
+    }
+}) => api.updateTask(id, taskName, taskDescription, accessToken))
 
 export const tasksSlice = createSlice({
     name: 'tasks',

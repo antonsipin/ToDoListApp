@@ -1,5 +1,6 @@
 export type RegUser = {
     name: string
-    email: string
+    accessToken: string
+    refreshToken: string
     id: string
 }

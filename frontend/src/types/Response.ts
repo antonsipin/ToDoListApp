@@ -10,6 +10,8 @@ type RegUser = {
     id: string
     name: string
     email: string
+    accessToken: string
+    refreshToken: string
 }
 
 export interface ResponseUser {
