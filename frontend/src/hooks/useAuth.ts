@@ -1,6 +1,7 @@
 import { useSelector  } from 'react-redux'
 import { selectUser, selectError, selectAccessToken, selectRefreshToken } from '../store/selectors'
 import { login, logout, register, setError, setUser } from '../store/userSlice'
+import { setError as resetError } from '../store/tasksSlice'
 import { useAppDispatch } from '../store'
 import { SignInUser } from '../types/SignInUser'
 import { User } from '../types/User'
@@ -14,6 +15,7 @@ export function useAuth () {
         const dispatch = useAppDispatch()
 
         const handleLogout = () => {
+                dispatch(resetError(''))
                 return dispatch(logout())
         }
 
