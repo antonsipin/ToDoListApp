@@ -26,7 +26,7 @@ const signUp = async (req, res) => {
             })
             await newUser.save()
             req.session.user = serializeUser(newUser)
-            res.status(200).json(response('Successfully', '', req.session.user))
+            res.status(201).json(response('Successfully', '', { name }))
         } else {
             res.status(401).json(response('Error', 'Missing Email or Password'))
         }
@@ -41,6 +41,7 @@ const signUp = async (req, res) => {
 
 const signIn = async (req, res) => {
     const { email, password } = req.body
+    const { name } = req.session.user
     try {
         if (email && password) {
             const user = await User.findOne({ email }).lean()
@@ -48,7 +49,7 @@ const signIn = async (req, res) => {
                 const validPassword = await bcrypt.compare(password, user.password)
                 if (validPassword) {
                     req.session.user = serializeUser(user)
-                    res.status(200).json(response('Successfully', '', req.session.user))
+                    res.status(200).json(response('Successfully', '', { name }))
                 } else {
                     res.status(401).json(response('Error', 'Wrong Email or Password'))
                 }
@@ -69,7 +70,7 @@ const logout = (req, res) => {
             res.status(503).json(response('Error', String(err)))
         } else {
             res.clearCookie(req.app.get('session cookie name'))
-            res.status(200).json(response('Successfully'))
+            res.status(200).json(response('Successfully logout'))
         }
     })
 }
