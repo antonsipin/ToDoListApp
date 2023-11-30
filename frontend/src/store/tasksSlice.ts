@@ -77,7 +77,11 @@ export const tasksSlice = createSlice({
                 getTasks.fulfilled,
                 (state, action) => {
                     if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
+                        if (action.payload.error === 'Token Expired') {
+                            state.error = 'Please Log In!'
+                        } else {
+                            state.error = action.payload.error
+                        }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         state.tasks = action.payload.data.sort(sortByName())
                     } else {
@@ -89,7 +93,11 @@ export const tasksSlice = createSlice({
                 resolveTask.fulfilled,
                 (state, action) => {
                     if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
+                        if (action.payload.error === 'Token Expired') {
+                            state.error = 'Please Log In!'
+                        } else {
+                            state.error = action.payload.error
+                        }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         state.tasks = state.tasks.map((task) => {
                             if (task.id === action.payload.data?.id) {
@@ -106,7 +114,11 @@ export const tasksSlice = createSlice({
                 deleteTask.fulfilled,
                 (state, action) => {
                     if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
+                        if (action.payload.error.includes('Token Expired')) {
+                            state.error = 'Please Log In!'
+                        } else {
+                            state.error = action.payload.error
+                        }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         state.tasks = state.tasks.filter((task) => task.id !== action.payload.data?.id)
                     } else {
@@ -118,7 +130,11 @@ export const tasksSlice = createSlice({
                 createTask.fulfilled,
                 (state, action) => {
                     if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
+                        if (action.payload.error.includes('Token Expired')) {
+                            state.error = 'Please Log In!'
+                        } else {
+                            state.error = action.payload.error
+                        }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         state.tasks = [...state.tasks, action.payload.data].sort(sortByName())
                     } else {
@@ -130,7 +146,11 @@ export const tasksSlice = createSlice({
                 updateTask.fulfilled,
                 (state, action) => {
                     if (action.payload.result === 'Error' && action.payload.error) {
-                        state.error = action.payload.error
+                        if (action.payload.error.includes('Token Expired')) {
+                            state.error = 'Please Log In!'
+                        } else {
+                            state.error = action.payload.error
+                        }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         const oldTask = state.tasks.find((task) => task.id === action.payload.data?.id)
                         Object.assign(oldTask as Task, action.payload.data)
