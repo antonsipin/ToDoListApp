@@ -2,12 +2,13 @@ import { ResponseTask, ResponseUser } from '../types/Response'
 import { User } from '../types/User'
 import { SignInUser } from '../types/SignInUser'
 
-export async function getTasks(): Promise<any> {
+export async function getTasks(accessToken: string): Promise<any> {
   try {
     const response = await fetch('/tasks', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
     })
     const tasks = await response.json()
@@ -21,12 +22,13 @@ export async function getTasks(): Promise<any> {
   }
 }
 
-export async function resolveTask(id: string): Promise<ResponseTask> {
+export async function resolveTask(id: string, accessToken: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/tasks/status', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
     body: JSON.stringify({ id })
   })
@@ -39,12 +41,13 @@ export async function resolveTask(id: string): Promise<ResponseTask> {
   }
 }
 
-export async function addTask(taskName: string, taskDescription: string): Promise<ResponseTask> {
+export async function addTask(taskName: string, taskDescription: string, accessToken: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/tasks', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify({ taskName, taskDescription })
     })
@@ -101,10 +104,14 @@ export async function logout(): Promise<ResponseUser> {
     return result
 }
 
-export async function deleteTask(id: string): Promise<ResponseTask> {
+export async function deleteTask(id: string, accessToken: string): Promise<ResponseTask> {
   try {
     const response = await fetch(`/tasks/${id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      }
     })
     return await response.json()
   } catch (e) {
@@ -115,12 +122,13 @@ export async function deleteTask(id: string): Promise<ResponseTask> {
   }
 }
 
-export async function updateTask(id: string, taskName: string, taskDescription: string): Promise<ResponseTask> {
+export async function updateTask(id: string, taskName: string, taskDescription: string, accessToken: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/tasks/name', {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
       },
       body: JSON.stringify({ id, taskName, taskDescription })
     })

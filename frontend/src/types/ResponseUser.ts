@@ -1,4 +1,5 @@
 export type ResponseUser = {
     name: string,
-    email: string
+    accessToken: string,
+    refreshToken: string
 }

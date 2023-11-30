@@ -11,7 +11,7 @@ const HeaderComponent = () => {
     const { handleLogout, user } = useAuth()
 
     const handleClick = () => {
-        if (user.name || user.email) {
+        if (user.name) {
             handleLogout()
         }
     }

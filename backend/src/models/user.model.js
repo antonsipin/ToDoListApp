@@ -11,7 +11,9 @@ const userSchema = new mongoose.Schema({
     required: true,
     type: String
   },
-  tasks: Array
+  tasks: Array,
+  accessToken: String,
+  refreshToken: String
 })
 
 module.exports = mongoose.model('User', userSchema)

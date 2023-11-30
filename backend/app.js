@@ -12,6 +12,7 @@ const tasksRouter = require('./src/routes/tasks')
 const usersRouter = require('./src/routes/users')
 const mainRouter = require('./src/routes/main')
 const usersMiddle = require('./src/middleware/user')
+const tokenMiddle = require('./src/middleware/token')
 const { dbConnect, dbConnectionURL } = require('./src/config/dbConnect')
 const cors = require('cors')
 const PORT = process.env.PORT || 3100
@@ -40,7 +41,7 @@ app.use(
 app.use(methodOverride('_method'))
 app.use(usersMiddle.userName)
 app.use('/', indexRouter)
-app.use('/tasks', usersMiddle.isAuth, tasksRouter)
+app.use('/tasks', tokenMiddle, tasksRouter)
 app.use('/users', usersRouter)
 app.use('*', mainRouter)
 
