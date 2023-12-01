@@ -17,7 +17,7 @@ export const initialUserState: UserState = {
 
 export const login = createAsyncThunk(SIGN_IN, async (user: SignInUser) => await api.signIn(user))
 
-export const logout = createAsyncThunk(LOGOUT, async () => await api.logout())
+export const logout = createAsyncThunk(LOGOUT, async (accessToken: string) => await api.logout(accessToken))
 
 export const register = createAsyncThunk(SIGN_UP, async (user: User) => await api.signUp(user))
 

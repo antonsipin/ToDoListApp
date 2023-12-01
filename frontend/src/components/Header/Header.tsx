@@ -8,11 +8,11 @@ import { useAuth } from '../../hooks'
 
 const HeaderComponent = () => {
     const { theme, setTheme } = useContext(ThemeContext)
-    const { handleLogout, user } = useAuth()
+    const { handleLogout, user, accessToken } = useAuth()
 
     const handleClick = () => {
         if (user.name) {
-            handleLogout()
+            handleLogout(accessToken)
         }
     }
 

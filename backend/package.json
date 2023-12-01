@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon --ignore .'sessions/' app.js",
     "start": "node app.js",
-    "production": "cross-env NODE_ENV=production node app.js"
+    "production": "cross-env NODE_ENV=production node app.js",
+    "generate": "prisma generate"
   },
   "repository": {
     "type": "git",

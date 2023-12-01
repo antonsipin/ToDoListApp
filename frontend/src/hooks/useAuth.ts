@@ -14,9 +14,9 @@ export function useAuth () {
         const error = useSelector(selectError)
         const dispatch = useAppDispatch()
 
-        const handleLogout = () => {
+        const handleLogout = (accessToken: string) => {
                 dispatch(resetError(''))
-                return dispatch(logout())
+                return dispatch(logout(accessToken))
         }
 
         const handleLogin = (user: SignInUser) => {

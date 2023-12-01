@@ -10,8 +10,4 @@ router
     .route('/signIn')
     .post(usersController.signIn)
 
-router
-    .route('/logout')
-    .get(usersController.logout)
-
 module.exports = router

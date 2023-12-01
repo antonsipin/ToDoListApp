@@ -2,11 +2,16 @@ require('dotenv').config()
 const Task = require('../models/task.model')
 const User = require('../models/user.model')
 const response = require('../types/response')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 const addTask = async (req, res) => {
   try {
-    const { taskName, taskDescription, userId } = req.body
-    const user = await User.findOne({ _id: userId }).lean()
+    const { taskName, taskDescription, email } = req.body
+    const user = await prisma.user.findUnique({
+      where: { email }
+    })
     const existTasks = user.tasks
     
     if (taskName) {
@@ -21,7 +26,12 @@ const addTask = async (req, res) => {
           message: taskDescription || ''
         })
       
-      await User.findOneAndUpdate({ _id: userId }, { tasks: [...existTasks, newTask] })
+      await prisma.user.update({
+        where: { email },
+        data: {
+          tasks: [...existTasks, newTask]
+        }
+      })
       res.status(201).json(response('Successfully', '', newTask))
         
       } else {
@@ -31,7 +41,8 @@ const addTask = async (req, res) => {
         res.status(400).json(response('Error', 'Can not add empty task'))
     }
     } catch (e) {
-    res.status(500).json(response('Error', String(e)))
+      console.log(e.message)
+      res.status(500).json(response('Error', 'Something went wrong'))
   }
 }
 
@@ -71,22 +82,17 @@ const resolveTask = async (req, res) => {
 }
 
 const getTasks = async (req, res) => {
-  const { userId } = req.body
+  const { email } = req.body
   try {
-  const token = req.headers.authorization.split(' ')[1]
-
-    if (token) {
-      const user = await User.findById({ _id: userId })
+      const user = await prisma.user.findUnique({ 
+        where: { email }
+      })
       if (user) {
         const tasks = user.tasks
         res.status(200).json(response('Successfully', '', tasks))
       } else {
         res.status(404).json(response('Error', 'The user is not found'))
       }
-    } else {
-      res.status(404).json(response('Error', 'The user is not found'))
-    }
-    
   } catch (e) {
     res.status(500).json(response('Error', String(e)))
   }

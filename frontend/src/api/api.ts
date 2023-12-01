@@ -90,12 +90,13 @@ export async function signIn(user: SignInUser): Promise<ResponseUser> {
     return result
 }
 
-export async function logout(): Promise<ResponseUser> {
-    const response = await fetch('/users/logout', {
+export async function logout(accessToken: string): Promise<ResponseUser> {
+    const response = await fetch('/logout', {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      },
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${accessToken}`
+      }
     })
     const result = await response.json()
     if (response.status >= 400) {
