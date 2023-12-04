@@ -1,12 +1,13 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
-const { PrismaClient } = require('@prisma/client')
+const PrismaService = require('../config/prisma.service')
 const { jwtToken } = process.env
 const response = require('../types/response')
 
 const checkToken = (req, res, next) => {
+    const prismaService = new PrismaService()
+    const prisma = prismaService.client
     const tokenToCheck = req.headers.authorization?.split(' ')[1]
-    const prisma = new PrismaClient()
     
     if (jwtToken && tokenToCheck) {
         try {

@@ -1,5 +1,4 @@
 require('dotenv').config()
-const User = require('../models/user.model')
 const response = require('../types/response')
 const PrismaService = require('../config/prisma.service')
 
