@@ -46,7 +46,13 @@ export const userSlice = createSlice({
             .addCase(
                 register.rejected,
                 (state, action) => {
-                    state.error = action.error.message || 'Something went wrong'
+                    if (action.error && action.error.message === 'Token Expired') {
+                        state.error = initialUserState.error
+                    } else if (action.error && action.error.message === 'The user already exists') {
+                        state.error = action.error.message
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
                 }
             )
             .addCase(
@@ -62,7 +68,11 @@ export const userSlice = createSlice({
             .addCase(
                 login.rejected,
                 (state, action) => {
-                    state.error = action.error.message || 'Something went wrong'
+                    if (action.error && action.error.message === 'Token Expired') {
+                        state.error = initialUserState.error 
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
                 }
             )
             .addCase(
@@ -75,8 +85,12 @@ export const userSlice = createSlice({
             .addCase(
                 logout.rejected,
                 (state, action) => {
-                    state.error = action.error.message || 'Something went wrong'
-                    
+                    if (action.error && action.error.message === 'Token Expired') {
+                        state.user = initialUserState.user
+                        state.error = initialUserState.error 
+                    } else {
+                        state.error = 'Something went wrong'
+                    }
                 }
             )
     },

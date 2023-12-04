@@ -31,7 +31,7 @@ const signUp = async (req, res) => {
             res.status(401).json(response('Error', 'All fields must be filled'))
         }
     } catch (e) {
-        if (e.message.includes('duplicate key')) {
+        if (e.message.includes('Unique constraint failed')) {
             res.status(401).json(response('Error', 'The user already exists'))
         } else {
         console.log(e.message)
@@ -74,4 +74,32 @@ const signIn = async (req, res) => {
     }
 }
 
-module.exports = { signUp, signIn }
+const logout = async (req, res) => {
+    const { email } = req.body
+
+    if (email) {
+        try {
+            const user = await prisma.user.update({
+                where: { email },
+                data: {
+                    accessToken: '',
+                    refreshToken: ''
+                }
+            })
+
+            res.status(200).json(response('Successfully', '', userDestructuring(user)))
+
+        } catch (e) {
+            console.log(`Logout error: ${e.message}`)
+            res.status(500).json(response('Error', 'Logout error'))
+        }
+    } else {
+        console.log('Logout error: missed email')
+    }
+}
+
+module.exports = { 
+    signUp,
+    signIn,
+    logout
+}

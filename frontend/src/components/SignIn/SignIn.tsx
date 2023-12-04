@@ -18,7 +18,7 @@ function SignIn(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
-    const { handleLogin, error, handleError, login } = useAuth()
+    const { handleLogin, error, handleError, login, handleLogout, accessToken } = useAuth()
 
     const signIn = useCallback(async ({ email, password }: SignInUser) => {
         try {
@@ -38,6 +38,10 @@ function SignIn(): JSX.Element {
             handleError(String(e))
         }
     }, [handleError, handleLogin, login.fulfilled, navigate])
+
+    useEffect(() => {
+        handleLogout(accessToken)
+    }, [])
 
     useEffect(() => {
         if (isSubmit) {

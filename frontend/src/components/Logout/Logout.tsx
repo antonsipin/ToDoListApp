@@ -21,10 +21,8 @@ export default function Logout(): JSX.Element {
 
     const currentLogout = useCallback(async () => {
             try {
-                const response = await handleLogout(accessToken)
-                if (logout.fulfilled.match(response)) {
-                    navigate('/')
-                }
+                await handleLogout(accessToken)
+                navigate('/')
             } catch (e) {
                 handleError('Something went wrong')
             }

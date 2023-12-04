@@ -10,6 +10,7 @@ import { ThemeContext } from '../../App/ThemeContext'
 import cn from 'classnames'
 import { Header } from '../../components/Header'
 import Task from '../../types/Task'
+import { useAuth } from '../../hooks/useAuth'
 
 function TaskCard(): JSX.Element {
     const { info, error, tasks, handleInfo, handleError, handleGetTasks, handleUpdate, handleDelete, handleHide, handleResolve } = useTasks()
@@ -19,13 +20,19 @@ function TaskCard(): JSX.Element {
     const [taskName, setTaskName] = useState<string>('')
     const [taskDescription, setTaskDescription] = useState<string>('')
     const { theme } = useContext(ThemeContext)
+    const { accessToken, handleLogout } = useAuth()
 
     useEffect(() => {
-      handleGetTasks()
+      if (error !== 'Please Log In!' && error !== 'Token Expired') {
+        handleGetTasks()
+      } else {
+        handleLogout(accessToken)
+        navigate('/')
+      }
       }, [])
 
     const handleBack = () => navigate(-1)
-    const task = tasks.find((task: Task) => task.id === id)
+    const task = tasks.find((task: Task) => String(task.id) === id)
 
     const currentHandleDelete = (id: string) => {
         handleDelete(id)
@@ -76,7 +83,7 @@ function TaskCard(): JSX.Element {
             <div className={styles.buttons}>
                   {
                     <Button 
-                    onClick={() => handleResolve(task.id)} 
+                    onClick={() => handleResolve(task.id, task.status)} 
                     children={
                       task.status ?
                         <div>

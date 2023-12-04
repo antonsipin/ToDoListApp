@@ -1,14 +1,16 @@
 require('dotenv').config()
-const { PrismaClient } = require('@prisma/client')
 const response = require('../types/response')
 const userDestructuring = require('../helpers/userDestructuring')
+const PrismaService = require('../config/prisma.service')
+
+const prismaService = new PrismaService()
+const prisma = prismaService.client
 
 const logout = async (req, res) => {
     const { email } = req.body
 
     if (email) {
         try {
-            const prisma = new PrismaClient()
             const user = await prisma.user.update({
                 where: { email },
                 data: {

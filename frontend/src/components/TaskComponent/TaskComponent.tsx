@@ -35,7 +35,7 @@ function TaskComponent({task}: {task : Task}): JSX.Element {
                   <div className={styles.buttons}>
                   {
                     <Button 
-                      onClick={() => handleResolve(task.id)} 
+                      onClick={() => handleResolve(task.id, task.status)} 
                       children={
                         task.status ?
                           <div>

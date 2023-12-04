@@ -22,7 +22,7 @@ export async function getTasks(accessToken: string): Promise<any> {
   }
 }
 
-export async function resolveTask(id: string, accessToken: string): Promise<ResponseTask> {
+export async function resolveTask(id: string, status: boolean, accessToken: string): Promise<ResponseTask> {
   try {
     const response = await fetch('/tasks/status', {
       method: 'PUT',
@@ -30,7 +30,7 @@ export async function resolveTask(id: string, accessToken: string): Promise<Resp
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${accessToken}`
       },
-    body: JSON.stringify({ id })
+    body: JSON.stringify({ id, status })
   })
   return await response.json()
   } catch (e) {
