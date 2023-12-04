@@ -8,7 +8,8 @@
     "dev": "nodemon --ignore .'sessions/' app.js",
     "start": "node app.js",
     "production": "cross-env NODE_ENV=production node app.js",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "db:migrate": "npx prisma migrate deploy"
   },
   "repository": {
     "type": "git",

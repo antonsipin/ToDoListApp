@@ -6,6 +6,7 @@
   "scripts": {
     "build": "cd frontend && npm ci && npm run build",
     "server:ci": "cd backend && npm ci",
+    "db:migrate": "cd backend && npm run db:migrate",
     "start": "cd backend && npm start"
   },
   "engines": {
