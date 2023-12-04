@@ -13,7 +13,7 @@ export default function Logout(): JSX.Element {
     const [ isSubmit, setIsSubmit ] = useState(false)
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
-    const { handleLogout, error, logout, handleError } = useAuth()
+    const { handleLogout, error, logout, handleError, accessToken } = useAuth()
 
     const handleNo = () => {
         navigate(-1)
@@ -21,10 +21,8 @@ export default function Logout(): JSX.Element {
 
     const currentLogout = useCallback(async () => {
             try {
-                const response = await handleLogout()
-                if (logout.fulfilled.match(response)) {
-                    navigate('/')
-                }
+                await handleLogout(accessToken)
+                navigate('/')
             } catch (e) {
                 handleError('Something went wrong')
             }

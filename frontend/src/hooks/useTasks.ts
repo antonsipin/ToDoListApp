@@ -71,8 +71,8 @@ export default function useTasks() {
         handleWebSocket(id, '')
       }, [dispatch, handleError, handleInfo])
 
-      const handleResolve = useCallback((id: string): void => {
-        dispatch(resolveTask({id , accessToken}))
+      const handleResolve = useCallback((id: string, status: boolean): void => {
+        dispatch(resolveTask({id, status, accessToken}))
         handleWebSocket(id, '')
       }, [dispatch, handleError, handleInfo])
 

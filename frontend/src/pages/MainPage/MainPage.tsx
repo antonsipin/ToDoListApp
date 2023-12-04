@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './MainPage.module.scss'
 import cn from 'classnames'
@@ -6,10 +6,16 @@ import { Button } from '../../components/Button'
 import { MdFlightTakeoff } from 'react-icons/md'
 import { ThemeContext } from '../../App/ThemeContext'
 import { Header } from '../../components/Header'
+import { useAuth } from '../../hooks/useAuth'
 
 function MainPage(): JSX.Element {
     const navigate = useNavigate()
     const { theme } = useContext(ThemeContext)
+    const { handleLogout, accessToken } = useAuth()
+
+    useEffect(() => {
+        handleLogout(accessToken)
+    }, [])
 
     const handleStart = () => {
         navigate('/signIn')

@@ -3,7 +3,7 @@
 <h3> This is animated interactive application for adding, editing and storing a to-do list.
 </h3>
   <h3>
-    Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, JSON Web Tokens (JWT), MongoDB, MongoStore, React, Redux Toolkit, Redux Persist, REST API, WebSocket, Sass/SCSS, CSS Modules, Adaptive layout, Docker.
+    Techs: HTML, CSS, TypeScript, JavaScript, Express.js, Node.js, JSON Web Tokens (JWT), PostgreSQL, Prisma ORM, React, Redux Toolkit, Redux Persist, REST API, WebSocket, Sass/SCSS, CSS Modules, Adaptive layout, Docker.
   </h3>
   <h3>
    This app is available by link: https://todolistapp-online.onrender.com/

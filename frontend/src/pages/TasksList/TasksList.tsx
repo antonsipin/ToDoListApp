@@ -29,11 +29,11 @@ function TasksList(): JSX.Element {
   const currentItems = useMemo(() => tasks.slice(itemOffset, endOffset), [tasks, itemOffset, endOffset])
   const pageCount = Math.ceil(tasks.length / DEFAULT_PAGE_SIZE)
   const [isLoaded, setIsLoaded] = useState(false)
-  const { user } = useAuth()
+  const { user, handleLogout, accessToken } = useAuth()
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (user.name) {
+    if (error !== 'Please Log In!' && error !== 'Token Expired') {
       handleGetTasks()
 
       const timer = setTimeout(() => {
@@ -43,7 +43,7 @@ function TasksList(): JSX.Element {
     } else {
       navigate('/')
     }
-  }, [])
+  }, [error])
 
   const handlePageClick = useCallback((event: any) => {
     const newOffset = (event.selected * DEFAULT_PAGE_SIZE) % tasks.length

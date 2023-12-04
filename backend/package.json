@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "nodemon --ignore .'sessions/' app.js",
     "start": "node app.js",
-    "production": "cross-env NODE_ENV=production node app.js"
+    "production": "cross-env NODE_ENV=production node app.js",
+    "generate": "prisma generate"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   },
   "homepage": "https://github.com/antonsipin/ToDoList#readme",
   "dependencies": {
+    "@prisma/client": "^5.6.0",
     "bcrypt": "^5.1.1",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "^1.4.5",
@@ -40,6 +42,7 @@
     "ws": "^7.5.9"
   },
   "devDependencies": {
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "prisma": "^5.6.0"
   }
 }

@@ -1,22 +1,26 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
-const User = require('../models/user.model')
+const { PrismaClient } = require('@prisma/client')
 const { jwtToken } = process.env
 const response = require('../types/response')
 
 const checkToken = (req, res, next) => {
     const tokenToCheck = req.headers.authorization?.split(' ')[1]
+    const prisma = new PrismaClient()
+    
     if (jwtToken && tokenToCheck) {
         try {
             jwt.verify(tokenToCheck, jwtToken, async (err, decoded) => {
                 try {
                     if (err) throw new Error(err)
 
-                    const user = await User.findById(decoded.id)
+                    const user = await prisma.user.findUnique({
+                        where: { email: decoded.email }
+                    })
                     if (!user || user.accessToken !== tokenToCheck) {
                         res.status(403).json(response('Error', 'Token not found'))
                     } else {
-                        req.body.userId = decoded.id
+                        req.body.email = decoded.email
                         next()
                     }
                 } catch (e) {

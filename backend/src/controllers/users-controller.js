@@ -1,45 +1,41 @@
 require('dotenv').config()
 const bcrypt = require('bcrypt')
 const salt = process.env.saltRounds || 10
-const User = require('../models/user.model')
 const response = require('../types/response')
 const createToken = require('../helpers/createToken')
 const userDestructuring = require('../helpers/userDestructuring')
+const PrismaService = require('../config/prisma.service')
 
-const serializeUser = (user) => {
-    const { name, email, id } = user
-    return {
-        id,
-        name,
-        email
-    }
-}
+const prismaService = new PrismaService()
+const prisma = prismaService.client
 
 const signUp = async (req, res) => {
     const { name, email, password } = req.body
     try {
         if (name && email && password) {
             const hashPass = await bcrypt.hash(password, Number(salt))
-            const newUser = new User({
+            const newUser = {
                 name,
                 email,
                 password: hashPass,
-                tasks: []
-            })
-            const payload = { id: newUser._id }
-            newUser.accessToken = createToken('access', payload)
-            newUser.refreshToken = createToken('refresh', payload)
+                accessToken: '',
+                refreshToken: '',
+                tasks: { 
+                    create: [] 
+                }
+            }
 
-            await newUser.save()
+            await prisma.user.create({ data: newUser })
             res.status(201).json(response('Successfully', '', userDestructuring(newUser)))
         } else {
             res.status(401).json(response('Error', 'All fields must be filled'))
         }
     } catch (e) {
-        if (e.message.includes('duplicate key')) {
+        if (e.message.includes('Unique constraint failed')) {
             res.status(401).json(response('Error', 'The user already exists'))
         } else {
-        res.status(500).json(response('Error', String(e)))
+        console.log(e.message)
+        res.status(500).json(response('Error', 'Something went wrong'))
         }
     }
 }
@@ -48,14 +44,19 @@ const signIn = async (req, res) => {
     const { email, password } = req.body
     try {
         if (email && password) {
-            let user = await User.findOne({ email })
+            let user = await prisma.user.findUnique({ 
+                where: { email } 
+            })
             if (user) {
                 const isValidPassword = await bcrypt.compare(password, user.password)
                 if (isValidPassword) {
-                    const payload = { id: user._id }
+                    const payload = { email }
                     user.accessToken = createToken('access', payload)
                     user.refreshToken = createToken('refresh', payload)
-                    await user.save()
+                    await prisma.user.update({
+                        where: { email },
+                        data: user
+                    })
 
                     res.status(200).json(response('Successfully', '', userDestructuring(user)))
                 } else {
@@ -68,19 +69,37 @@ const signIn = async (req, res) => {
             res.status(401).json(response('Error', 'Missing Email or Password'))
         }
     } catch (e) {
-        res.status(500).json(response('Error', String(e)))
+        console.log(e.message)
+        res.status(500).json(response('Error', 'Something went wrong'))
     }
 }
 
-const logout = (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            res.status(503).json(response('Error', String(err)))
-        } else {
-            res.clearCookie(req.app.get('session cookie name'))
-            res.status(200).json(response('Successfully logout'))
+const logout = async (req, res) => {
+    const { email } = req.body
+
+    if (email) {
+        try {
+            const user = await prisma.user.update({
+                where: { email },
+                data: {
+                    accessToken: '',
+                    refreshToken: ''
+                }
+            })
+
+            res.status(200).json(response('Successfully', '', userDestructuring(user)))
+
+        } catch (e) {
+            console.log(`Logout error: ${e.message}`)
+            res.status(500).json(response('Error', 'Logout error'))
         }
-    })
+    } else {
+        console.log('Logout error: missed email')
+    }
 }
 
-module.exports = { signUp, signIn, logout }
+module.exports = { 
+    signUp,
+    signIn,
+    logout
+}

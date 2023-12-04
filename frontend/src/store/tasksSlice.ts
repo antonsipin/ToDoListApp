@@ -14,12 +14,14 @@ export const initialTasksState: TasksState = {
 export const getTasks = createAsyncThunk(GET_TASKS, (accessToken: string) => api.getTasks(accessToken))
 
 export const resolveTask = createAsyncThunk(RESOLVE_TASK, ({
-    id, 
+    id,
+    status, 
     accessToken
 } : {
-    id: string, 
+    id: string,
+    status: boolean, 
     accessToken: string
-}) => api.resolveTask(id, accessToken))
+}) => api.resolveTask(id, status, accessToken))
 
 export const deleteTask = createAsyncThunk(DELETE_TASK, ({
     id, 
@@ -65,10 +67,13 @@ export const tasksSlice = createSlice({
             })
         },
         setError(state: TasksState, action: PayloadAction<string>) {
-            state.error = action.payload || ''
+            state.error = action.payload || initialTasksState.error
         },
         setInfo(state: TasksState, action: PayloadAction<boolean>) {
-            state.info = action.payload || false
+            state.info = action.payload || initialTasksState.info
+        },
+        setUserTasks(state: TasksState, action: PayloadAction<Task[]>) {
+            state.tasks = action.payload || initialTasksState.tasks
         }
     },
     extraReducers: (builder) => {
@@ -84,6 +89,7 @@ export const tasksSlice = createSlice({
                         }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         state.tasks = action.payload.data.sort(sortByName())
+                        state.error = ''
                     } else {
                         state.error = 'Something went wrong'
                     }
@@ -100,7 +106,7 @@ export const tasksSlice = createSlice({
                         }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
                         state.tasks = state.tasks.map((task) => {
-                            if (task.id === action.payload.data?.id) {
+                            if (Number(task.id) === Number(action.payload.data?.id)) {
                                 task.status = !task.status
                             }
                             return task
@@ -120,7 +126,7 @@ export const tasksSlice = createSlice({
                             state.error = action.payload.error
                         }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                        state.tasks = state.tasks.filter((task) => task.id !== action.payload.data?.id)
+                        state.tasks = state.tasks.filter((task) => Number(task.id) !== Number(action.payload.data?.id))
                     } else {
                         state.error = 'Something went wrong'
                     }
@@ -152,7 +158,7 @@ export const tasksSlice = createSlice({
                             state.error = action.payload.error
                         }
                     } else if (action.payload.result === 'Successfully' && action.payload.data) {
-                        const oldTask = state.tasks.find((task) => task.id === action.payload.data?.id)
+                        const oldTask = state.tasks.find((task) => Number(task.id) === Number(action.payload.data?.id))
                         Object.assign(oldTask as Task, action.payload.data)
                         state.tasks = state.tasks.sort(sortByName())
                     } else {
@@ -163,5 +169,5 @@ export const tasksSlice = createSlice({
     }
 })
 
-export const { setInfo, setError, hideInput } = tasksSlice.actions
+export const { setInfo, setError, hideInput, setUserTasks } = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
