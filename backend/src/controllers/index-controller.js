@@ -1,7 +1,3 @@
-const index = (req, res) => {
+export const index = (req, res) => {
   res.redirect('/task')
-};
-
-module.exports = {
-  index
 }

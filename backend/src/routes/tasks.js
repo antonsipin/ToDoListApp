@@ -1,22 +1,22 @@
-const express = require('express')
+import express from 'express'
+import { getTasks, addTask, deleteTask, resolveTask, updateTask } from '../controllers/tasks-controller.js'
 const router = express.Router()
-const tasksController = require('../controllers/tasks-controller')
 
 router
   .route('/')
-  .get(tasksController.getTasks)
-  .post(tasksController.addTask)
+  .get(getTasks)
+  .post(addTask)
 
 router
   .route('/:id')
-  .delete(tasksController.deleteTask)
+  .delete(deleteTask)
 
 router
   .route('/status')
-  .put(tasksController.resolveTask)
+  .put(resolveTask)
 
 router
   .route('/name')
-  .put(tasksController.updateTask)
+  .put(updateTask)
 
-module.exports = router
+export default router

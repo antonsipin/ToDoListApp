@@ -1,10 +1,10 @@
-require('dotenv').config()
-const bcrypt = require('bcrypt')
+import 'dotenv/config'
+import bcrypt from 'bcrypt'
+import response from '../types/response.js'
+import createToken from '../helpers/createToken.js'
+import userDestructuring from '../helpers/userDestructuring.js'
+import PrismaService from '../config/prisma.service.js'
 const salt = process.env.saltRounds || 10
-const response = require('../types/response')
-const createToken = require('../helpers/createToken')
-const userDestructuring = require('../helpers/userDestructuring')
-const PrismaService = require('../config/prisma.service')
 
 const prismaService = new PrismaService()
 const prisma = prismaService.client
@@ -98,7 +98,7 @@ const logout = async (req, res) => {
     }
 }
 
-module.exports = { 
+export { 
     signUp,
     signIn,
     logout

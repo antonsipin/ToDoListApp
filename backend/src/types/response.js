@@ -6,4 +6,4 @@ const response = (result, error, data) => {
     } 
 }
 
-module.exports = response
+export default response

@@ -1,5 +1,5 @@
-require('dotenv').config()
-const jwt = require('jsonwebtoken')
+import 'dotenv/config'
+import jwt from 'jsonwebtoken'
 
 const { jwtToken, jwtRefreshToken, tokenLife, refreshTokenLife } = process.env
 
@@ -22,4 +22,4 @@ const { jwtToken, jwtRefreshToken, tokenLife, refreshTokenLife } = process.env
 
 
 
-module.exports = createToken
+export default createToken

@@ -1,12 +1,12 @@
-require('dotenv').config()
-const response = require('../types/response')
-const userDestructuring = require('../helpers/userDestructuring')
-const PrismaService = require('../config/prisma.service')
+import 'dotenv/config'
+import response from '../types/response.js'
+import userDestructuring from '../helpers/userDestructuring.js'
+import PrismaService from '../config/prisma.service.js'
 
 const prismaService = new PrismaService()
 const prisma = prismaService.client
 
-const logout = async (req, res) => {
+export const logout = async (req, res) => {
     const { email } = req.body
 
     if (email) {
@@ -28,8 +28,4 @@ const logout = async (req, res) => {
     } else {
         console.log('Logout error: missed email')
     }
-}
-
-module.exports = { 
-    logout
 }

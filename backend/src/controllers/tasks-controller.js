@@ -1,6 +1,6 @@
-require('dotenv').config()
-const response = require('../types/response')
-const PrismaService = require('../config/prisma.service')
+import 'dotenv/config'
+import response from '../types/response.js'
+import PrismaService from '../config/prisma.service.js'
 
 const prismaService = new PrismaService()
 const prisma = prismaService.client
@@ -98,7 +98,7 @@ const updateTask = async (req, res) => {
   }
 }
 
-module.exports = {
+export {
   addTask,
   deleteTask,
   resolveTask,

@@ -1,9 +1,10 @@
-const WebSocket = require('ws')
+import WebSocket from 'ws'
+import EventEmitter from 'events'
 const clients = new Set()
 
-module.exports = function createSocketServer(server) {
+export default function createSocketServer(server) {
     const socketServer = new WebSocket.Server({ server })
-    require('events').EventEmitter.defaultMaxListeners = 100
+    EventEmitter.defaultMaxListeners = 100
 
     socketServer.on('connection', (socketClient) => {
         console.log('SocketClient connected')

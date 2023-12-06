@@ -1,8 +1,8 @@
-require('dotenv').config()
-const jwt = require('jsonwebtoken')
-const PrismaService = require('../config/prisma.service')
+import 'dotenv/config'
+import jwt from 'jsonwebtoken'
+import PrismaService from '../config/prisma.service.js'
+import response from '../types/response.js'
 const { jwtToken } = process.env
-const response = require('../types/response')
 
 const checkToken = (req, res, next) => {
     const prismaService = new PrismaService()
@@ -43,4 +43,4 @@ const checkToken = (req, res, next) => {
     }
 }
 
-module.exports = checkToken
+export default checkToken

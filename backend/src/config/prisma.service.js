@@ -1,4 +1,4 @@
-const { PrismaClient } = require ('@prisma/client')
+import { PrismaClient } from '@prisma/client'
 
 class PrismaService {
     constructor() {
@@ -21,4 +21,4 @@ class PrismaService {
     }
 }
 
-module.exports = PrismaService
+export default PrismaService

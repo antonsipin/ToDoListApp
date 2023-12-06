@@ -6,4 +6,4 @@ const userDestructuring = (user) => {
     }
 }
 
-module.exports = userDestructuring
+export default userDestructuring
