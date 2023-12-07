@@ -3,8 +3,6 @@ import { Request, Response, NextFunction }from 'express'
 
 export type CustomError = VerifyErrors | null
 
-interface Decoded {}
-
 export interface DecodedType extends VerifyOptions {
   email: string
 }
