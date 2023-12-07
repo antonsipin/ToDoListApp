@@ -1,5 +1,5 @@
 import express from 'express'
-import { index } from '../controllers/index-controller.js'
+import { index } from '../controllers/index-controller'
 const router = express.Router()
 
 router.get('/', index)

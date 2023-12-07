@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 
 class PrismaService {
+    client: PrismaClient
     constructor() {
         this.client = new PrismaClient()
     }

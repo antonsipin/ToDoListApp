@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 
 const { jwtToken, jwtRefreshToken, tokenLife, refreshTokenLife } = process.env
 
-    const createToken = (type = 'access', payload) => {
+    const createToken = (type = 'access', payload: {}) => {
 
         if (jwtToken && jwtRefreshToken && tokenLife && refreshTokenLife) {
 
