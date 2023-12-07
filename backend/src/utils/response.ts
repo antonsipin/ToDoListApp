@@ -1,4 +1,4 @@
-const response = (result, error, data) => {
+const response = (result: string, error: string, data: {}) => {
     return {
         result: result || '',
         error: error || '',
@@ -6,4 +6,4 @@ const response = (result, error, data) => {
     } 
 }
 
-module.exports = response
+export default response

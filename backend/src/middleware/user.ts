@@ -1,4 +1,6 @@
-const isAuth = (req, res, next) => {
+import { RequestType, Response, NextFunction } from '../types/index'
+
+export const isAuth = (req: RequestType, res: Response, next: NextFunction) => {
     if (req.session && req.session.user) {
         return next()
     } else {
@@ -7,14 +9,9 @@ const isAuth = (req, res, next) => {
     }
 }
 
-const userName = (req, res, next) => {
+export const userName = (req: RequestType, res: Response, next: NextFunction) => {
     if (req.session && req.session.user) {
         res.locals.userName = req.session.user.name
     }
     next()
-}
-
-module.exports = { 
-    isAuth,
-    userName
 }

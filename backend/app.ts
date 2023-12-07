@@ -1,18 +1,18 @@
-require('dotenv').config()
-const express = require('express')
-const createSocketServer = require('./socket')
-const { createServer } = require('http')
-const path = require('path')
-const logger = require('morgan')
-const indexRouter = require('./src/routes/index')
-const tasksRouter = require('./src/routes/tasks')
-const usersRouter = require('./src/routes/users')
-const logoutRouter = require('./src/routes/logout')
-const mainRouter = require('./src/routes/main')
-const tokenMiddle = require('./src/middleware/token')
-const cors = require('cors')
+import 'dotenv/config'
+import express from 'express'
+import createSocketServer from './socket'
+import { createServer } from 'http'
+import path from 'path'
+import logger from 'morgan'
+import indexRouter from './src/routes/index'
+import tasksRouter from './src/routes/tasks'
+import usersRouter from './src/routes/users'
+import logoutRouter from './src/routes/logout'
+import mainRouter from './src/routes/main'
+import tokenMiddle from './src/middleware/token'
+import cors from 'cors'
+import PrismaService from './src/config/prisma.service'
 const PORT = process.env.PORT || 3100
-const PrismaService = require('./src/config/prisma.service')
 
 const app = express()
 const server = createServer()
@@ -37,4 +37,4 @@ server.listen(PORT, () => {
   console.log('[Server]: Server has been started on port: ', PORT)
 })
 
-module.exports = app
+export default app
