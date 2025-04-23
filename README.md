@@ -32,6 +32,12 @@
       Envoke the TypeScript compiler <b><i> tsc or npx tsc</i></b>
     </li>
     <li>
+      Re-establish the link between schema.prisma and .env file <b><i>npm run generate</i></b>
+    </li>
+    <li>
+      Reset the development database​ <b><i>npm run db:migrate</i></b>
+    </li>
+    <li>
       Run the app server <b><i> npm start </i></b> (The server starts at http://localhost:3100)
     </li>
     <li>
