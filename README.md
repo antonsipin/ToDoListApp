@@ -32,6 +32,9 @@
       Envoke the TypeScript compiler <b><i> tsc or npx tsc</i></b>
     </li>
     <li>
+      Re-establish the link between schema.prisma and .env file <b><i> npx prisma generate</i></b>
+    </li>
+    <li>
       Run the app server <b><i> npm start </i></b> (The server starts at http://localhost:3100)
     </li>
     <li>
