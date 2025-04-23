@@ -8,8 +8,8 @@
     "dev": "cd dist && nodemon --ignore .'sessions/' app.js",
     "start": "cd dist && node app.js",
     "production": "cd dist && cross-env NODE_ENV=production node app.js",
-    "generate": "prisma generate",
-    "db:migrate": "npx prisma migrate deploy"
+    "generate": "npx prisma generate",
+    "db:migrate": "npx prisma migrate reset"
   },
   "repository": {
     "type": "git",

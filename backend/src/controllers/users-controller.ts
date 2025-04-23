@@ -25,7 +25,7 @@ const signUp = async (req: Request, res: Response) => {
                     create: [] 
                 }
             }
-
+            
             await prisma.user.create({ data: newUser })
             res.status(201).json(response('Successfully', '', userDestructuring(newUser)))
         } else {
